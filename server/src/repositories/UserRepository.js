@@ -16,11 +16,11 @@ async function findAllDefaultUsers() {
          "usuario",
          "status",
          [
-            sequelize.fn("DATE_FORMAT", sequelize.col("users.created_at"), "%d-%m-%Y %H:%i:%s"),
+            sequelize.fn("DATE_FORMAT", sequelize.col("User.created_at"), "%d-%m-%Y %H:%i:%s"),
             "created_at",
          ],
          [
-            sequelize.fn("DATE_FORMAT", sequelize.col("users.updated_at"), "%d-%m-%Y %H:%i:%s"),
+            sequelize.fn("DATE_FORMAT", sequelize.col("User.updated_at"), "%d-%m-%Y %H:%i:%s"),
             "updated_at",
          ],
       ]

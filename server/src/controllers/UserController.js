@@ -29,7 +29,24 @@ async function getAllUsers(req, res) {
 
 async function getAllDefaultUsers(req, res) {
    try {
-      const { nivel_acesso } = req.userInfo;
+      /*
+      =============================================
+              Verificação de nível de acesso
+      =============================================
+      */
+      const { id } = req.userInfo;
+
+      const existsUser = await getUserByIdService(id);
+
+      if(!existsUser) {
+         throw new NotFoundError("Usuário não encontrado", {
+            fields: {
+               id
+            }
+         })
+      }
+
+      const { nivel_acesso } = existsUser;
       
       if(nivel_acesso > 1) {
          throw new AccessLevelError("É necessário ser um Administrador para executar a ação", {
@@ -251,7 +268,7 @@ async function changeStatusUser(req, res) {
 async function changePasswordUser(req, res) {
    try {
       const { id } = req.userInfo;
-      const { currPassword, newPassword } = req.body;
+      const { currPassword, newPassword } = req.body || { currPassword: undefined, newPassword: undefined };
 
       if(!currPassword || !newPassword) {
          throw new FieldUndefinedError("Um ou mais campos não identificados", {

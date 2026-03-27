@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
          allowNull: false
       },
       data_validade: {
-         type: DataTypes.DATEONLY.UNSIGNED,
+         type: DataTypes.DATEONLY,
          allowNull: false
       },
       created_at: {

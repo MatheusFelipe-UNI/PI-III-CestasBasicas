@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
    });
 
    Fornecedores.associate = (models) => {
-      Fornecedores.hasMany(models.Itens_entrada, {
+      Fornecedores.hasMany(models.Entradas_produtos_itens, {
          constraint: true,
          foreignKey: "fk_id_fornecedor",
          as: "entrada_produto_fornecedor"

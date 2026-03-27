@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
          constraint: "fk_id_user",
          as: "user_venda"
       });
-      Vendas.belongsTo(models.Cesta, {
+      Vendas.belongsTo(models.Cestas, {
          constraint: "fk_id_cesta",
          as: "cesta_venda"
       })

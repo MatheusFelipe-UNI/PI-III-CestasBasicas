@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-   const EntradasProdutos_itens = sequelize.define("EntradasProdutos_itens", {
+   const Entradas_produtos_itens = sequelize.define("Entradas_produtos_itens", {
       id: {
          type: DataTypes.INTEGER.UNSIGNED,
          primaryKey: true,
@@ -45,24 +45,24 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true
    });
 
-   EntradasProdutos_itens.associate = (models) => {
-      EntradasProdutos_itens.belongsTo(models.EntradasProdutos, {
+   Entradas_produtos_itens.associate = (models) => {
+      Entradas_produtos_itens.belongsTo(models.EntradasProdutos, {
          constraint: true,
          foreignKey: "fk_id_entrada",
          as: "entradas"
       });
-      EntradasProdutos_itens.belongsTo(models.Produtos, {
+      Entradas_produtos_itens.belongsTo(models.Produtos, {
          constraint: true,
          foreignKey: "fk_id_produto",
          as: "produtos_entrada"
       });
-      EntradasProdutos_itens.belongsTo(models.Fornecedor, {
+      Entradas_produtos_itens.belongsTo(models.Fornecedores, {
          constraint: true,
          foreignKey: "fk_id_fornecedor",
          as: "fornecedor_produtos_entrada"
       });
    }
 
-   return EntradasProdutos_itens;
+   return Entradas_produtos_itens;
 
 };

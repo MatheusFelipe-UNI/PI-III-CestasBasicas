@@ -49,6 +49,11 @@ module.exports = (sequelize, DataTypes) => {
          foreignKey: "fk_id_produto",
          as: "lotes_produto"
       });
+      Produtos.hasMany(models.Itens_cestas, {
+         constraint: true,
+         foreignKey: "fk_id_produto",
+         as: "cestas_produto"
+      });
    }
 
    return Produtos;

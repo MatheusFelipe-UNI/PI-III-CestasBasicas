@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
          type: DataTypes.ENUM("ATIVO", "INATIVO"),
          allowNull: false,
       },
+      quantidade: {
+         type: DataTypes.INTEGER.UNSIGNED,
+         allowNull: false
+      },
       created_at: {
          type: DataTypes.DATE,
          defaultValue: DataTypes.NOW,

@@ -30,6 +30,6 @@ router
 
 router
    .route("/:id")
-   .get(vendasController.getCestaVendaById)
+   .get(vendasController.getVendaCestaById)
 
 module.exports = router;

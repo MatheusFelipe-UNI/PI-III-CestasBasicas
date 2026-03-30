@@ -18,11 +18,15 @@ router
 
 router
    .route("/ativos/filter")
-   .get(lotesProdutosController.getAllLotesProdutosByFilterAndOrderBy)
+   .get(lotesProdutosController.getAllActiveLotesProdutosByFilterAndOrderBy)
 
 router
    .route("/fornecedores/:idFornecedor")
    .get(lotesProdutosController.getAllLotesProdutosByFornecedor)
+
+router
+   .route("/:id/status")
+   .patch(lotesProdutosController.changeLoteProdutoStatus)
 
 router
    .route("/:id")

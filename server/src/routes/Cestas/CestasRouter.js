@@ -33,6 +33,10 @@ router
    .patch(cestasController.changeCestaStatus)
 
 router
+   .route("/:id/itens")
+   .get(cestasController.getAllCestasItensByCestaId)
+
+router
    .route("/:id")
    .get(cestasController.getCestaById)
    .patch(cestasController.updateCesta)

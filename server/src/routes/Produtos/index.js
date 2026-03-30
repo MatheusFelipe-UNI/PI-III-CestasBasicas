@@ -25,7 +25,7 @@ router
 
 router
    .route("/:idProduto/lotes/filter")
-   .get(lotesProdutosController.getAllActiveLotesProdutosByProdutoByFilterAndOrderBy);
+   .get(lotesProdutosController.getAllActiveLotesProdutosByProdutoWithFilterAndOrderBy);
 
 
 module.exports = router;

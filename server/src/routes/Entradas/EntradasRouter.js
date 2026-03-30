@@ -25,11 +25,23 @@ router
    .get(entradasController.getAllCanceledEntradasProdutosByFilterAndOrderBy)
 
 router
+   .route("/itens")
+   .get(entradasController.getAllEntradasProdutosItens)
+
+router
+   .route("/itens/:idItem")
+   .get(entradasController.getEntradaProdutoItemById)
+
+router
    .route("/:id/status")
    .patch(entradasController.changeEntradaProdutoStatus)
 
 router
+   .route("/:id/itens")
+   .get(entradasController.getAllEntradasProdutosItens)
+
+router
    .route("/:id")
-   .get(entradasController.getCestaById)
+   .get(entradasController.getEntradaProdutoById)
 
 module.exports = router;

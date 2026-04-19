@@ -1,0 +1,491 @@
+/* 
+===================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Estilização Geral
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================================================
+*/
+
+header.navContainer {
+    width: var(--fixWidthNav);
+    min-height: 100vh;
+    background-color: var(--colorPrim);
+    box-shadow: 0px 4px 12px 9px rgba(191, 191, 191, 0.21);
+    color: white;
+    position: relative;
+
+}
+
+
+
+/* 
+===================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Estilização da logo
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================================================
+*/
+
+.navContent__logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.navContent__logo h1{
+    font-size: 3.4em;
+    cursor: pointer;
+    transition: .3s;
+
+}
+
+.navContent__logo h1:hover {
+    transform: translateY(-5px);
+
+}
+
+
+
+/* 
+===================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Estilização dos Links
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================================================
+*/
+
+.navContent__info ul {
+    padding-right: 15px;
+
+}
+
+.navContent__info ul :is(li, li > p){
+    position: relative;
+    font-size: var(--fontSizeNav);
+    padding: 10px 20px;
+    margin: 15px 0;
+    border-radius: 0 var(--fixBorderRadius) var(--fixBorderRadius) 0;
+    transition: .2s ease;
+    z-index: 1;
+    
+}
+
+
+/* Animação no fundo */
+.navContent__info ul li:not(:has(ul))::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    border-radius: 0 var(--fixBorderRadius) var(--fixBorderRadius) 0;
+    background-color: var(--colorPrimDark);
+    transition: .2s ease;
+    z-index: -1;
+    
+}
+
+.navContent__info ul li:is(:has(.active))::before {
+    background-color: var(--colorPrimDark);
+}
+
+.navContent__info ul li:not(:has(.active))::before {
+    transform: scaleX(0);
+    transform-origin: left;
+
+}
+
+
+.navContent__info ul li:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+
+}
+
+
+
+.navContent__info ul li a{
+    color: white;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-weight: 600;
+
+}
+
+.navContent__info ul li a.active {
+    color: white;
+}
+
+.navContent__info ul li a .iconList {
+    font-size: 1.5em;
+}
+
+
+/* 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            Estilização das Sublistas
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+.navContent__info .iconDropList {
+    font-size: 1.15em;
+    transition: .2s ease;
+}
+
+.navContent__info ul li ul {
+    display: none;
+}
+
+.navContent__info ul :is(li.activeDropDown) ul{
+    display: block;
+}
+
+.navContent__info ul li:has(ul) {
+    margin-right: -15px;
+}
+
+.navContent__info ul :is(li.activeDropDown) .iconDropList {
+    transform: rotate(180deg);
+}
+
+.navContent__info ul :is(li.activeDropDown, li:hover) {
+    background-color: var(--colorPrimLight);
+}
+
+.navContent__info ul li ul {
+    padding-right: 0;
+    margin-right: -20px;
+    font-size: calc(var(--fontSizeNav) / 1.5);
+}
+
+
+.navContent__info ul li ul li::before {
+    border-radius: var(--fixBorderRadius) 0  0 var(--fixBorderRadius);
+}
+
+.navContent__info ul li ul li:not(:has(.active))::before {
+    transform: scaleX(0);
+    transform-origin: right;
+
+}
+
+
+.navContent__info ul li ul li:hover::before {
+    transform: scaleX(1);
+    transform-origin: right;
+
+}
+
+
+/* 
+===================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Estilização da área de Informações de Login
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================================================
+*/
+.navContent__info .navContent__info__login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 5em;
+    padding: 10px 20px;
+    text-align: center;
+    color: white;
+
+}
+
+
+/* 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     Informações de Login (ícone e UserName)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+.info__login__user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info__login__user .login__user__icon {
+    color: var(--colorPrim);
+    font-size: 2.5em;
+    background-color: white;
+    padding: 10px;
+    border-radius: 50px;
+
+}
+
+.info__login__user p.login__user__name {
+    margin: 5px 0;
+    font-weight: 500;
+    font-family: var(--fontPrim);
+}
+
+/* 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                Botão de Logout
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+.navContent__info__login button.info__login__btn {
+    margin: auto;
+    padding: 8px 25px;
+    background-color: white;
+    color: var(--colorPrim);
+    font-weight: bold;
+    box-shadow: none;
+    gap: 5px;
+}
+
+.navContent__info__login button.info__login__btn:hover {
+    background-color: var(--colorPrimDark);
+    color: white;
+}
+
+.navContent__info__login button.info__login__btn 
+.login__btn__icon {
+    font-size: 20px;
+}
+
+
+.navContent__menuBtn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    font-size: 2.5em;
+    padding: 0;
+    border-radius: 50px;
+    box-shadow: none;
+    transition: .15s ease;
+    cursor: pointer;
+    
+}
+
+.menuBtn__icon {
+    margin: 10px;
+}
+
+.navContent__menuBtn:hover {
+    background-color: white;
+    color: var(--colorSec);
+    opacity: 1;
+}
+
+
+
+/* 
+===================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Responsividade
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================================================
+*/
+
+@media only screen and (min-width: 1400px) {
+    /* .navContent__info ul li:has(ul):hover ul{
+        display: block;
+    }
+
+    .navContent__info ul li:has(ul):hover .iconDropList {
+        transform: rotate(180deg);
+    } */
+}
+
+@media only screen and (max-width: 1399px) {
+    header.navContainer {
+        width: var(--widthNavResp);
+    }
+
+    .navContent__logo {
+        height: 150px;
+    }
+    .navContent__info ul li {
+        font-size: var(--fontSizeNavResp);
+
+    }
+}
+
+
+
+@media only screen and (max-width: 991px) {
+    header.navContainer {
+        width: 100%;
+        min-height: 100%;
+        padding: 10px 20px;
+        border-radius: 0 0 var(--fixBorderRadius) var(--fixBorderRadius);
+    }
+
+    .navContent__logo {
+        height: 120px;
+    }
+
+    .navContent__info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .navContent__info ul {
+        display: flex;
+        padding: 0;
+
+    }
+
+    .navContent__info ul :is(li, li > p) {
+        position: relative;
+        padding: 10px;
+        margin: 15px 10px;
+        font-size: 16px;
+        border-radius: var(--fixBorderRadius) var(--fixBorderRadius) 0 0;
+        z-index: 2;
+    }
+
+
+    .navContent__info ul li:not(:has(ul))::before {
+        border-radius: var(--fixBorderRadius);
+    }
+
+    .navContent__info ul li:not(:has(.active))::before {
+        transform: scaleX(0);
+        transform-origin: top;
+    
+    }
+
+    .navContent__info ul li:hover::before {
+        transform: scaleX(1);
+        transform-origin: top;
+    
+    }
+
+    /* sublista */
+
+    .navContent__info ul li ul {
+        position: absolute;
+        left: 0;
+        top: 100%;
+        width: 100%;
+        background-color: var(--colorPrimLight);
+        border-radius: 0 0 var(--fixBorderRadius) var(--fixBorderRadius);
+    }
+
+    .navContent__info .navContent__info__login {
+        display: block;
+        margin: 0;
+        padding: 10px;
+        border-radius: var(--fixBorderRadius);
+    }
+
+    .info__login__user { display: block; }
+
+    .info__login__user p.login__user__name { margin-bottom: 10px; }
+    
+}
+
+@media only screen and (max-width: 880px) {
+    header.navContainer {
+        position: relative;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        max-height: 140px;
+    }
+
+    .navContent__info {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        top: 130px;
+        background-color: var(--colorPrim);
+        min-height: 100vh;
+        transform: translateX(-100%);
+        transition: .3s ease;
+        z-index: 3;
+
+    }
+
+    .navContent__info__active {
+        transform: translateX(0);
+    }
+
+    .navContent__info ul {
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .navContent__info ul :is(li, li > p) {
+        margin: 1em 0;
+        font-size: 30px;
+    }
+
+    .navContent__info ul li a .iconList {
+        font-size: 1em;
+    }
+
+    /* Sublista */
+    .navContent__info ul li ul {
+        position: static;
+        background-color: transparent;
+    }
+
+    .navContent__info ul li ul li {
+        margin: 15px 0;
+    }
+
+    .navContent__info ul li ul li::before {
+        border-radius: var(--fixBorderRadius);
+    }
+
+    .navContent__info .navContent__info__login {
+        background-color: white;
+        color: var(--colorPrim);
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+
+    .info__login__user .login__user__icon {
+        background-color: var(--colorPrim);
+        color: white;
+    }
+
+    .info__login__user p.login__user__name { color: black; }
+
+    .navContent__info__login button.info__login__btn {
+        padding: 10px 30px;
+        background-color: var(--colorPrim);
+        color: white;
+        border: 1px solid var(--colorPrim);
+    }
+
+    .navContent__info__login button.info__login__btn:hover {
+        color: var(--colorPrim);
+    }
+
+    .navContent__info__login button.info__login__btn 
+    .login__btn__icon {
+        font-size: 25px;
+    }
+
+    .navContent__menuBtn {
+        display: flex;
+    }
+
+}
+
+@media only screen and (max-width: 575px) {
+    .navContent__info ul :is(li, li > p) {
+        margin: 1em 0;
+        font-size: 25px;
+    }
+}
+
+

@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+   --fontPrim: 'Roboto', sans-serif;
+   --fontSec: 'Bebas Neue', sans-serif;
+   --colorBackground: #F6F6F6;
+   --colorPrim: #BF1515;
+   --colorPrimDark: #590202;
+   --colorPrimLight: #a90808;
+   --colorSec: #D9C148;
+
+   /* Valores fixos */
+   --fixWidthNav: 240px;
+   --fixBorderRadius: 4px;
+
+   /* para textos */
+   --fontSizeNav: 16px;
+   --fontTitleSize: 40px;
+
+   --shadowBox: 2px 2px 10px 7px #e5e5e526;
+
+   /* espaçamento */
+   --marginContent: 0.65rem;
+
+   /* Variáveis de fundo + texto */     
+  --bg-green: #a3e8b3;
+  --colorText-for-bg-green: #002809;
+
+  --bg-yellow: #ffe493;
+  --colorText-for-bg-yellow: #513c00;
+
+  --bg-blue: #99d2ff;
+  --colorText-for-bg-blue: #002f52;
+  
+  --bg-red: #ff8888;
+  --colorText-for-bg-red: #4b0101;
+
+  /* Variáveis para o responsivo */
+  --fontSizeContentResp: 1.65em;
+  --fontSizeNavResp: 18px;
+  --widthNavResp: 240px;
+
+}

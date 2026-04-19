@@ -1,0 +1,49 @@
+@import url("./assets/css/var.css");
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+body {
+  font-family: var(--fontPrim);
+  background-color: var(--colorBackground);
+  overflow: hidden;
+}
+
+body:has(.activeModal) { overflow-y: hidden; }
+
+a { text-decoration: none; }
+
+ul li { list-style: none; }
+
+button {
+   border: none;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   padding: 5px 10px;
+   color: white;
+   font-family: var(--fontPrim);
+   font-size: 16px;
+   font-weight: 500;
+   border-radius: 4px;
+   transition: .2s ease;
+   cursor: pointer;
+}
+
+/* Removendo as setas do input number */
+input[type=number]::-webkit-inner-spin-button { 
+    -webkit-appearance: none;
+    
+}
+input[type=number] { 
+   -moz-appearance: textfield;
+   appearance: textfield;
+
+}
+
+:is(input, textarea)::placeholder {
+   opacity: .6;
+}

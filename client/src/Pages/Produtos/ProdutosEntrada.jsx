@@ -1,5 +1,10 @@
+import { Outlet } from "react-router";
+import MainLayout from "../../Components/layout/MainLayout";
+
 export function ProdutosEntrada() {
    return(
-      <h1>Entrada de Produtos</h1>
+      <MainLayout title={"Entrada de Produtos"}>
+         <Outlet/>
+      </MainLayout>
    )
 }

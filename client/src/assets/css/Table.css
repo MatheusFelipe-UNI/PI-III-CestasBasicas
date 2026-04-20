@@ -59,7 +59,7 @@ Estilização do Header (contém informações da tabela pai)
 */
 
 .tableHeader {
-    background-color: var(--colorSec);
+    background-color: var(--colorPrimDark);
     font-size: 17px;
 }
 
@@ -110,15 +110,17 @@ Estilização de Content (texto, subtítulos...)
 .generalInfo__container .generalInfo__Btn {
     padding: 15px 25px;
     background-color: white;
-    color: black;
+    color: var(--colorRed);
     font-weight: 800;
     letter-spacing: .2px;
+    border-radius: var(--fixBorderRadius) !important;
+    border: 1px solid var(--colorRed);
 }
 
 .generalInfo__container .generalInfo__Btn:hover {
-    outline: 1px solid white;
-    background-color: var(--colorSec);
+    background-color: var(--colorPrim);
     color: white;
+    border-color: white;
     opacity: 1;
 }
 

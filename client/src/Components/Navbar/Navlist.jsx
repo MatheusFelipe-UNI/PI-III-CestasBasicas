@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import {NavLink, useLocation} from 'react-router';
-import PropTypes from 'prop-types';
 
 import styles from "./Navbar.module.css";
 
@@ -47,7 +46,7 @@ export default function Navlist({listContent=[], handleCloseMenu}) {
                 return(
                     <li key={content.id}>
                         <NavLink to={content.path} className={({isActive}) => styleValidation(isActive, content) ? styles.active : ""} onClick={handleCloseMenu}
-                        
+                        end
                     >
                             {content.icon}{content.title}
                         </NavLink>
@@ -56,9 +55,4 @@ export default function Navlist({listContent=[], handleCloseMenu}) {
             })}
         </ul>
     )
-}
-
-Navlist.propTypes = {
-    listContent: PropTypes.array,
-    handleCloseMenu: PropTypes.func
 }

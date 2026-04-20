@@ -3,7 +3,7 @@
 }
 
 main {
-   width: calc(100% - var(--widthNav));
+   width: 100%;
    padding: 20px;
 }
 

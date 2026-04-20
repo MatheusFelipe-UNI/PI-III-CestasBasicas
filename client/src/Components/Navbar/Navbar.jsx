@@ -36,7 +36,7 @@ export default function Navbar() {
                 {
                     id: 3,
                     title: "Geral",
-                    path: "/produtos/geral",
+                    path: "/produtos",
                     icon: <IconBox className={styles.iconList}/>
                 },
                 {
@@ -57,7 +57,7 @@ export default function Navbar() {
                     id: 6,
                     title: "Geral",
                     icon: <IconCestas className={styles.iconList}/>,
-                    path: "/cestas/geral",
+                    path: "/cestas",
                 },
                 {
                     id: 7,

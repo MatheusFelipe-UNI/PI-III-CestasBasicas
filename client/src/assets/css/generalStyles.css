@@ -1,0 +1,63 @@
+/* 
+Estilização textual
+*/
+
+h1.mainTitle {
+   font-size: var(--fontSizeTitle);
+   margin: var(--fontMargin);
+   margin-top: 20px;
+}
+
+.textMargin {
+   margin: var(--marginContent);
+}
+
+.textInfoNotAvaliable {
+   font-family: var(--fontSec);
+   font-size: 16px;
+   margin: var(--marginContent);
+}
+
+span.errorMessage {
+   font-size: 14px;
+   font-weight: 500;
+   color: var(--colorRed);
+   user-select: none;
+}
+
+/* Estilização de Layouts */
+.layoutFormContentSpacing {
+   display: grid;
+   gap: 20px;
+}
+
+.layoutTableSpacing {
+   display: grid;
+   gap: 1em;
+}
+
+/* 
+===================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                        INPUTS CUSTOMIZADOS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================================================
+*/
+.inputCollection__dual {
+   display: flex;
+   gap: 15px;
+}
+
+@media only screen and (max-width: 575px) {
+   .layoutFlexCollectionCard {
+      justify-content: center;
+   }
+
+   .textForTableDataCounter,
+   .textInfoNotAvaliable {
+      margin-left: 0;
+      margin-right: 0;
+      width: 100%;
+      text-align: center;
+   }
+}

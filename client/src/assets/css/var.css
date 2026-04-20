@@ -9,6 +9,9 @@
    --colorPrimDark: #590202;
    --colorPrimLight: #a90808;
    --colorSec: #D9C148;
+   --colorRed: #BF1515;
+   --colorYellow: #ffc107;
+   --colorGreen: #28a745;
 
    /* Valores fixos */
    --fixWidthNav: 240px;
@@ -16,7 +19,7 @@
 
    /* para textos */
    --fontSizeNav: 16px;
-   --fontTitleSize: 40px;
+   --fontSizeTitle: 35px;
 
    --shadowBox: 2px 2px 10px 7px #e5e5e526;
 

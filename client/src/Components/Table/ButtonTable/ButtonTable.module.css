@@ -1,0 +1,40 @@
+button.btnTable:hover { opacity: 0.8; }
+
+button:is(.acceptBtn, .editBtn) { background-color: var(--colorSec); }
+
+button.delBtn { background-color: var(--colorRed); }
+
+button.restoreBtn { background-color: var(--colorYellow); }
+
+button.subBtn {
+    background-color: var(--colorBright);
+    color: var(--colorSec);
+}
+
+button.greenBtn {
+    background-color: var(--colorGreen);
+    
+}
+
+button.alternateGreenBtn {
+    background-color: transparent;
+    color: var(--colorGreen);
+    border: 1px solid var(--colorGreen);
+}
+
+button.alternateGreenBtn:hover {
+    background-color: var(--colorGreen);
+    color: white;
+}
+
+button.inactiveBtn {
+    pointer-events: none;
+    user-select: none;
+    background-color: var(--colorInactive);
+    align-self: start; 
+}
+
+.customToolTips {
+    font-family: var(--fontPrim) !important;
+    font-weight: bold !important;
+}

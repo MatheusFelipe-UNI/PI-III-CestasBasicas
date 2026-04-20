@@ -1,0 +1,291 @@
+@import url(./var.css);
+
+/* 
+===================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                        Container da Tabela
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================================================
+*/
+
+.tableContainer {
+    margin: var(--marginContent) 0;
+    overflow: auto;
+}
+
+/* 
+===================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                          Estilização geral
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================================================
+*/
+
+.tableContainer :is(.generalInfo__container, .splitContainer, .generalInfo__content) {
+    display: flex;
+    align-items: center;
+}
+
+table, td {
+    border-collapse: collapse;
+
+}
+
+table {
+    width: 100%;
+    background-color: white;
+    border-radius: var(--fixBorderRadius);
+    box-shadow: var(--shadowBox);
+    border: none;
+    /* Deixar todo conteudo dentro da tabela, mantendo as bordas*/
+    overflow: hidden;
+}
+
+table thead tr:not(.tableHeader, .tableTitle) {
+    color: black;
+    text-align: left;
+    background-color: #f9f9f9;
+
+}
+
+
+/* 
+===================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Estilização do Header (contém informações da tabela pai)
+              == TableRequest, TableEntradaSupply ==
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================================================
+*/
+
+.tableHeader {
+    background-color: var(--colorSec);
+    font-size: 17px;
+}
+
+.generalInfo__container { justify-content: space-between; }
+
+:is(.generalInfo__container, .splitContainer) { gap: 2em; }
+
+.tableHeader:not(:has(button)) td {
+    padding: 15px;
+}
+
+/* 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Estilização de Content (texto, subtítulos...)
+                         == TableProds ==
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+.generalInfo__content {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+}
+
+.generalInfo__content span{
+    font-family: var(--fontPrim);
+    font-weight: 600;
+    color: white;
+    border-bottom: 2px solid white;
+}
+
+.generalInfo__content p {
+    font-family: var(--fontPrim);
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+}
+
+.infoRequest__status p{
+    padding: 5px 15px;
+    font-weight: 500;
+    color: white;
+    background-color: var(--colorSaldoPos);
+    border-radius: var(--fixBorderRadius);
+}
+
+.generalInfo__container .generalInfo__Btn {
+    padding: 15px 25px;
+    background-color: white;
+    color: black;
+    font-weight: 800;
+    letter-spacing: .2px;
+}
+
+.generalInfo__container .generalInfo__Btn:hover {
+    outline: 1px solid white;
+    background-color: var(--colorSec);
+    color: white;
+    opacity: 1;
+}
+
+.generalInfo__container .generalInfo__Btn__inactive {
+    background-color: var(--colorSec);
+    color: var(--colorSec);
+    padding: 15px 25px;
+    font-weight: 800;
+    letter-spacing: .2px;
+    user-select: none;
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* 
+===================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            Estilização dos campos das informações
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================================================
+*/
+
+table thead tr.tableTitle th {
+    text-align: left;
+    font-size: var(--fontSizeTitleContent);
+    padding: 0.5em 15px;
+}
+
+
+table thead tr th.tableContent__actionTitle {
+    text-align: center;
+}
+
+table th, table td {
+    padding: 10px 15px;
+
+}
+
+/* 
+===================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    Estilização de Registros
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================================================
+*/
+
+table tbody td {
+    white-space: nowrap;
+    border: none;
+    border-bottom: 1px solid #cccccc3b;
+    table-layout: auto;
+    font-family: var(--fontPrim);
+}
+
+table tbody td.passwordField div{
+    display: flex;
+    align-items: center;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #fdfdfd;
+}
+
+table tbody td input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: var(--colorPrim);
+    font-family: var(--fontPrim);
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: var(--fixBorderRadius);
+    transition: .2s ease;
+}
+
+table tbody td.passwordField input {
+    width: 200px;
+    background-color: transparent;
+}
+
+table tbody td input:read-only {
+    padding: 5px 0;
+    background-color: transparent;
+    user-select: none;
+    cursor: default;
+
+}
+
+
+/* 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Informações de Tabela não editáveis
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+table td p:is(.success, .unSuccessful, .pending, .greenStyle, .yellowStyle, .blueStyle, .redStyle) {
+    width: fit-content;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: var(--fixBorderRadius);
+
+}
+
+table td p.success { color: white; background-color: var(--colorGreen); }
+table td p.unSuccessful { color: white; background-color: var(--colorRed); }
+table td p.pending { color: white; background-color: var(--colorYellow); }
+
+table td p.greenStyle {
+    background-color: var(--bg-green);
+    color: var(--colorText-for-bg-green);
+}
+
+table td p.yellowStyle {
+    background-color: var(--bg-yellow);
+    color: var(--colorText-for-bg-yellow);
+}
+
+table td p.blueStyle {
+    background-color: var(--bg-blue);
+    color: var(--colorText-for-bg-blue);
+}
+
+table td p.redStyle {
+    background-color: var(--bg-red);
+    color: var(--colorText-for-bg-red);
+}
+
+td.tableContent__customField { width: 750px; white-space: normal;}
+
+td.tableContent__customField p {
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.tableContent__btns {
+    display: flex;
+    justify-content: center;
+}
+
+.tableContent__btns button {
+    padding: 10px;
+    margin: 0 5px;
+}
+
+/* 
+===================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    Classes Especiais/Customizadas
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================================================
+*/
+table tbody td input.inputError {
+    border: 1px solid var(--colorRed)!important;
+    color: var(--colorRed)!important;
+}
+
+
+@media only screen and (max-width: 767px) {
+    .tableContainer {
+        margin: var(--marginContent) 0;
+    }
+}
+
+
+
+
+

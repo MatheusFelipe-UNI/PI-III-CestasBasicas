@@ -20,6 +20,8 @@ import { Administrador } from './Pages/Administrador/Administrador.jsx';
 import { ProdutosMain } from './Components/MainPage/Produtos/ProdutosMain.jsx';
 import { LotesProdutos } from './Pages/LotesProdutos/LotesProdutos.jsx';
 import { ProdutosEntradaMain } from './Components/MainPage/ProdutosEntrada/ProdutosEntradaMain.jsx';
+import { FornecedoresMain } from './Components/MainPage/Fornecedores/FornecedoresMain.jsx';
+import { ClientesMain } from './Components/MainPage/Clientes/ClientesMain.jsx';
 
 const router = createBrowserRouter([
   {
@@ -89,7 +91,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <h1>Fornecedores main</h1>
+            element: <FornecedoresMain/>
           }
         ]
       },
@@ -99,7 +101,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <h1>clientes main</h1>
+            element: <ClientesMain/>
           }
         ]
       },

@@ -1,6 +1,11 @@
 button.btnTable:hover { opacity: 0.8; }
 
-button:is(.acceptBtn, .editBtn) { background-color: var(--colorSec); }
+button.acceptBtn { background-color: var(--colorPrim); }
+
+button.editBtn {
+    background-color: var(--colorYellow);
+    color: #393939;
+}
 
 button.delBtn { background-color: var(--colorRed); }
 

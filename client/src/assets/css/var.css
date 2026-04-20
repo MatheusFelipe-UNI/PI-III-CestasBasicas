@@ -14,7 +14,7 @@
    --colorGreen: #28a745;
 
    /* Valores fixos */
-   --fixWidthNav: 240px;
+   --fixWidthNav: 220px;
    --fixBorderRadius: 4px;
 
    /* para textos */
@@ -42,6 +42,7 @@
   /* Variáveis para o responsivo */
   --fontSizeContentResp: 1.65em;
   --fontSizeNavResp: 18px;
-  --widthNavResp: 240px;
+  --widthNavResp: 280px;
+  --heightNavResp: 100px;
 
 }

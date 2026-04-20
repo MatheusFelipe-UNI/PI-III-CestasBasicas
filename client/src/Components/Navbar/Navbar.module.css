@@ -7,13 +7,17 @@ Estilização Geral
 */
 
 header.navContainer {
+    position: fixed;
     width: var(--fixWidthNav);
-    min-height: 100vh;
+    height: 100vh;
     background-color: var(--colorPrim);
     box-shadow: 0px 4px 12px 9px rgba(191, 191, 191, 0.21);
     color: white;
-    position: relative;
+    overflow-y: auto;
+}
 
+header.navContainer::-webkit-scrollbar {
+    display: none;
 }
 
 
@@ -296,7 +300,9 @@ Responsividade
     } */
 }
 
-@media only screen and (max-width: 1399px) {
+/* Não está sendo utilizado no momento */
+
+/* @media only screen and (max-width: 1399px) {
     header.navContainer {
         width: var(--widthNavResp);
     }
@@ -308,13 +314,15 @@ Responsividade
         font-size: var(--fontSizeNavResp);
 
     }
-}
+} */
 
 
 
-@media only screen and (max-width: 991px) {
+/* @media only screen and (max-width: 991px) {
     header.navContainer {
+        position: relative;
         width: 100%;
+        height: auto;
         min-height: 100%;
         padding: 10px 20px;
         border-radius: 0 0 var(--fixBorderRadius) var(--fixBorderRadius);
@@ -363,7 +371,7 @@ Responsividade
     
     }
 
-    /* sublista */
+    //sublista 
 
     .navContent__info ul li ul {
         position: absolute;
@@ -385,30 +393,151 @@ Responsividade
 
     .info__login__user p.login__user__name { margin-bottom: 10px; }
     
+} */
+
+@media only screen and (max-width: 991px) {
+    header.navContainer {
+        position: relative;
+        width: 100%;
+        height: auto;
+        min-height: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        max-height: var(--heightNavResp);
+        overflow-y: initial;
+    }
+
+    .navContent__logo {
+        height: calc(var(--heightNavResp) - 20px);
+    }
+
+    .navContent__info {
+        --recalc-fix-heightNavResp: calc(var(--heightNavResp) - 20px); 
+        
+        position: fixed;
+        left: 0;
+        top: var(--recalc-fix-heightNavResp);
+        width: var(--widthNavResp);
+        height: calc(100dvh - var(--recalc-fix-heightNavResp));
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: var(--colorPrim);
+        padding-bottom: 20px;
+        transform: translateX(-100%);
+        transition: .3s ease;
+        z-index: 3;
+        overflow-y: auto;
+
+    }
+
+    .navContent__info::-webkit-scrollbar {
+        display: none;
+    }
+
+    .navContent__info__active {
+        transform: translateX(0);
+    }
+
+    .navContent__info ul {
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    /* Sublista */
+    .navContent__info ul li ul {
+        position: static;
+        background-color: transparent;
+    }
+
+    .navContent__info ul li:not(:has(ul))::before {
+        border-radius: var(--fixBorderRadius);
+    }
+
+    .navContent__info ul li:has(ul) {
+        margin-right: 0;
+    }
+
+    .navContent__info ul li ul li {
+        margin: 10px 0;
+    }
+
+    .navContent__info ul li.activeDropDown {
+        border-radius: var(--fixBorderRadius);
+    }
+
+    .navContent__info .navContent__info__login {
+        background-color: white;
+        color: var(--colorPrim);
+        margin-top: 2em;
+        padding: 10px 20px;
+        font-size: 1em;
+        border-radius: var(--fixBorderRadius);
+    }
+
+    .info__login__user .login__user__icon {
+        background-color: var(--colorPrim);
+        color: white;
+    }
+
+    .info__login__user p.login__user__name { color: black; }
+
+    .navContent__info__login button.info__login__btn {
+        padding: 10px 30px;
+        background-color: var(--colorPrim);
+        color: white;
+        border: 1px solid var(--colorPrim);
+    }
+
+    .navContent__info__login button.info__login__btn:hover {
+        color: var(--colorPrim);
+    }
+
+    .navContent__info__login button.info__login__btn 
+    .login__btn__icon {
+        font-size: 25px;
+    }
+
+    .navContent__menuBtn {
+        display: flex;
+    }
+
 }
 
 @media only screen and (max-width: 880px) {
     header.navContainer {
         position: relative;
+        width: 100%;
+        height: auto;
+        min-height: 100%;
         display: flex;
         justify-content: space-evenly;
         align-items: center;
-        max-height: 140px;
+        max-height: var(--heightNavResp);
+        overflow-y: initial;
+    }
+
+    .navContent__logo {
+        height: calc(var(--heightNavResp) - 20px);
     }
 
     .navContent__info {
+        --recalc-fix-heightNavResp: calc(var(--heightNavResp) - 20px); 
         position: absolute;
+        top: var(--recalc-fix-heightNavResp);
+        width: 100%;
+        height: calc(100dvh - var(--recalc-fix-heightNavResp));
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
-        width: 100%;
-        top: 130px;
         background-color: var(--colorPrim);
-        min-height: 100vh;
+        padding-bottom: 20px;
         transform: translateX(-100%);
         transition: .3s ease;
         z-index: 3;
+        overflow-y: auto;
 
     }
 

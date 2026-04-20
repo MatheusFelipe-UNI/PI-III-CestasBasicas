@@ -1,0 +1,46 @@
+.viewStatusBarContainer {
+   margin: var(--marginContent) 0;
+}
+
+.viewStatusBarContainer h4 {
+   margin-bottom: 5px;
+}
+
+ul.viewStatusBarContent {
+   width: fit-content;
+   background-color: white;
+   border-radius: var(--fixBorderRadius);
+   display: flex;
+   justify-content: space-around;
+}
+
+ul.viewStatusBarContent li {
+   width: 140px;
+   padding: 8px;
+   font-weight: 500;
+   border-radius: var(--fixBorderRadius);
+   text-align: center;
+   cursor: pointer;
+   user-select: none;
+   transition: .2s ease;
+}
+
+ul.viewStatusBarContent :first-child {
+   border-top-right-radius: 0;
+   border-bottom-right-radius: 0;
+}
+
+ul.viewStatusBarContent :last-child {
+   border-top-left-radius: 0;
+   border-bottom-left-radius: 0;
+}
+
+ul.viewStatusBarContent li.active {
+   background-color: var(--colorPrim);
+   color: white;
+}
+
+ul.viewStatusBarContent li:not(.active):hover {
+   background-color: var(--colorSec);
+   color: black;
+}

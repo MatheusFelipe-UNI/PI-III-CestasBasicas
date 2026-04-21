@@ -1,5 +1,10 @@
+import { Outlet } from "react-router";
+import MainLayout from "../../Components/layout/MainLayout";
+
 export function Cestas() {
    return(
-      <h1>Cestas</h1>
+      <MainLayout title={"Cestas"}>
+         <Outlet/>
+      </MainLayout>
    )
 }

@@ -1,0 +1,26 @@
+.subnavCollection {
+   display: flex;
+   align-items: end;
+   gap: 10px;
+   margin-top: 1em;
+}
+
+.subnavCollection a {
+   background-color: var(--colorPrim);
+   color: white;
+   padding: 10px 10px;
+   border-radius: var(--fixBorderRadius) var(--fixBorderRadius) 0 0;
+   font-weight: 500;
+   user-select: none;
+   transition: .3s ease background;
+}
+
+.subnavCollection a.active {
+   padding-bottom: 20px;
+   background-color: var(--colorPrimDark);
+}
+
+
+.cestasVendasMainContainer {
+   padding: 10px 15px;
+}

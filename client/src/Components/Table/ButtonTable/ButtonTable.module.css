@@ -12,8 +12,14 @@ button.delBtn { background-color: var(--colorRed); }
 button.restoreBtn { background-color: var(--colorYellow); }
 
 button.subBtn {
-    background-color: var(--colorBright);
-    color: var(--colorSec);
+    border: 1px solid var(--colorPrim);
+    color: var(--colorPrim);
+    background-color: transparent;
+}
+button.subBtn:hover {
+    background-color: var(--colorPrimDark);
+    color: white;
+    border-color: var(--colorPrimDark);
 }
 
 button.greenBtn {

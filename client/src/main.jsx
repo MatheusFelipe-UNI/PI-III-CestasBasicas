@@ -22,6 +22,8 @@ import { LotesProdutos } from './Pages/LotesProdutos/LotesProdutos.jsx';
 import { ProdutosEntradaMain } from './Components/MainPage/ProdutosEntrada/ProdutosEntradaMain.jsx';
 import { FornecedoresMain } from './Components/MainPage/Fornecedores/FornecedoresMain.jsx';
 import { ClientesMain } from './Components/MainPage/Clientes/ClientesMain.jsx';
+import { CestasMain } from './Components/MainPage/Cestas/CestasMain.jsx';
+import { CestasVendasMain } from './Components/MainPage/CestasVendas/CestasVendasMain.jsx';
 
 const router = createBrowserRouter([
   {
@@ -71,7 +73,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <h1>Cestas Main</h1>
+            element: <CestasMain/>
           }
         ]
       },
@@ -80,8 +82,25 @@ const router = createBrowserRouter([
         element: <CestasVendas/>,
         children: [
           {
-            index: true,
-            element: <h1>Cestas vendas main</h1>
+            element: <CestasVendasMain/>,
+            children: [
+              {
+                index: true,
+                element: <h2>Cadastro de cestas</h2>
+              },
+              {
+                path: "pendentes",
+                element: <h2>Vendas Pendentes</h2>
+              },
+              {
+                path: "concluidas",
+                element: <h2>Vendas Concluídas</h2>
+              },
+              {
+                path: "canceladas",
+                element: <h2>Vendas Canceladas</h2>
+              }
+            ]
           }
         ]
       },

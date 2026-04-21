@@ -63,7 +63,12 @@ export default function Navbar() {
                     id: 7,
                     title: "Vendas",
                     icon: <IconRequestCestas className={styles.iconList}/>,
-                    path: "/cestas/vendas"
+                    path: "/cestas/vendas",
+                    subNav: [
+                        "/cestas/vendas/pendentes", 
+                        "/cestas/vendas/concluidas", 
+                        "/cestas/vendas/canceladas"
+                    ] 
                 }
             ]
         },

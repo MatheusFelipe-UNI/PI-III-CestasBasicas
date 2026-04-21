@@ -24,6 +24,10 @@ import { FornecedoresMain } from './Components/MainPage/Fornecedores/Fornecedore
 import { ClientesMain } from './Components/MainPage/Clientes/ClientesMain.jsx';
 import { CestasMain } from './Components/MainPage/Cestas/CestasMain.jsx';
 import { CestasVendasMain } from './Components/MainPage/CestasVendas/CestasVendasMain.jsx';
+import { CestasVendasRegisterSub } from './Components/SubPages/CestasVendas/CestasVendasRegister/CestasVendasRegisterSub.jsx';
+import { CestasVendasPendentesSub } from './Components/SubPages/CestasVendas/CestasVendasPendentes/CestasVendasPendentesSub.jsx';
+import { CestasVendasConcluidasSub } from './Components/SubPages/CestasVendas/CestasVendasConcluidas/CestasVendasConcluidasSub.jsx';
+import { CestasVendasCanceladasSub } from './Components/SubPages/CestasVendas/CestasVendasCanceladas/CestasVendasCanceladasSub.jsx';
 
 const router = createBrowserRouter([
   {
@@ -86,19 +90,19 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <h2>Cadastro de cestas</h2>
+                element: <CestasVendasRegisterSub/>
               },
               {
                 path: "pendentes",
-                element: <h2>Vendas Pendentes</h2>
+                element: <CestasVendasPendentesSub/>
               },
               {
                 path: "concluidas",
-                element: <h2>Vendas Concluídas</h2>
+                element: <CestasVendasConcluidasSub/>
               },
               {
                 path: "canceladas",
-                element: <h2>Vendas Canceladas</h2>
+                element: <CestasVendasCanceladasSub/>
               }
             ]
           }

@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router';
 
 // Páginas
 import App from './App.jsx';
+import AlertProvider from './Context/AlertContext.jsx';
 import { Home } from './Pages/Home.jsx';
 // Aba Produtos
 import { Produtos } from './Pages/Produtos/Produtos.jsx';
@@ -28,6 +29,7 @@ import { CestasVendasRegisterSub } from './Components/SubPages/CestasVendas/Cest
 import { CestasVendasPendentesSub } from './Components/SubPages/CestasVendas/CestasVendasPendentes/CestasVendasPendentesSub.jsx';
 import { CestasVendasConcluidasSub } from './Components/SubPages/CestasVendas/CestasVendasConcluidas/CestasVendasConcluidasSub.jsx';
 import { CestasVendasCanceladasSub } from './Components/SubPages/CestasVendas/CestasVendasCanceladas/CestasVendasCanceladasSub.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -154,6 +156,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}/>
+    <AlertProvider>
+      <RouterProvider router={router}/>
+    </AlertProvider>
   </StrictMode>,
 )

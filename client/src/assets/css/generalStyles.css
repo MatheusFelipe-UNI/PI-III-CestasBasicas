@@ -36,6 +36,38 @@ span.errorMessage {
    gap: 1em;
 }
 
+
+/* Estilização de Formulários */
+.footerButtonContainerForForm {
+   display: flex;
+   justify-content: end;
+   background-color: #f5f5f5;
+   margin: -10px -20px;
+   padding: 15px 20px;
+}
+
+
+/* 
+===================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                        BUTTONS CUSTOMIZADOS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================================================
+*/
+
+.buttonFormMain-style1 {
+   padding: 10px 15px;
+   font-size: 1em;
+   background-color: var(--colorPrim);
+   border: 1px solid var(--colorPrim);
+   transition: .2s ease;
+}
+
+.buttonFormMain-style1:hover {
+   background-color: transparent;
+   color: var(--colorPrim);
+}
+
 /* 
 ===================================================================
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

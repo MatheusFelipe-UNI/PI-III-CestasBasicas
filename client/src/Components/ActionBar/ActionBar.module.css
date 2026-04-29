@@ -1,0 +1,19 @@
+.actionBarContainer {
+   display: flex;
+   align-items: center;
+   gap: 20px;
+}
+
+button.actionBarContent__buttonAdd {
+   display: flex;
+   gap: 8px;
+   align-items: center;
+   background-color: var(--bg-green);
+   color: var(--colorText-for-bg-green);
+   border: 1px solid var(--colorText-for-bg-green);
+   padding: 10px 15px;
+}
+
+button.actionBarContent__buttonAdd:hover {
+   opacity: .7;
+}

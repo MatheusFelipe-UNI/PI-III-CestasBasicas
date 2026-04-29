@@ -1,0 +1,71 @@
+/* 
+===================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            Estilização de Fundo e Container da Modal
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================================================
+*/
+.modal__cover {
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #4b4b4b34;
+    backdrop-filter: blur(2px);
+    z-index: 10;
+}
+
+.modalContainer {
+    min-width: 500px;
+    max-height: 750px;
+    height: fit-content;
+    background-color: white;
+    padding: 10px 20px;
+    border-radius: var(--fixBorderRadius);
+    overflow-x: hidden;
+    overflow-y: auto;
+
+}
+
+.modalContainer hr {
+    border: 1px solid rgba(204, 204, 204, 0.233);
+    margin: 10px -20px;
+}
+
+.modalContainer .modalContent__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: -10px -20px;
+    padding: 10px 20px;
+    background-color: var(--colorPrim);
+    color: white;
+}
+
+.modalContent__header h1 {
+    font-size: 20px;
+    text-align: left;
+}
+
+.modalContent__header .closeIcon {
+    font-size: 2em;
+    color: var(--colorPrim);
+    background-color: white;
+    border-radius: var(--fixBorderRadius);
+    border: 1px solid white;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.modalContent__header .closeIcon:hover {
+    background-color: transparent;
+    color: white;
+}
+
+@media only screen and (max-width: 575px) {
+    .modalContainer {
+        min-width: calc(100% - 20px);
+        max-height: 100dvh;
+    }
+}

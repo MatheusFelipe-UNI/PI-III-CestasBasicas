@@ -1,7 +1,20 @@
+import { useModal } from "../../../Context/ModalContext";
+import { ActionBar } from "../../ActionBar/ActionBar";
 import { TableDefaultEditable } from "../../Table/TableDefaultEditable/TableDefaultEditable";
 import { ViewStatusBar } from "../../ViewStatusBar/ViewStatusBar";
 
 export function ClientesMain() {
+   const { showModal } = useModal();
+
+   const handleOpenModal = () => {
+      showModal({
+         modalName: "addCliente",
+         data: {
+            id: "1"
+         }
+      })
+   }
+
    const fieldCollection = [
       "ID",
       "Nome Cliente",
@@ -33,9 +46,7 @@ export function ClientesMain() {
 
    return (
       <>
-         <div>
-            <input type="text" />
-         </div>
+         <ActionBar viewName="Cliente" handleOpenModal={handleOpenModal}/>
          <ViewStatusBar viewName="Clientes"/>
          <TableDefaultEditable
             fieldCollection={fieldCollection}

@@ -1,0 +1,48 @@
+.inputCheck__container {
+    display: flex;
+    align-items: center;
+    width: 200px;
+    padding: 4px;
+    background-color: var(--colorBackground);
+    border-radius: 50px;
+    box-sizing: content-box;
+}
+
+.inputCheck__container input { display: none; }
+
+.inputCheck__container label {
+    width: 100px;
+    padding: 8px 15px;
+    background-color: var(--bg-red);
+    color: var(--colorText-for-bg-red);
+    font-family: var(--fontPrim);
+    font-weight: 500;
+    text-align: center;
+    border-radius: 50px;
+    border: 1px solid transparent;
+    transition: .3s ease;
+    transform: translateX(0);
+    user-select: none;
+    cursor: pointer;
+}
+
+
+.inputCheck__container input:checked ~ label {
+    background-color: var(--bg-green);
+    color: var(--colorText-for-bg-green);
+    transform: translateX(100%);
+}
+
+/* Permite que o clique seja efetivo em qualquer local do Container do Checkbox (mesmo fora do botão interno) */
+.inputCheck__container label::before {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+.inputCheck__container input:checked ~ label::before {
+    left: unset;
+    right: 0;
+}

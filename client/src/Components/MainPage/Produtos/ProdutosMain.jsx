@@ -17,11 +17,9 @@ export function ProdutosMain() {
 
    return(
       <>
-         <div>
-            <ActionBar viewName="Produto" handleOpenModal={handleOpenModal}/>
-            <ViewStatusBar/>
-            <TableProdutos/>
-         </div>
+         <ActionBar viewName="Produto" handleOpenModal={handleOpenModal}/>
+         <ViewStatusBar/>
+         <TableProdutos/>
       </>
    )
 }

@@ -1,7 +1,20 @@
+import { useModal } from "../../../Context/ModalContext";
+import { ActionBar } from "../../ActionBar/ActionBar";
 import { TableDefaultEditable } from "../../Table/TableDefaultEditable/TableDefaultEditable";
 import { ViewStatusBar } from "../../ViewStatusBar/ViewStatusBar";
 
 export function FornecedoresMain() {
+   const { showModal } = useModal();
+
+   const handleOpenModal = () => {
+      showModal({
+         modalName: "addFornecedor",
+         data: {
+            id: "1"
+         }
+      })
+   }
+
    const fieldCollection = [
       "ID",
       "Fornecedor",
@@ -26,9 +39,7 @@ export function FornecedoresMain() {
 
    return(
       <>
-         <div>
-            <input type="text" />
-         </div>
+         <ActionBar viewName="Fornecedor" handleOpenModal={handleOpenModal}/>
          <ViewStatusBar viewName="Fornecedores"/>
          <TableDefaultEditable
             fieldCollection={fieldCollection}

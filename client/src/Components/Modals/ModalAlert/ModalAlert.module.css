@@ -99,7 +99,7 @@
 .modalMessageContent__info .info__text {
     margin: 1.25em 0;
     text-align: center;
-    font-family: var(--fontSec);
+    font-family: var(--fontPrim);
 }
 
 .modalMessageContent__info hr {
@@ -130,16 +130,14 @@
 }
 
 .btnCollection__btnCancel {
-    background-color: white;
-    color: var(--colorPrim);
-    border: 1px solid var(--colorPrim);
+   background-color: #e0e0e0;
+   border: 1px solid #e0e0e0;
+   color: #333
 
 }
 
 .btnCollection__btnCancel:hover {
-    background-color: var(--colorInactive);
-    color: white;
-    border-color: transparent;
+    opacity: .7;
 
 }
 

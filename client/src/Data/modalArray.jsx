@@ -2,6 +2,7 @@
 import { ModalAddProduto } from "../Components/Modals/Produtos/ModalAddProduto/ModalAddProduto";
 import { ModalAddFornecedor } from "../Components/Modals/Fornecedores/ModalAddFornecedor/ModalAddFornecedor";
 import { ModalAddCliente } from "../Components/Modals/Clientes/ModalAddCliente";
+import { ModalAddUser } from "../Components/Modals/Administrador/ModalAddUser";
 
 export const modalCollection = [
    // Produtos
@@ -19,7 +20,13 @@ export const modalCollection = [
    //Clientes
    {
       name: "addCliente",
-      title: "Adiciona Novo Cliente",
+      title: "Adicionar Novo Cliente",
       modalContent: <ModalAddCliente/>
+   },
+   //Admin
+   {
+      name: "addAdmin",
+      title: "Adicionar novo Usuário",
+      modalContent: <ModalAddUser/>
    }
 ];

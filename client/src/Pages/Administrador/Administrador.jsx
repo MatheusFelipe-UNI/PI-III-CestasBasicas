@@ -1,5 +1,10 @@
+import { Outlet } from "react-router";
+import MainLayout from "../../Components/layout/MainLayout";
+
 export function Administrador() {
    return(
-      <h1>Administrador</h1>
+      <MainLayout title={"Administrador"}>
+         <Outlet/>
+      </MainLayout>
    )
 }

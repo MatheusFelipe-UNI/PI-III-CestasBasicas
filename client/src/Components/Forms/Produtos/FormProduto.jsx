@@ -74,6 +74,8 @@ export function FormProduto({ dataProduto, handleProdutoSubmit }) {
             <input type="text" {...registerQtdEstoqueMinimo}/>
          </div>
          <div className="footerButtonContainerForForm">
+               <button className={`buttonFormSec-style1`}>Cancelar</button>
+
                <button className={`buttonFormMain-style1 ${
                dataProduto && isDirty ? "buttonFormMain-style1__inactive" : ""
             }`}>

@@ -41,6 +41,7 @@ span.errorMessage {
 .footerButtonContainerForForm {
    display: flex;
    justify-content: end;
+   gap: 15px;
    background-color: #f5f5f5;
    margin: -10px -20px;
    padding: 15px 20px;
@@ -55,17 +56,27 @@ span.errorMessage {
 ===================================================================
 */
 
-.buttonFormMain-style1 {
+:is(.buttonFormMain-style1, .buttonFormSec-style1) {
    padding: 10px 15px;
    font-size: 1em;
-   background-color: var(--colorPrim);
-   border: 1px solid var(--colorPrim);
    transition: .2s ease;
 }
 
-.buttonFormMain-style1:hover {
-   background-color: transparent;
-   color: var(--colorPrim);
+.buttonFormMain-style1 {
+   background-color: var(--colorPrim);
+   border: 1px solid var(--colorPrim);
+   
+}
+
+.buttonFormSec-style1 {
+   background-color: #e0e0e0;
+   border: 1px solid #e0e0e0;
+   color: #333;
+}
+
+.buttonFormMain-style1:hover, 
+.buttonFormSec-style1:hover {
+   opacity: .7;
 }
 
 /* 

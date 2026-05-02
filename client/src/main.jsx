@@ -30,6 +30,7 @@ import { CestasVendasPendentesSub } from './Components/SubPages/CestasVendas/Ces
 import { CestasVendasConcluidasSub } from './Components/SubPages/CestasVendas/CestasVendasConcluidas/CestasVendasConcluidasSub.jsx';
 import { CestasVendasCanceladasSub } from './Components/SubPages/CestasVendas/CestasVendasCanceladas/CestasVendasCanceladasSub.jsx';
 import { AdministradorMain } from './Components/MainPage/Administrador/AdministradorMain.jsx';
+import { UsuarioMain } from './Components/MainPage/Usuario/UsuarioMain.jsx';
 
 
 const router = createBrowserRouter([
@@ -137,7 +138,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <h1>Usuario main</h1>
+            element: <UsuarioMain/>
           }
         ]
       },

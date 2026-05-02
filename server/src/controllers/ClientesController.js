@@ -6,6 +6,17 @@ const NotFoundError = require("../classes/NotFoundError.js");
 const FieldUndefinedError = require("../classes/FieldUndefinedError.js");
 const CannotCreateError = require("../classes/CannotCreateError.js");
 
+const {
+   getAllClientesService,
+   getAllActiveClientesService,
+   getAllInactiveClientesService,
+   getAllActiveClientesByFilterAndOrderByService,
+   getClienteByIdService,
+   changeClienteStatusService,
+   createClienteService,
+   updateClienteService,
+} = require("../services/ClientesServices.js")
+
 /* 
 ============================================
 NOTAS DO NATAN PARA O MATHEUS
@@ -119,8 +130,8 @@ async function changeClienteStatus(req, res) {
                status
             }
          })
-      }      
-      
+   }
+
       // Utilizar esse Nome de função para os services
       const [rowAffected] = await changeClienteStatusService(id, status);
 
@@ -165,7 +176,7 @@ async function createCliente(req, res) {
          cpf_cnpj
       })
 
-      if(!createdCliente) {
+      if (!createdCliente) {
          throw new CannotCreateError("Erro ao cadastrar Cliente", {
             data: {
                createdCliente
@@ -195,14 +206,14 @@ async function updateCliente(req, res) {
          cpf_cnpj
       } = req.body;
 
-      if(!id || (!nome_cliente && !telefone && !tipo_cliente && !cpf_cnpj)) {
+      if (!id || (!nome_cliente && !telefone && !tipo_cliente && !cpf_cnpj)) {
          throw new FieldUndefinedError("Um ou mais campos obrigatórios não identificados", {
             dados_passados: {
                id: id || "Não encontrado",
                nome_cliente: nome_cliente || "Não encontrado",
                telefone: telefone || "Não encontrado",
                tipo_cliente: tipo_cliente || "Não encontrado",
-               cpf_cnpj: cpf_cnpj || "Não encontrado"  
+               cpf_cnpj: cpf_cnpj || "Não encontrado"
             }
          })
       }

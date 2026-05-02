@@ -64,11 +64,13 @@ module.exports = (sequelize, DataTypes) => {
          as: "cliente_venda"
       });
       Vendas.belongsTo(models.User, {
-         constraint: "fk_id_user",
+         constraint: true,
+         foreignKey: "fk_id_user",
          as: "user_venda"
       });
       Vendas.belongsTo(models.Cestas, {
-         constraint: "fk_id_cesta",
+         constraint: true,
+         foreignKey: "fk_id_cesta", 
          as: "cesta_venda"
       })
    }

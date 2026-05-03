@@ -28,6 +28,6 @@ export function ModalAddProduto() {
    }
 
    return(
-      <FormProduto handleProdutoSubmit={handleRegisterProduto}/>
+      <FormProduto handleProdutoSubmit={handleRegisterProduto} handleCancel={closeModal}/>
    )
 }

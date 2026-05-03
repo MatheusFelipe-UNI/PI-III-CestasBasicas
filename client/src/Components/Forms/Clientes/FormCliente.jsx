@@ -1,10 +1,15 @@
 import { useForm } from "react-hook-form";
 import { getItemsDirtyData } from "../../../utils/ManipulateDataUtil";
+import { InputDefault } from "../../Input/InputDefault/InputDefault";
+import { useHookFormMask } from "use-mask-input";
+import InputRadio from "../../Input/InputRadio/InputRadio";
+import { useEffect } from "react";
 
 export function FormCliente({ dataCliente, handleClienteSubmit, handleCancel }) {
    const {
       register,
       handleSubmit,
+      resetField,
       watch,
       formState: { errors, isDirty, dirtyFields },
    } = useForm({
@@ -17,20 +22,18 @@ export function FormCliente({ dataCliente, handleClienteSubmit, handleCancel }) 
    });
 
    const watchTipoCliente = watch("tipo_cliente");
+   const watchCpfCnpj = watch("cpf_cnpj");
+   const registerWithMask = useHookFormMask(register);
 
    const registerNomeCliente = register("nome_cliente", {
       required: "Campo Obrigatório",
    });
 
-   const registerTelefone = register("telefone", {
+   const registerTelefone = registerWithMask("telefone", ["(99) 999999999"], {
       required: "campo Obrigatório",
    });
 
    const registerTipoCliente = register("tipo_cliente", {
-      required: "campo Obrigatório",
-   });
-
-   const registerCpfCnpj = register("cpf_cnpj", {
       required: "campo Obrigatório",
    });
 
@@ -43,54 +46,88 @@ export function FormCliente({ dataCliente, handleClienteSubmit, handleCancel }) 
       }
    };
 
+   // Limpa o campo CPF CNPJ toda vez que o tipo de cliente for alterado
+   useEffect(() => {
+      if(watchTipoCliente !== "" && watchCpfCnpj !== "") {
+         resetField("cpf_cnpj");
+      }
+   }, [watchTipoCliente])
+
    return (
       <form
          action=""
          className="layoutFormContentSpacing"
          onSubmit={handleSubmit(validateAndSubmit)}
       >
-         <div>
-            <label htmlFor="nome_cliente">Nome do Cliente*</label>
-            <input type="text" {...registerNomeCliente} />
+         <InputDefault
+            type="text"
+            id="nomeCliente"
+            placeholder="ex: Claudio Pereira"
+            textView="Cliente*"
+            register={registerNomeCliente}
+            error={errors?.nome_cliente}
+         />
+         <InputDefault
+            type="text"
+            id="telefone"
+            placeholder="ex: 14995821423"
+            textView="Telefone/Celular*"
+            register={registerTelefone}
+            error={errors?.telefone}
+         />
+         <div className={"radioContainer"}>
+            <h4 style={errors?.tipo_cliente ? { color: "var(--colorRed)" } : {}}>Tipo de Cliente*</h4>
+
+            <div className="radioCollection">
+               <InputRadio
+                  id="pessoaFisica"
+                  value="PESSOA_FISICA"
+                  textView="Pessoa Física"
+                  register={registerTipoCliente}
+               />
+               <InputRadio
+                  id="pessoaJuridica"
+                  value="PESSOA_JURIDICA"
+                  textView="Pessoa Jurídica"
+                  register={registerTipoCliente}
+               />
+            </div>
          </div>
-         <div>
-            <label htmlFor="telefone">Telefone/Celular*</label>
-            <input type="text" {...registerTelefone} />
-         </div>
-         <div>
-            <label htmlFor="quantidade_estoque">Tipo de Cliente*</label>
-            <input
-               type="radio"
-               id="pessoa_fisica"
-               value={"PESSOA_FISICA"}
-               {...registerTipoCliente}
-            />
-            <input
-               type="radio"
-               id="pessoa_juridica"
-               value={"PESSOA_JURIDICA"}
-               {...registerTipoCliente}
-            />
-         </div>
-         <div>
-            <label htmlFor="cpf_cnpj">
-               {watchTipoCliente === "PESSOA_FISICA"
-                  ? "CPF"
-                  : watchTipoCliente === "PESSOA_JURIDICA"
-                    ? "CNPJ"
-                    : "CPF/CNPJ"}
-            </label>
-            <input
-               type="text"
-               {...registerCpfCnpj}
-               placeholder={
-                  watchTipoCliente === "PESSOA_FISICA" 
-                     ? "Informe o CPF" 
-                     : "Informe o CNPJ"
-               }
-               disabled={watchTipoCliente === ""}
-            />
-         </div>
+         {
+            watchTipoCliente === "PESSOA_FISICA"
+               ? <InputDefault
+                     type="text"
+                     id="cpfCnpj"
+                     placeholder="Informe o CPF"
+                     textView="CPF*"
+                     register={{...registerWithMask("cpf_cnpj", ["999.999.999-99"], {
+                        required: "Campo Obrigatório"
+                     })}}
+                     error={errors?.cpf_cnpj}
+                 />
+               : watchTipoCliente === "PESSOA_JURIDICA" 
+                  ?  <InputDefault
+                        type="text"
+                        id="cpfCnpj"
+                        placeholder="Informe o CNPJ"
+                        textView="CPF*"
+                        register={{...registerWithMask("cpf_cnpj", ["99.999.999/0001-99"], {
+                           required: "Campo Obrigatório"
+                        })}}
+                        error={errors?.cpf_cnpj}
+                     />
+                  :  <InputDefault
+                        type="text"
+                        id="cpfCnpj"
+                        placeholder="Selecione o TIPO DE CLIENTE primeiro..."
+                        textView="CPF/CNPJ"
+                        disabled={true}
+                        register={{...register("cpf_cnpj", {
+                           validate: () => watchTipoCliente !== "" || "Selecione o Tipo de Cliente..."
+                        })}}
+                        error={errors?.cpf_cnpj}
+                     />
+         }
          <div className="footerButtonContainerForForm">
             <button className={`buttonFormSec-style1`} onClick={handleCancel}>
                Cancelar

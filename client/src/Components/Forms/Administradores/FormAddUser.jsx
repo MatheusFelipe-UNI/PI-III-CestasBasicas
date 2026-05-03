@@ -1,4 +1,7 @@
 import { useForm } from "react-hook-form";
+import { InputDefault } from "../../Input/InputDefault/InputDefault";
+import InputRadio from "../../Input/InputRadio/InputRadio";
+import InputDefaultPassword from "../../Input/InputDefaultPassword/InputDefaultPassword";
 
 export function FormAddUser({ handleUserSubmit, handleCancel }) {
    const {
@@ -24,10 +27,6 @@ export function FormAddUser({ handleUserSubmit, handleCancel }) {
    const registerNivelAcesso = register("nivel_acesso", {
       required: "Campo Obrigatório",
       valueAsNumber: true,
-      min: {
-         value: 0,
-         message: "Insira um valor maior ou igual a 0",
-      },
    });
 
    return (
@@ -36,23 +35,38 @@ export function FormAddUser({ handleUserSubmit, handleCancel }) {
          className="layoutFormContentSpacing"
          onSubmit={handleSubmit(handleUserSubmit)}
       >
-         <div>
-            <label htmlFor="usuario">Usuário*</label>
-            <input type="text" {...registerUsuario} />
-         </div>
-         <div>
-            <label htmlFor="senha">Senha*</label>
-            <input type="text" {...registerSenha} />
-         </div>
-         <div>
-            <h4>Nível de acesso</h4>
-            <div>
-               <label htmlFor="nivelAcesso">Administrador</label>
-               <input type="radio" value={1} {...registerNivelAcesso}/>
-            </div>
-            <div>
-               <label htmlFor="nivelAcesso">Funcionário</label>
-               <input type="radio" value={2} {...registerNivelAcesso}/>
+         <InputDefault
+            type="text"
+            id="usuario"
+            placeholder="ex: claudio.pereira"
+            textView="Usuário*"
+            register={registerUsuario}
+            error={errors?.usuario}
+         />
+         <InputDefaultPassword
+            type="text"
+            id="senha"
+            placeholder="Informe a senha..."
+            textView="Senha*"
+            register={registerSenha}
+            error={errors?.senha}
+         />
+         <div className="radioContainer">
+            <h4 style={errors?.nivel_acesso ? { color: "var(--colorRed)" } : {}}>Nível de Acesso*</h4>
+
+            <div className="radioCollection">
+               <InputRadio
+                  id={"admin"}
+                  value={"1"}
+                  textView="Administrador"
+                  register={registerNivelAcesso}
+               />
+               <InputRadio
+                  id={"funcionario"}
+                  value={"2"}
+                  textView="Funcionário"
+                  register={registerNivelAcesso}
+               />
             </div>
          </div>
          <div className="footerButtonContainerForForm">

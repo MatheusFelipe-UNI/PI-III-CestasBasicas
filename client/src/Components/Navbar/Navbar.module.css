@@ -32,16 +32,25 @@ Estilização da logo
 
 .navContent__logo {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 200px;
+    user-select: none;
 }
 
 .navContent__logo h1{
     font-size: 3.4em;
+    letter-spacing: 1.2px;
     cursor: pointer;
     transition: .3s;
 
+}
+
+.navContent__logo h2 {
+    font-size: 15px;
+    letter-spacing: 2.3px;
+    text-transform: uppercase;
 }
 
 .navContent__logo h1:hover {
@@ -410,6 +419,11 @@ Responsividade
 
     .navContent__logo {
         height: calc(var(--heightNavResp) - 20px);
+    }
+
+    .navContent__logo h1 {
+        font-size: 2.8em;
+        margin: -5px 0;
     }
 
     .navContent__info {

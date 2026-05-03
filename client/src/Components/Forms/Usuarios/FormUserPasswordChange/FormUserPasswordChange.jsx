@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useAlert } from "../../../../Context/AlertContext";
 import styles from "./FormUserPasswordChange.module.css";
+import InputDefaultPassword from "../../../Input/InputDefaultPassword/InputDefaultPassword";
 
 export function FormUserPasswordChange() {
   const {
@@ -79,33 +80,30 @@ export function FormUserPasswordChange() {
          onSubmit={handleSubmit(handleChangePassword)}
       >
          <h3>Alterar Senha</h3>
-         <div>
-            <label htmlFor="currPassword">Senha Atual*</label>
-            <input
-               type="text"
-               id="currPassword"
-               placeholder="Senha Atual"
-               {...registerCurrPass}
-            />
-         </div>
-         <div>
-            <label htmlFor="newPassword">Nova Senha*</label>
-            <input
-               type="text"
-               id="newPassword"
-               placeholder="Nova Senha"
-               {...registerNewPass}
-            />
-         </div>
-         <div>
-            <label htmlFor="confirmNewPass">Confirme a Nova Senha*</label>
-            <input
-               type="text"
-               id="confirmNewPass"
-               placeholder="Confirme a Nova Senha"
-               {...registerConfirmNewPass}
-            />
-         </div>
+         <InputDefaultPassword
+            type="text"
+            id="currPassword"
+            placeholder="Senha Atual"
+            textView="Senha Atual*"
+            register={registerCurrPass}
+            error={errors?.currPassword}
+         />
+         <InputDefaultPassword
+            type="text"
+            id="newPassword"
+            placeholder="Nova Senha"
+            textView="Nova Senha*"
+            register={registerNewPass}
+            error={errors?.newPassword}
+         />
+         <InputDefaultPassword
+            type="text"
+            id="confirmNewPass"
+            placeholder="Confirme a Nova Senha"
+            textView="Confirme a Nova Senha*"
+            register={registerConfirmNewPass}
+            error={errors?.confirmNewPassword}
+         />
          <button className="buttonForm-style1">Alterar Senha</button>
       </form>
    );   

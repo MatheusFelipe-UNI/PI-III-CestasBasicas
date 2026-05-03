@@ -111,6 +111,7 @@ export default function Navbar() {
         <header className={styles.navContainer}>              
             <section className={styles.navContent__logo}>
                 <h1>DMC</h1>
+                <h2>CESTAS BÁSICAS</h2>
             </section>
             <section className={`${styles.navContent__info} ${isActiveMenu ? styles.navContent__info__active : ""}`}>
                 <Navlist listContent={navLinkCollection} handleCloseMenu={handleCloseMenu}/>

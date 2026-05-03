@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form";
 import { getItemsDirtyData } from "../../../utils/ManipulateDataUtil";
+import { useHookFormMask } from "use-mask-input";
+import { InputDefault } from "../../Input/InputDefault/InputDefault";
 
 export function FormFornecedor({ dataFornecedor, handleFornecedorSubmit, handleCancel }) {
    const {
@@ -17,7 +19,9 @@ export function FormFornecedor({ dataFornecedor, handleFornecedorSubmit, handleC
       required: "Campo Obrigatório"
    });
 
-   const registerCnpj = register("cnpj", {
+   const registerCnpjWithMask = useHookFormMask(register);
+
+   const registerCnpj = registerCnpjWithMask("cnpj", ["99.999.999/0001-99"], {
       required: "campo Obrigatório",
    });
 
@@ -36,14 +40,22 @@ export function FormFornecedor({ dataFornecedor, handleFornecedorSubmit, handleC
          className="layoutFormContentSpacing"
          onSubmit={handleSubmit(validateAndSubmit)}
       >
-         <div>
-            <label htmlFor="nome_fornecedor">Nome do Fornecedor*</label>
-            <input type="text" {...registerNomeFornecedor}/>
-         </div>
-         <div>
-            <label htmlFor="cnpj">CNPJ*</label>
-            <input type="text" {...registerCnpj}/>
-         </div>
+         <InputDefault 
+            type="text"
+            id="nomeFornecedor"
+            placeholder="Informe o fornecedor..."
+            textView="Nome do Fornecedor*"
+            register={registerNomeFornecedor}
+            error={errors?.nome_fornecedor}
+         />
+         <InputDefault 
+            type="text"
+            id="cnpj"
+            placeholder="Informe o CNPJ..."
+            textView="CNPJ*"
+            register={registerCnpj}
+            error={errors?.cnpj}
+         />
          <div className="footerButtonContainerForForm">
                <button className={`buttonFormSec-style1`} onClick={handleCancel}>Cancelar</button>
 

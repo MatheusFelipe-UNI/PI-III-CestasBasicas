@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import { getItemsDirtyData } from "../../../utils/ManipulateDataUtil";
+import { InputDefault } from "../../Input/InputDefault/InputDefault";
 
-export function FormProduto({ dataProduto, handleProdutoSubmit }) {
+export function FormProduto({ dataProduto, handleProdutoSubmit, handleCancel }) {
    const {
       register,
       handleSubmit,
@@ -57,26 +58,44 @@ export function FormProduto({ dataProduto, handleProdutoSubmit }) {
          className="layoutFormContentSpacing"
          onSubmit={handleSubmit(validateAndSubmit)}
       >
-         <div>
-            <label htmlFor="nome_produto">Nome do Produto</label>
-            <input type="text" {...registerNomeProduto}/>
-         </div>
-         <div>
-            <label htmlFor="unidade">Tipo Unidade</label>
-            <input type="text" {...registerUnidade}/>
-         </div>
-         <div>
-            <label htmlFor="quantidade_estoque">Quantidade no Estoque</label>
-            <input type="text" {...registerQtdEstoque}/>
-         </div>
-         <div>
-            <label htmlFor="estoque_minimo">Estoque Mínimo</label>
-            <input type="text" {...registerQtdEstoqueMinimo}/>
+         <InputDefault
+            type="text"
+            id="nomeProduto"
+            placeholder="ex: Arroz Safra sul"
+            textView="Produto*"
+            register={registerNomeProduto}
+            error={errors?.nome_produto}
+         />
+         <InputDefault
+            type="text"
+            id="unidade"
+            placeholder="ex: UN, KG, L etc."
+            textView="Tipo de Unidade*"
+            register={registerUnidade}
+            error={errors?.unidade}
+         />
+         <div className="inputCollection__dual">
+            <InputDefault
+               type="number"
+               id="qtdEstoque"
+               placeholder="ex: 20"
+               textView="Qtd. no Estoque*"
+               register={registerQtdEstoque}
+               error={errors?.quantidade_estoque}
+            />
+            <InputDefault
+               type="number"
+               id="qtdEstoqueMinimo"
+               placeholder="ex: 5"
+               textView="Qtd. Mínimo no Estoque*"
+               register={registerQtdEstoqueMinimo}
+               error={errors?.estoque_minimo}
+            />
          </div>
          <div className="footerButtonContainerForForm">
-               <button className={`buttonFormSec-style1`}>Cancelar</button>
+            <button className={`buttonFormSec-style1`} onClick={handleCancel}>Cancelar</button>
 
-               <button className={`buttonFormMain-style1 ${
+            <button className={`buttonFormMain-style1 ${
                dataProduto && isDirty ? "buttonFormMain-style1__inactive" : ""
             }`}>
                {dataProduto ? "Confirmar Alterações" : "Cadastrar Produto"}

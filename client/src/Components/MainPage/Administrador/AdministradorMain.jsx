@@ -29,7 +29,7 @@ export function AdministradorMain() {
 
    return(
       <>
-         <ActionBar viewName="Administrador" handleOpenModal={handleOpenModal}/>
+         <ActionBar viewName="Novo Usuário" handleOpenModal={handleOpenModal}/>
          <TableAdminUser userCollection={tempDataUser}/>
       </>
    )

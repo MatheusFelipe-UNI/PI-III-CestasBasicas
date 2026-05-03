@@ -13,7 +13,7 @@ h1.mainTitle {
 }
 
 .textInfoNotAvaliable {
-   font-family: var(--fontSec);
+   font-family: var(--fontPrim);
    font-size: 16px;
    margin: var(--marginContent);
 }
@@ -43,7 +43,7 @@ span.errorMessage {
    justify-content: end;
    gap: 15px;
    background-color: #f5f5f5;
-   margin: -10px -20px;
+   margin: 0 -20px -10px;
    padding: 15px 20px;
 }
 

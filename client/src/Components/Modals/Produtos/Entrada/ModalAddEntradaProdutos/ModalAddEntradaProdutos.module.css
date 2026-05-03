@@ -1,0 +1,38 @@
+.formSelectContainer {
+   display: flex;
+   align-items: stretch;
+   gap: 15px;
+   margin: 1em 0;
+}
+
+.formSelectContainer button {
+   background-color: transparent;
+   color: var(--colorPrim);
+   padding: 15px 20px;
+   border: 1px solid var(--colorPrim);
+   max-height: 45px;
+}
+
+.formSelectContainer button:hover {
+   background-color: var(--colorPrim);
+   color: white;
+}
+
+.formEntradaProdutosContainer {
+   margin-top: 1em;
+}
+
+.customErrorMessage {
+   margin: var(--marginContent) 0;
+   padding: 10px 15px;
+   font-size: 15px;
+   font-weight: bold;
+   color: var(--colorText-for-bg-red);
+   background-color: var(--bg-red);
+   border-radius: var(--fixBorderRadius);
+   width: fit-content;
+}
+
+.customNotAvailableText {
+   margin: var(--marginContent) 0;
+}

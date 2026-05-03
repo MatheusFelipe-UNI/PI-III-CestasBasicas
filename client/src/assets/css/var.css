@@ -5,6 +5,7 @@
    --fontPrim: 'Roboto', sans-serif;
    --fontSec: 'Bebas Neue', sans-serif;
    --colorBackground: #F6F6F6;
+   --colorBackgroundForInput: rgb(245, 245, 245);
    --colorPrim: #BF1515;
    --colorPrimDark: #590202;
    --colorPrimLight: #a90808;

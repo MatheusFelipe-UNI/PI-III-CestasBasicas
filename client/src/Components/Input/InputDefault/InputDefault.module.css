@@ -1,0 +1,61 @@
+.inputContainer {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+   max-width: 500px;
+}
+
+.inputContent__label {
+   font-family: var(--fontPrim);
+   font-size: 1em;
+   font-weight: 700;
+   color: #333333;
+   margin-bottom: 5px;
+   letter-spacing: 0.5px;
+}
+
+.inputContainer:has(input:disabled) .inputContent__label {
+   color: var(--colorInactive);
+}
+
+.inputContent__input {
+   padding: 12px 10px;
+   background-color: var(--colorBackgroundForInput);
+   font-family: var(--fontPrim);
+   font-size: 16px;
+   border: 1px solid var(--borderColor);
+   border-radius: var(--fixBorderRadius);
+   outline: none;
+
+   transition: border 0.2s ease;
+}
+
+.inputContent__input:not(:disabled):is(:focus, :active) {
+   border-color: var(--colorPrim);
+}
+
+.inputContent__input::placeholder {
+   opacity: 0.3;
+}
+
+/* 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            Estilização do Input Error
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+.inputError .inputContent__label {
+   color: var(--colorRed) !important;
+}
+
+.inputError .inputContent__input {
+   border: 1px solid var(--colorRed) !important;
+   color: var(--colorRed) !important;
+}
+
+.inputError span.errorMessage {
+   opacity: 1;
+   font-size: 14px;
+   font-weight: 500;
+   color: var(--colorRed);
+   user-select: none;
+}

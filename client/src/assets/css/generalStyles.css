@@ -91,6 +91,15 @@ span.errorMessage {
    gap: 15px;
 }
 
+.radioContainer .radioCollection{
+   display: flex;
+   gap: 10px;
+}
+
+.radioContainer h4 {
+   margin-bottom: 4px;
+}
+
 @media only screen and (max-width: 575px) {
    .layoutFlexCollectionCard {
       justify-content: center;
@@ -103,4 +112,8 @@ span.errorMessage {
       width: 100%;
       text-align: center;
    }
+
+   .radioContainer .radioCollection {
+      flex-direction: column;
+    }
 }

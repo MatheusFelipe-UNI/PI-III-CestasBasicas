@@ -1,0 +1,92 @@
+/* 
+===================================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                  Estilização de Input CheckBox
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===================================================================
+*/
+
+/* 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Estilização Geral de InputCheckBox
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+.inputCheckContainer {
+   position: relative;
+   display: flex;
+   align-items: center;
+   width: fit-content;
+   gap: 5px;
+}
+
+.inputCheckContainer input {
+   display: none;
+}
+
+/* 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+              CheckBox Personalizada
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+.inputCheckContainer span.inputCheck__checkbox {
+   display: inline-flex;
+   justify-content: center;
+   align-items: center;
+   padding: 3px;
+   border: 1px solid var(--colorPrim);
+   transition: 0.1s ease;
+}
+
+span.inputCheck__checkbox .checkbox__icon {
+   opacity: 0;
+   color: var(--colorAux);
+   transition: 0.15s ease;
+}
+
+.inputCheckContainer input:checked ~ span.inputCheck__checkbox {
+   background-color: var(--colorPrim);
+}
+
+.inputCheckContainer input:checked ~ span.inputCheck__checkbox .checkbox__icon {
+   opacity: 1;
+}
+
+/* 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+             Texto (label) de Checkbox
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+.inputCheckContainer label {
+   font-family: var(--fontPrim);
+   user-select: none;
+   cursor: pointer;
+}
+
+/* 
+Permite que o usuário possa clicar tanto 
+no texto quanto no checkbox Personalizado 
+*/
+.inputCheckContainer label::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   right: 0;
+   bottom: 0;
+   left: 0;
+}
+
+/* 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    Erros
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+.inputCheckError span.inputCheck__checkbox {
+   border-color: var(--colorRed) !important;
+}
+
+.inputCheckError label {
+   color: var(--colorRed) !important;
+}

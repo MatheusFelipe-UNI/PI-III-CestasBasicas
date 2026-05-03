@@ -23,7 +23,7 @@
     justify-content: center; align-items: center;
     /* Altura do Input */
     left: 91%;
-    top: 50%;
+    top: 42%;
     transform: translateY(-35%);
     color: var(--colorInactive);
     font-size: 23px;

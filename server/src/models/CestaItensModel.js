@@ -33,12 +33,12 @@ module.exports = (sequelize, DataTypes) => {
    });
 
    Itens_cestas.associate = (models) => {
-      Itens_cestas.belongsTo(models.Itens_cestas, {
+      Itens_cestas.belongsTo(models.Cestas, {
          constraint: true,
          foreignKey: "fk_id_cesta",
          as: "cestas"
       });
-      Itens_cestas.belongsTo(models.Vendas, {
+      Itens_cestas.belongsTo(models.Produtos, {
          constraint: true,
          foreignKey: "fk_id_produto",
          as: "produtos_cesta"

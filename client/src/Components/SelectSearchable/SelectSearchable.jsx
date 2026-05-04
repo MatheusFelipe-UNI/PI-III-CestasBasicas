@@ -37,10 +37,10 @@ export default function SelectSearchable({controlName = "", control, dataOptions
         }),
         control: (baseStyles) => ({
             ...baseStyles,
-            marginTop: textView ? "3px" : "0",
+            marginTop: textView ? "4px" : "0",
             padding: "4px",
             borderRadius: "3px",
-            border: (error) ? "1px solid var(--colorRed)" : "",
+            border: (error) ? "1px solid var(--colorRed)" : "1px solid var(--borderColor)",
             backgroundColor: "var(--colorBackground)",
             borderWidth: 0,
             boxShadow: "none",

@@ -12,7 +12,7 @@ export function InputDefault({
    error
 }) {
    return(
-      <div class={`${styles.inputContainer} ${customClass} ${error ? styles.inputError : ""}`}>
+      <div className={`${styles.inputContainer} ${customClass} ${error ? styles.inputError : ""}`}>
          <label htmlFor={id} className={styles.inputContent__label}>{textView}</label>
          <input 
             type={type} 

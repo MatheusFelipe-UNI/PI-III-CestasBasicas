@@ -2,8 +2,24 @@ import TableDefault from "../../Table/TableDefault/TableDefault";
 import { ViewStatusBar } from "../../ViewStatusBar/ViewStatusBar";
 import { FaGear as IconConfig } from "react-icons/fa6";
 import { FaTrashAlt as IconDel } from "react-icons/fa";
+import { useModal } from "../../../Context/ModalContext";
+import { ActionBar } from "../../ActionBar/ActionBar";
 
 export function CestasMain() {
+   const { showModal } = useModal();
+
+   const handleOpenModal = () => {
+      showModal({
+         modalName: "addCesta",
+         customStyle: {
+            overflow: "initial"
+         },
+         data: {
+            id: "1"
+         }
+      })
+   }
+
    const fieldCollection = [
       "ID",
       "Nome Cesta",
@@ -59,7 +75,10 @@ export function CestasMain() {
 
    return(
       <>
-         <div><input type="text" /></div>
+         <ActionBar
+            viewName="Cesta Básica"
+            handleOpenModal={handleOpenModal}
+         />
          <ViewStatusBar viewName="Cestas"/>
          <TableDefault
             fieldCollection={fieldCollection}

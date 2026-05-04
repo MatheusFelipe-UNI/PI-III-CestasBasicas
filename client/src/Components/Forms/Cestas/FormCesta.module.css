@@ -1,0 +1,97 @@
+.formCestaContainer {
+   display: flex;
+   position: relative;
+}
+
+.formCestaContainer .verticalLine {
+   position: absolute;
+   /* Valor encontrado na base da gambiarra XD */
+   left: 29.312%;
+   width: 2px;
+   background-color: var(--colorPrim);
+   /* 32px = 12px de margin negativa + 20px de gap */
+   height: calc(100% + 32px);
+   margin: -12px 0;
+}
+
+.formCestaContent__leftSide {
+   display: grid;
+   align-content: start;
+   gap: 20px;
+   min-width: 300px;
+   margin-right: 20px;
+}
+
+.formCestaContent__rightSide {
+   min-width: 750px;
+   display: grid;
+   align-content: start;
+   gap: 15px;
+   margin-left: 20px;
+}
+
+.formCestaContent__rightSide .selectProdutoContainer {
+   display: flex;
+   align-items: center;
+   gap: 15px;
+   /* margin-top: 23px; */
+   height: fit-content;
+}
+
+.formCestaContent__rightSide .selectProdutoContainer button {
+   height: 45px;
+   padding: 5px 20px;
+   background-color: transparent;
+   color: var(--colorPrim);
+   border: 1px solid var(--colorPrim);
+   transition: none;
+   transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+}
+
+.formCestaContent__rightSide .selectProdutoContainer button:hover {
+   background-color: var(--colorPrim);
+   color: white;
+}
+
+.customErrorMessage {
+   margin: var(--marginContent) 0;
+   padding: 10px 15px;
+   font-size: 15px;
+   font-weight: bold;
+   color: var(--colorText-for-bg-red);
+   background-color: var(--bg-red);
+   border-radius: var(--fixBorderRadius);
+   width: fit-content;
+}
+
+@media only screen and (max-width: 1140px) {
+   .formCestaContainer {
+      flex-direction: column;
+      gap: 20px;
+   }
+
+   .formCestaContent__leftSide {
+      display: flex;
+      margin-right: 0;
+   }
+
+   .formCestaContent__rightSide {
+      margin-left: 0;
+   }
+
+   .formCestaContainer .verticalLine {
+      display: none;
+   }
+}
+
+@media only screen and (max-width: 780px) {
+   .formCestaContent__leftSide {
+      flex-direction: column;
+   }
+
+   .formCestaContent__rightSide {
+      min-width: 100%;
+   }
+}

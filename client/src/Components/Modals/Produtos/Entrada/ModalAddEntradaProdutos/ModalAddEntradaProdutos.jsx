@@ -176,7 +176,7 @@ export function ModalAddEntradaProdutos() {
                controlName="fornecedorId"
                dataOptions={optionsFornecedores}
                placeholder={"Selecione o Fornecedor..."}
-               error={errorsSelect.fornecedorId}
+               error={errorsSelect?.fornecedorId}
                customStyle={
                   Array.isArray(watchProdutos) && watchProdutos.length === 0 
                      ? { minWidth: "270px" }
@@ -211,7 +211,7 @@ export function ModalAddEntradaProdutos() {
                <p className={`${styles.customErrorMessage} fadeIn`}>Uma ou mais quantidades Inválidas</p>
             )}
             {Array.isArray(watchProdutos) && watchProdutos.length === 0 ? (
-               <p className={styles.customNotAvailableText}>Nenhum suprimento selecionado</p>
+               <p className={styles.customNotAvailableText}>Nenhum Produto selecionado</p>
             ) : (
                <TableAddEntradaProdutos
                   dataCollection={watchProdutos}

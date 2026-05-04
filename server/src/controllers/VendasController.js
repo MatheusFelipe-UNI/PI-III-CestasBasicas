@@ -6,6 +6,17 @@ const NotFoundError = require("../classes/NotFoundError.js");
 const FieldUndefinedError = require("../classes/FieldUndefinedError.js");
 const CannotCreateError = require("../classes/CannotCreateError.js");
 
+const {
+   getAllVendasCestasService,
+   getAllPendingVendasCestasService,
+   getAllFinishedVendasCestasService,
+   getAllCanceledVendasCestasService,
+   getAllFinishedVendasCestasByFilterAndOrderByService,
+   getVendaCestaByIdService,
+   changeVendaCestaStatusService,
+   createVendaCestaService,
+} = require("../services/VendasServices.js")
+
 /* 
 ============================================
 NOTAS DO NATAN PARA O MATHEUS

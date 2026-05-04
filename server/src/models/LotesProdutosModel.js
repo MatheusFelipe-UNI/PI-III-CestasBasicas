@@ -69,6 +69,11 @@ module.exports = (sequelize, DataTypes) => {
          foreignKey: "fk_id_produto",
          as: "cestas_produto"
       });
+      Lotes_produtos.belongsTo(models.Fornecedores, {
+         constraint: true,
+         foreignKey: "fk_id_fornecedor",
+         as: "fornecedor_produto"
+      });
    }
 
    return Lotes_produtos;

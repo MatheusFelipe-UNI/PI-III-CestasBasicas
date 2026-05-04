@@ -6,6 +6,17 @@ const NotFoundError = require("../classes/NotFoundError.js");
 const FieldUndefinedError = require("../classes/FieldUndefinedError.js");
 const CannotCreateError = require("../classes/CannotCreateError.js");
 
+const {
+   getAllFornecedoresService,
+    getAllActiveFornecedoresService,
+    getAllInactiveFornecedoresService,
+    getFornecedorByIdService,
+    getAllActiveFornecedoresByFilterAndOrderByService,
+    changeFornecedorStatusService,
+    createFornecedorService,
+    updateFornecedorService,
+} = require ("../services/FornecedoresServices.js")
+
 /* 
 ============================================
 NOTAS DO NATAN PARA O MATHEUS

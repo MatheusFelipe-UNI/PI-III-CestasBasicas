@@ -5,6 +5,19 @@ const errorResponse = require("../helper/ErrorResponseHelper.js");
 const NotFoundError = require("../classes/NotFoundError.js");
 const FieldUndefinedError = require("../classes/FieldUndefinedError.js");
 const CannotCreateError = require("../classes/CannotCreateError.js");
+const {
+   getAllEntradasProdutosService,
+   getAllReceivedEntradasProdutosService,
+   getAllCanceledEntradasProdutosService,
+   getAllReceivedEntradasProdutosByFilterAndOrderByService,
+   getAllCanceledEntradasProdutosByFilterAndOrderByService,
+   getEntradaProdutoByIdService,
+   changeEntradaProdutoStatusService,
+   createEntradaProdutoService,
+   getAllEntradasProdutosItensService,
+   getAllEntradasProdutosItensByIdEntradaService,
+   getEntradaProdutoItemByIdService,
+} = require("../services/EntradasServices.js");
 
 /* 
 ============================================
@@ -80,7 +93,7 @@ async function getAllCanceledEntradasProdutosByFilterAndOrderBy(req, res) {
       }
 
       const filteredEntradasProdutos = await getAllCanceledEntradasProdutosByFilterAndOrderByService(orderBy, filterOptions);
-      
+
       return res.status(200).json(filteredEntradasProdutos);
 
    } catch (error) {
@@ -92,7 +105,7 @@ async function getEntradaProdutoById(req, res) {
    try {
       const id = Number(req.params.id);
 
-      if(!id) {
+      if (!id) {
          throw new FieldUndefinedError("Campo ID não identificado", {
             fields: {
                id,
@@ -129,7 +142,7 @@ async function changeEntradaProdutoStatus(req, res) {
                status
             }
          })
-      } 
+         }
 
       const [rowAffected] = await changeEntradaProdutoStatusService(id, status);
 
@@ -208,7 +221,7 @@ async function getAllEntradasProdutosItensByIdEntrada(req, res) {
    try {
       const idEntrada = Number(req.params.idEntrada);
 
-      if(!idEntrada) {
+      if (!idEntrada) {
          throw new FieldUndefinedError("Campo idEntrada não identificado", {
             fields: {
                idEntrada,
@@ -226,7 +239,7 @@ async function getAllEntradasProdutosItensByIdEntrada(req, res) {
 
 async function getEntradaProdutoItemById(req, res) {
    try {
-      const id = Number(req.params.id);
+      const id = Number(req.params.idItem);
 
       if (!id) {
          throw new FieldUndefinedError("Campo ID não identificado", {
@@ -246,6 +259,7 @@ async function getEntradaProdutoItemById(req, res) {
          });
       }
 
+      return res.status(200).json(entradaProdutoItem);
    } catch (error) {
       errorResponse(error, res);
    }

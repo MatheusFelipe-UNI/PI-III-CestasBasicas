@@ -8,9 +8,8 @@ router
    .post(userController.createFirstUser)
 
 
-// Essa rota será definida após a confirmação de um grupo de lógica (repository, service e controller) de estatística 
-// router
-//    .route("/total-registered")
-//    .get(anyOneController.getTotalUsers)
+router
+   .route("/total-registered")
+   .get(userController.getTotalUsers)
 
 module.exports = router;

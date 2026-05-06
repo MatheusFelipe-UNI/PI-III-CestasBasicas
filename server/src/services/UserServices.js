@@ -127,6 +127,11 @@ async function changePasswordUserService(idUser, currPassword, newPassword) {
 
 }
 
+async function getTotalUsersService() {
+   const totalUsers = await findAndCountAllUsers();
+   return totalUsers;
+}
+
 module.exports = {
    getAllUsersService,
    getAllDefaultUsersService,
@@ -135,5 +140,6 @@ module.exports = {
    createUserService,
    createFirstUserService,
    changeStatusUserService,
-   changePasswordUserService
+   changePasswordUserService,
+   getTotalUsersService
 };

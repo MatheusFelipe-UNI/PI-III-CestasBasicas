@@ -7,6 +7,7 @@ const {
    getUserLoggedByIdService,
    createFirstUserService,
    changePasswordUserService,
+   getTotalUsersService,
 } = require("../services/UserServices.js");
 //Helpers
 const errorResponse = require("../helper/ErrorResponseHelper.js");
@@ -293,6 +294,16 @@ async function changePasswordUser(req, res) {
    
 }
 
+async function getTotalUsers(req, res) {
+   try {
+      const totalUsers = await getTotalUsersService();
+      return res.status(200).json(totalUsers);
+      
+   } catch (error) {
+      errorResponse(error, res);
+   }
+}
+
 module.exports = { 
    getAllUsers, 
    getAllDefaultUsers, 
@@ -301,5 +312,6 @@ module.exports = {
    createUser,
    createFirstUser,
    changeStatusUser,
-   changePasswordUser
+   changePasswordUser,
+   getTotalUsers
 };

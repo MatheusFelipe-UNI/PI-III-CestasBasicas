@@ -8,6 +8,15 @@ h1.mainTitle {
    margin-top: 20px;
 }
 
+h2.subTitle {
+   width: fit-content;
+   margin: var(--marginContent) 0;
+   padding: 5px 30px;
+   background-color: var(--colorPrimDark);
+   font-size: 20px;
+   color: white;
+}
+
 .textMargin {
    margin: var(--marginContent);
 }

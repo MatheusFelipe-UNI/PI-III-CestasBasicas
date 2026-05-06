@@ -2,18 +2,25 @@
 import InputCheck from "../../../Input/InputCheck/InputCheck.jsx";
 import { useState } from "react";
 import { useAlert } from "../../../../Context/AlertContext";
+import { useAdmin } from "../../../../Context/AdminContext.jsx";
+import { changeStatusUserService } from "../../../../services/admin.service.js";
 
 export function TBodyAdminUser({ userData }) {
    const { showConfirmAlert, showSuccessAlert, showErrorAlert } = useAlert();
+   const { getAllUsers } = useAdmin();
 
    // LOGICA PENDENTE
    const handleChangeUserStatus = async () => {
       try {
          const newStatus = userData.status === "ATIVO" ? "INATIVO" : "ATIVO";
-         showSuccessAlert({
-            title: "Alteração Concluída",
-            message: "Status de usuário alterado com sucesso!",
-         });
+         const res = await changeStatusUserService(userData.id, newStatus);
+         if (res?.data?.status === "success") {
+            showSuccessAlert({
+               title: "Alteração Concluída",
+               message: "Status de usuário alterado com sucesso!",
+            });
+            await getAllUsers();
+         }
          
       } catch (error) {
          console.log(error);

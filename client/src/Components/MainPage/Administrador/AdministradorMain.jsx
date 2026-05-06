@@ -1,9 +1,16 @@
+import { useAdmin } from "../../../Context/AdminContext";
 import { useModal } from "../../../Context/ModalContext";
 import { ActionBar } from "../../ActionBar/ActionBar";
+import { Loading } from "../../Loading/Loading";
 import { TableAdminUser } from "../../Table/TableAdminUser/TableAdminUser";
 
 export function AdministradorMain() {
    const { showModal } = useModal();
+   const {
+      allUsers: users,
+      isLoading,
+      getAllUsers
+   } = useAdmin();
 
    const handleOpenModal = () => {
       showModal({
@@ -29,8 +36,8 @@ export function AdministradorMain() {
 
    return(
       <>
-         <ActionBar viewName="Novo Usuário" handleOpenModal={handleOpenModal}/>
-         <TableAdminUser userCollection={tempDataUser}/>
+         <h2 className="subTitle">Todos os Usuários</h2>
+         { isLoading ? <Loading/> : users && <TableAdminUser userCollection={users}/> }
       </>
    )
 }

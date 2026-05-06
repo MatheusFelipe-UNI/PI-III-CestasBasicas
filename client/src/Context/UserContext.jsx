@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import localforage from "localforage";
 import Cookies from "js-cookie";
-// import { getNecessaryInfoUser } from "../services/user.service";
+import { getNecessaryInfoUser } from "../services/user.service";
+import { useEffectEvent } from "react";
 
 const UserContext = createContext(null);
 
@@ -17,10 +17,10 @@ export function UserProvider({children}) {
          }
          const userData = await localforage.getItem("user");
          if(token && (!userData || Object.keys(userData).length === 0)) {
-            // const res = await getNecessaryInfoUser();
-            // const { user, nivel_acesso } = res.data;
-            // await localforage.setItem("user", { user, nivel_acesso });
-            // setUser({ user, nivel_acesso });
+            const res = await getNecessaryInfoUser();
+            const { usuario, nivel_acesso } = res.data;
+            await localforage.setItem("user", { usuario, nivel_acesso });
+            setUser({ usuario, nivel_acesso });
          } else {
             setUser(userData);
          }
@@ -31,8 +31,10 @@ export function UserProvider({children}) {
       }
    }
 
+   const onGetUserInfo = useEffectEvent(() => getUserInfo())
+
    useEffect(() => {
-      getUserInfo();
+      onGetUserInfo();
    }, []);
 
    return(
@@ -44,10 +46,3 @@ export function UserProvider({children}) {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const useUser = () => useContext(UserContext);
-
-UserProvider.propTypes = {
-   children: PropTypes.oneOfType([
-               PropTypes.element,
-               PropTypes.arrayOf(PropTypes.element)
-   ]),
-}

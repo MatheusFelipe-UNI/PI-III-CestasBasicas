@@ -31,6 +31,8 @@ import { CestasVendasConcluidasSub } from './Components/SubPages/CestasVendas/Ce
 import { CestasVendasCanceladasSub } from './Components/SubPages/CestasVendas/CestasVendasCanceladas/CestasVendasCanceladasSub.jsx';
 import { AdministradorMain } from './Components/MainPage/Administrador/AdministradorMain.jsx';
 import { UsuarioMain } from './Components/MainPage/Usuario/UsuarioMain.jsx';
+import { UserProvider } from './Context/UserContext.jsx';
+import { Autenticacao } from './Pages/Autenticacao/Autenticacao.jsx';
 
 
 const router = createBrowserRouter([
@@ -153,13 +155,19 @@ const router = createBrowserRouter([
         ]
       }
     ]
+  },
+  {
+    path: "/auth",
+    element: <Autenticacao/>
   }
 ])
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AlertProvider>
-      <RouterProvider router={router}/>
-    </AlertProvider>
+    <UserProvider>
+      <AlertProvider>
+        <RouterProvider router={router}/>
+      </AlertProvider>
+    </UserProvider>
   </StrictMode>,
 )

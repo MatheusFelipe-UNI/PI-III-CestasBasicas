@@ -8,8 +8,15 @@ import { useUser } from '../../Context/UserContext.jsx';
 
 export default function Navlist({listContent=[], handleCloseMenu}) {
     const location = useLocation();
-    // const {user} = useUser();
-
+    const { user } = useUser();
+    /*
+        Key: nível de acesso
+        Value: Array com Id das páginas que não podem ser acessadas por ele 
+    */
+    const excludesNavListData = {
+        1: [],
+        2: [11]
+    }
     const [dropDownInfo, setDropDownInfo] = useState({});
 
     const handleActiveDropDown = (e) => {
@@ -43,15 +50,18 @@ export default function Navlist({listContent=[], handleCloseMenu}) {
                         </li>
                     )
                 }
-                return(
-                    <li key={content.id}>
-                        <NavLink to={content.path} className={({isActive}) => styleValidation(isActive, content) ? styles.active : ""} onClick={handleCloseMenu}
-                        end
-                    >
-                            {content.icon}{content.title}
-                        </NavLink>
-                    </li>
-                )
+                if(!user || !excludesNavListData[user.nivel_acesso].includes(content.id)) {
+                    return(
+                        <li key={content.id}>
+                            <NavLink to={content.path} className={({isActive}) => styleValidation(isActive, content) ? styles.active : ""} onClick={handleCloseMenu}
+                            end
+                        >
+                                {content.icon}{content.title}
+                            </NavLink>
+                        </li>
+                    )
+                }
+                
             })}
         </ul>
     )

@@ -10,7 +10,7 @@
     justify-content: center; align-items: center;
     /* Altura do Input */
     height: 48px;
-    top: 36%; left: 90%;
+    top: 22%; left: 90%;
     color: var(--colorInactive);
     font-size: 23px;
     cursor: pointer;

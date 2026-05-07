@@ -2,15 +2,22 @@ import { createContext, useContext, useEffect, useEffectEvent, useMemo, useState
 import { useSearchParams } from "react-router";
 import {
    createFornecedorService,
+   getAllActiveFornecedoresService,
    getAllFornecedoresService,
    getAllInactiveFornecedoresService,
    updateFornecedorService,
    updateFornecedorStatusService,
 } from "../Services/fornecedores.service";
+import { getScreenViewStatusByKey, setScreenViewStatusByKey } from "../utils/ViewStatusUtil";
+import { searchFilterData } from "../utils/SearchFilterUtil";
 
 const FornecedorContext = createContext(null);
 
 export function FornecedorProvider({ children }) {
+   const [fornecedores, setFornecedores] = useState();
+   const [filteredFornecedores, setFilteredFornecedores] = useState();
+   const [currViewStatus, setCurrViewStatus] = useState(getScreenViewStatusByKey("fornecedores") || "ATIVO"); 
+
    const [activeFornecedores, setActiveFornecedores] = useState();
    const [filteredActiveFornecedores, setFilteredActiveFornecedores] = useState();
 
@@ -22,25 +29,41 @@ export function FornecedorProvider({ children }) {
    const [searchParams, setSearchParams] = useSearchParams();
    const searchValueMemo = useMemo(() => searchParams.get("search"), [searchParams]);
 
-   const getAllActiveFornecedores = async () => {
-      if (!isLoading) {
-         setIsLoading(true);
-      }
-      const res = await getAllFornecedoresService();
-      setActiveFornecedores(res.data);
-      setFilteredActiveFornecedores(res.data);
-      setIsLoading(false);
-   };
 
-   const getAllInactiveFornecedores = async () => {
-      if (!isLoading) {
+   // Alteração do viewStatus
+   const changeCurrViewStatus = (newViewStatus) => {
+      setCurrViewStatus(newViewStatus);
+      setScreenViewStatusByKey("fornecedores", newViewStatus);
+   }
+
+
+   const getAllFornecedores = async (viewStatus) => {
+      let res;
+      if(!isLoading) {
          setIsLoading(true);
       }
-      const res = await getAllInactiveFornecedoresService();
-      setInactiveFornecedores(res.data);
-      setFilteredInactiveFornecedores(res.data);
+      if(viewStatus === "ATIVO") {
+         res = await getAllActiveFornecedoresService();
+      
+      } else {
+         res = await getAllInactiveFornecedoresService();
+      }
+
+      setFornecedores(res.data);
+      setFilteredFornecedores(res.data);
       setIsLoading(false);
-   };
+   }
+
+   const loadFilteredFornecedores = (fornecedores, searchValue) => {
+      const fieldsForSearch = [
+         "nome_fornecedor",
+         "cnpj"
+      ]
+      if(fornecedores && Array.isArray(fornecedores)) {
+         const filteredData = searchFilterData(fornecedores, searchValue);
+         setFilteredFornecedores(filteredData);
+      }
+   }
 
    // PENDENTE
    const loadFilteredActiveFornecedores = (activeFornecedores, searchValue) => {
@@ -67,7 +90,7 @@ export function FornecedorProvider({ children }) {
    const createFornecedor = async (fornecedorData) => {
       const res = await createFornecedorService(fornecedorData);
       if (res.data.status === "success" || res.status === 201) {
-         await getAllActiveFornecedores();
+         await getAllFornecedores(currViewStatus);
          return true;
       }
    };
@@ -92,7 +115,7 @@ export function FornecedorProvider({ children }) {
 
    const init = async () => {
       try {
-         await getAllActiveFornecedores();
+         await getAllFornecedores();
       } catch (error) {
          console.log(error);
       }
@@ -101,34 +124,29 @@ export function FornecedorProvider({ children }) {
    // useEffectEvents
    const onInit = useEffectEvent(() => init());
 
-   const onLoadFilteredActiveFornecedores = useEffectEvent((fornecedores, searchValue) =>
-      loadFilteredActiveFornecedores(fornecedores, searchValue),
-   );
-   const onLoadFilteredInactiveFornecedores = useEffectEvent((fornecedores, searchValue) =>
-      loadFilteredInactiveFornecedores(fornecedores, searchValue),
-   );
+   const onLoadFilteredFornecedores = useEffectEvent((fornecedores, searchValue) => loadFilteredFornecedores(fornecedores, searchValue))
 
    useEffect(() => {
       onInit();
    }, []);
 
    useEffect(() => {
-      onLoadFilteredActiveFornecedores(activeFornecedores, searchValueMemo);
-   }, [activeFornecedores, searchValueMemo]);
+      onLoadFilteredFornecedores(fornecedores, searchValueMemo);
+   }, [fornecedores, searchValueMemo])
 
    useEffect(() => {
-      onLoadFilteredInactiveFornecedores(inactiveFornecedores, searchValueMemo);
-   }, [inactiveFornecedores, searchValueMemo]);
+      getAllFornecedores(currViewStatus)
+   }, [currViewStatus])
+
 
    return(
       <FornecedorContext.Provider value={{
-         activeFornecedores,
-         filteredActiveFornecedores,
-         inactiveFornecedores,
-         filteredInactiveFornecedores,
+         fornecedores,
+         filteredFornecedores,
          isLoading,
-         getAllActiveFornecedores,
-         getAllInactiveFornecedores,
+         currViewStatus,
+         changeCurrViewStatus,
+         getAllFornecedores,
          createFornecedor,
          updateFornecedor,
          updateFornecedorStatus,

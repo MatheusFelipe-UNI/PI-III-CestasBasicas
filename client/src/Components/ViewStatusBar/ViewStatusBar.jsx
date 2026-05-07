@@ -1,12 +1,18 @@
 import { useState } from "react";
 import styles from "./ViewStatusBar.module.css";
+import { getScreenViewStatus, getScreenViewStatusByKey, setScreenViewStatusByKey } from "../../utils/ViewStatusUtil";
 
-export function ViewStatusBar({ viewName = "", optionsCollection = [] }) {
-   const [activeStatus, setActiveStatus] = useState("ATIVO");
+export function ViewStatusBar({ viewName = "", optionsCollection = [], viewStatusName = "", changeViewStatus }) {
+   const [activeStatus, setActiveStatus] = useState(getScreenViewStatusByKey(viewStatusName) || "ATIVO");
    const [option1, option2] = optionsCollection;
 
-   const handleStatusChange = (status) => {
-      setActiveStatus(status);
+   const handleStatusChange = (newStatus) => {
+      if(newStatus !== activeStatus) {
+         setActiveStatus(newStatus);
+         changeViewStatus(newStatus);
+      }
+      
+
    };
 
    return(

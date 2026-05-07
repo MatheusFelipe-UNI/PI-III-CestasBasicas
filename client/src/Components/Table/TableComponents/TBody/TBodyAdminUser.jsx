@@ -43,10 +43,18 @@ export function TBodyAdminUser({ userData }) {
       });
    };
 
+   const NIVEL_ACESSO_DATA = {
+      1: "Administrador",
+      2: "Funcionário"
+   }
+
    return (
       <tr id={userData.id}>
          <td>
             <p>{userData.usuario}</p>
+         </td>
+         <td>
+            <p>{NIVEL_ACESSO_DATA[userData.nivel_acesso]}</p>
          </td>
          <td>
             <InputCheck

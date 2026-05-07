@@ -16,7 +16,7 @@ export function AdministradorMain() {
       showModal({
          modalName: "addAdmin",
          data: {
-            id: "1"
+            getAllUsers
          }
       })
    }
@@ -36,6 +36,10 @@ export function AdministradorMain() {
 
    return(
       <>
+         <ActionBar 
+            viewName="Novo Usuário"
+            handleOpenModal={handleOpenModal} 
+            hasSearchBar={false}/>
          <h2 className="subTitle">Todos os Usuários</h2>
          { isLoading ? <Loading/> : users && <TableAdminUser userCollection={users}/> }
       </>

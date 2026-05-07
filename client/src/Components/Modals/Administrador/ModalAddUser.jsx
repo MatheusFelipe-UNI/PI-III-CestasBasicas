@@ -1,10 +1,12 @@
 import { useAlert } from "../../../Context/AlertContext";
 import { useModal } from "../../../Context/ModalContext";
+import { registerNewUser } from "../../../services/admin.service";
 import { FormAddUser } from "../../Forms/Administradores/FormAddUser";
 
 export function ModalAddUser() {
    const { showConfirmAlert, showSuccessAlert, showErrorAlert } = useAlert();
    const { showDataInfo, closeModal } = useModal();
+   const { getAllUsers } = showDataInfo();
 
 
    const handleRegisterUser = async ({ usuario, senha, nivel_acesso }) => {
@@ -15,13 +17,18 @@ export function ModalAddUser() {
          });
       }
       try {
-         console.log(usuario, senha, nivel_acesso)
-         showSuccessAlert({
-            title: "Cadastro Concluído",
-            message: "O usuário foi cadastrado com Sucesso.",
-         });
+         const res = await registerNewUser({ usuario, senha, nivel_acesso })
+         console.log(res);
 
-         closeModal();
+         if(res.data.status === "success" || res.status === 201) {
+            showSuccessAlert({
+               title: "Cadastro Concluído",
+               message: "O usuário foi cadastrado com Sucesso.",
+            });
+
+            closeModal();
+         }
+         
       } catch (error) {
         console.log(error);
         if(error?.response?.data) {

@@ -7,22 +7,28 @@ export function ActionBar({
    viewName = "Produto",
    searchFilter,
    updateFilterSearch, 
-   handleOpenModal
+   handleOpenModal,
+   hasSearchBar = true,
+   hasActionButton = true
 }) {
    return(
       <div className={styles.actionBarContainer}>
          {/* componente InputSearch */}
-         <InputSearch
-            type="text"
-            name={"searchValue"}
-            id={"searchValue"}
-            placeholder={"Pesquisar..."}
-            value={searchFilter}
-            handleOnChange={updateFilterSearch}
-         />
-         <button className={styles.actionBarContent__buttonAdd} onClick={handleOpenModal}>
-             <IconAdd/> Cadastrar {viewName}
-         </button>
+         {hasSearchBar && (
+            <InputSearch
+               type="text"
+               name={"searchValue"}
+               id={"searchValue"}
+               placeholder={"Pesquisar..."}
+               value={searchFilter}
+               handleOnChange={updateFilterSearch}
+            />
+         )}
+         {hasActionButton && (
+            <button className={styles.actionBarContent__buttonAdd} onClick={handleOpenModal}>
+               <IconAdd/> Cadastrar {viewName}
+            </button>
+         )}
       </div>
    )
 }

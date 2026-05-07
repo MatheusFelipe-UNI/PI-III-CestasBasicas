@@ -2,7 +2,7 @@ import THeadGeneral from "../TableComponents/THead/THeadGeneral";
 import { TBodyAdminUser } from "../TableComponents/TBody/TBodyAdminUser";
 
 export function TableAdminUser({userCollection = []}) {
-    const fieldCollection = ["Usuário", "Status", "Criado em", "Ultima Alteração em"];
+    const fieldCollection = ["Usuário", "Nível de Acesso", "Status", "Criado em", "Ultima Alteração em"];
 
     return(
         <>

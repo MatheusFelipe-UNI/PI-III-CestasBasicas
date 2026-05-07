@@ -22,8 +22,8 @@ async function getAllUsersService() {
    return users;
 }
 
-async function getAllDefaultUsersService() {
-   const defaultUsers = await findAllDefaultUsers();
+async function getAllDefaultUsersService(idLoggedUser) {
+   const defaultUsers = await findAllDefaultUsers(idLoggedUser);
    return defaultUsers;
 }
 

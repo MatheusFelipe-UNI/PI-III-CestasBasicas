@@ -1,4 +1,4 @@
-const { where } = require("sequelize");
+const { where, Op } = require("sequelize");
 const { User, sequelize } = require("../models");
 
 async function findAllUsers() {
@@ -6,14 +6,17 @@ async function findAllUsers() {
    return users;
 }
 
-async function findAllDefaultUsers() {
+async function findAllDefaultUsers(idLoggedUser) {
    const usersDefault = await User.findAll({
       where: {
-         nivel_acesso: 2
+         id: {
+            [Op.ne]: idLoggedUser
+         }
       },
       attributes: [
          "id",
          "usuario",
+         "nivel_acesso",
          "status",
          [
             sequelize.fn("DATE_FORMAT", sequelize.col("User.created_at"), "%d-%m-%Y %H:%i:%s"),

@@ -16,6 +16,7 @@ const errorResponse = require("../helper/ErrorResponseHelper.js");
 const NotFoundError = require("../classes/NotFoundError.js");
 const FieldUndefinedError = require("../classes/FieldUndefinedError.js");
 const AccessLevelError = require("../classes/AccessLevelError.js");
+const CannotCreateError = require("../classes/CannotCreateError.js");
 
 async function getAllUsers(req, res) {
    try {
@@ -57,7 +58,7 @@ async function getAllDefaultUsers(req, res) {
          })
       }
 
-      const allDefaultUsers = await getAllDefaultUsersService();
+      const allDefaultUsers = await getAllDefaultUsersService(existsUser.id);
       return res.status(200).json(allDefaultUsers);
       
    } catch (error) {
@@ -154,11 +155,15 @@ async function createUser(req, res) {
          })
       }
 
-      const createdUser = await createUserService({ 
+      const createdUser = await createUserService(existsUser.id,{ 
          usuario: newUser_usuario, 
          senha: newUser_senha, 
          nivel_acesso: newUser_nivel_acesso 
       });
+
+      if(!createdUser) {
+         throw new CannotCreateError("Não foi possível criar um novo usuário. Tente novamente mais tarde.")
+      }
       
       return res.status(201).json({
          status: "success",

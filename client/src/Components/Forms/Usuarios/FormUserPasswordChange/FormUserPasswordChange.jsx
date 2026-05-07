@@ -1,10 +1,12 @@
 import { useForm } from "react-hook-form";
-import { useAlert } from "../../../../Context/AlertContext";
 import styles from "./FormUserPasswordChange.module.css";
 import InputDefaultPassword from "../../../Input/InputDefaultPassword/InputDefaultPassword";
+import { useAlert } from "../../../../Context/AlertContext";
+import { logoutService, updatePasswordUserService } from "../../../../services/user.service";
 
 export function FormUserPasswordChange() {
-  const {
+   const { showSuccessAlert, showErrorAlert } = useAlert();
+   const {
       register,
       handleSubmit,
       watch,
@@ -18,8 +20,6 @@ export function FormUserPasswordChange() {
       },
    });
 
-   const { showSuccessAlert, showErrorAlert } = useAlert();
-
    const registerCurrPass = register("currPassword", {
       required: "Campo Obrigatório",
    });
@@ -30,52 +30,50 @@ export function FormUserPasswordChange() {
    const watchNewpass = watch("newPassword");
    const registerConfirmNewPass = register("confirmNewPassword", {
       required: "Campo Obrigatório",
-      validate: (value) => value === watchNewpass || "As senhas não são iguais!"
+      validate: (value) => value === watchNewpass || "As senhas não são iguais!",
    });
 
-
-   // LOGICA PENDENTE
    const handleChangePassword = async ({ currPassword, newPassword, confirmNewPassword }) => {
       try {
-         if(newPassword !== confirmNewPassword) {
+         if (newPassword !== confirmNewPassword) {
             showErrorAlert({
                title: "Erro ao Atualizar a senha",
-               message: "A senhas não coincidem!"
-            })
+               message: "A senhas não coincidem!",
+            });
          }
+         const res = await updatePasswordUserService(currPassword, newPassword);
 
-         showSuccessAlert({
-            title: "Senha Alterada com Sucesso!",
-            message: "Efetue novamente o login com a sua nova senha"
-         })
-         reset();
-
+         if (res.status === 200 || res.data.status === "success") {
+            showSuccessAlert({
+               title: "Senha Alterada com Sucesso!",
+               message: "Efetue novamente o login com a sua nova senha",
+            });
+            reset();
+            await logoutService();
+         }
       } catch (error) {
          console.log(error);
-         if(error?.response?.data) {
+         if (error?.response?.data) {
             const { code, errMessage } = error.response.data;
 
-            if(code === "CANNOT_UPDATE_DATA") {
+            if (code === "CANNOT_UPDATE_DATA") {
                showErrorAlert({
                   title: "Erro ao Atualizar Senha",
-                  message: errMessage
-               })
-
+                  message: errMessage,
+               });
             } else {
                showErrorAlert({
                   title: "Erro",
-                  message: errMessage
-               })
+                  message: errMessage,
+               });
             }
          }
       }
-
-      
-   }
+   };
 
    return (
-      <form 
-         action="" 
+      <form
+         action=""
          className={`layoutFormContentSpacing ${styles.formUserChangePassword}`}
          onSubmit={handleSubmit(handleChangePassword)}
       >
@@ -106,5 +104,5 @@ export function FormUserPasswordChange() {
          />
          <button className="buttonForm-style1">Alterar Senha</button>
       </form>
-   );   
+   );
 }

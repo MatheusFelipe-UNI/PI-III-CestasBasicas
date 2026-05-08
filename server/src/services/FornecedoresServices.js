@@ -10,7 +10,7 @@ const { getFornecedorById,
 } = require("../repositories/FornecedoresRepository");
 const ExistsDataError = require("../classes/ExistsDataError");
 const NotFoundError = require("../classes/NotFoundError");
-const { removeAllAcentsForString } = require("../utils/DataFormatUtil.js");
+const { removeAllAcentsForString, setCnpjMask } = require("../utils/DataFormatUtil.js");
 
 
 async function getAllFornecedoresService() {
@@ -20,12 +20,18 @@ async function getAllFornecedoresService() {
 
 async function getAllActiveFornecedoresService() {
     const allActiveFornecedores = await getAllActiveFornecedores();
-    return allActiveFornecedores;
+    let formattedData = JSON.parse(JSON.stringify(allActiveFornecedores));
+    const activeFornecedoresWithCnpjMask = setCnpjMask(formattedData);
+
+    return activeFornecedoresWithCnpjMask;
 }
 
 async function getAllInactiveFornecedoresService() {
     const allInactiveFornecedores = await getAllInactiveFornecedores();
-    return allInactiveFornecedores;
+    let formattedData = JSON.parse(JSON.stringify(allInactiveFornecedores));
+    const inactiveFornecedoresWithCnpjMask = setCnpjMask(formattedData);
+    
+    return inactiveFornecedoresWithCnpjMask;
 }
 
 async function getAllActiveFornecedoresByFilterAndOrderByService(orderBy, filterOptions) {
@@ -93,21 +99,22 @@ async function createFornecedorService(fornecedorData) {
 
 async function updateFornecedorService(id, FornecedoresData) {
     const fornecedor = await getFornecedorByIdService(id);
-
-    const { nome_fornecedor, cnpj} = FornecedoresData
-    const formattedDoc = cnpj && String(cnpj).replace(/\D/g, '').trim();
-    const formattedFornecedor = nome_fornecedor && String(removeAllAcentsForString(nome_fornecedor)).trim();
-    const existFornecedor = await getFornecedorByCNPJ(formattedDoc);
-
+    
+    const { nome_fornecedor, cnpj} = FornecedoresData;
     
     if (!fornecedor) {
         throw new NotFoundError("Fornecedores não localizado!")
     }
 
-    if (existFornecedor && existFornecedor.id !== id) {
-        throw new ExistsDataError("Já existe um Fornecedores com este CNPJ")
-    }
+    const formattedFornecedor = nome_fornecedor && String(removeAllAcentsForString(nome_fornecedor)).trim();
+    if(cnpj) {  
+        const formattedDoc = cnpj && String(cnpj).replace(/\D/g, '').trim();
+        const existFornecedor = await getFornecedorByCNPJ(formattedDoc);
 
+        if (existFornecedor && existFornecedor.id !== id) {
+            throw new ExistsDataError("Já existe um Fornecedor com este CNPJ")
+        }
+    }  
 
     const updateFields = {};
     if (nome_fornecedor !== undefined) updateFields.nome_fornecedor = formattedFornecedor

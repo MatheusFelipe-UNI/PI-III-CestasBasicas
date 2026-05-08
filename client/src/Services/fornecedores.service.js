@@ -78,7 +78,7 @@ export async function updateFornecedorService(id, body) {
 
 export async function updateFornecedorStatusService(id, newStatus) {
 
-   const res = await axios.patch(`${localServer}/fornecedores/${id}`, {status: newStatus}, {
+   const res = await axios.patch(`${localServer}/fornecedores/${id}/status`, {status: newStatus}, {
       headers: {
          Authorization: `Bearer ${Cookies.get("token")}`
       }

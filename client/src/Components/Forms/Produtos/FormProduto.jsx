@@ -25,14 +25,7 @@ export function FormProduto({ dataProduto, handleProdutoSubmit, handleCancel }) 
       required: "campo Obrigatório",
    });
 
-   const registerQtdEstoque = register("quantidade_estoque", {
-      required: "Campo Obrigatório",
-      valueAsNumber: true,
-      min: {
-         value: 0,
-         message: "Insira um valor maior ou igual a 0"
-      }
-   });
+   const registerQtdEstoque = register("quantidade_estoque");
 
    const registerQtdEstoqueMinimo = register("estoque_minimo", {
       required: "Campo Obrigatório",
@@ -74,24 +67,37 @@ export function FormProduto({ dataProduto, handleProdutoSubmit, handleCancel }) 
             register={registerUnidade}
             error={errors?.unidade}
          />
-         <div className="inputCollection__dual">
-            <InputDefault
-               type="number"
-               id="qtdEstoque"
-               placeholder="ex: 20"
-               textView="Qtd. no Estoque*"
-               register={registerQtdEstoque}
-               error={errors?.quantidade_estoque}
-            />
-            <InputDefault
-               type="number"
-               id="qtdEstoqueMinimo"
-               placeholder="ex: 5"
-               textView="Qtd. Mínimo no Estoque*"
-               register={registerQtdEstoqueMinimo}
-               error={errors?.estoque_minimo}
-            />
-         </div>
+         {
+            !dataProduto || Object.keys(dataProduto).length > 0 ? (
+               <InputDefault
+                  type="number"
+                  id="qtdEstoqueMinimo"
+                  placeholder="ex: 5"
+                  textView="Qtd. Mínimo no Estoque*"
+                  register={registerQtdEstoqueMinimo}
+                  error={errors?.estoque_minimo}
+               />
+            ) : (
+               <div className="inputCollection__dual">
+                  <InputDefault
+                     type="number"
+                     id="qtdEstoque"
+                     placeholder="ex: 20"
+                     textView="Qtd. no Estoque*"
+                     register={registerQtdEstoque}
+                     error={errors?.quantidade_estoque}
+                  />
+                  <InputDefault
+                     type="number"
+                     id="qtdEstoqueMinimo"
+                     placeholder="ex: 5"
+                     textView="Qtd. Mínimo no Estoque*"
+                     register={registerQtdEstoqueMinimo}
+                     error={errors?.estoque_minimo}
+                  />
+               </div>
+            )
+         }
          <div className="footerButtonContainerForForm">
             <button className={`buttonFormSec-style1`} onClick={handleCancel}>Cancelar</button>
 

@@ -13,17 +13,17 @@ async function getAllActiveClientes() {
         attributes: [
             "id",
             "nome_cliente",
-            "telefone",
             "cpf_cnpj",
+            "telefone",
             "tipo_cliente",
             "status",
             [
                 sequelize.fn("DATE_FORMAT", sequelize.col("Clientes.created_at"), "%d-%m-%Y %H:%i:%s"),
-                "created_at",
+                "data_criacao",
             ],
             [
                 sequelize.fn("DATE_FORMAT", sequelize.col("Clientes.updated_at"), "%d-%m-%Y %H:%i:%s"),
-                "updated_at",
+                "data_alteracao",
             ],
         ]
     })
@@ -38,17 +38,17 @@ async function getAllInactiveClientes() {
         attributes: [
             "id",
             "nome_cliente",
-            "telefone",
             "cpf_cnpj",
+            "telefone",
             "tipo_cliente",
             "status",
             [
                 sequelize.fn("DATE_FORMAT", sequelize.col("Clientes.created_at"), "%d-%m-%Y %H:%i:%s"),
-                "created_at",
+                "data_criacao",
             ],
             [
                 sequelize.fn("DATE_FORMAT", sequelize.col("Clientes.updated_at"), "%d-%m-%Y %H:%i:%s"),
-                "updated_at",
+                "data_alteracao",
             ],
         ]
     })

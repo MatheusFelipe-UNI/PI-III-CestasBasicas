@@ -29,8 +29,41 @@ function setCnpjMask(dataCollection) {
    return dataWithCnpjMask;
 }
 
+function setCpfOrCnpjMask(dataCollection) {
+   let newDataCollection;
+   if(!Array.isArray(dataCollection)) {
+      newDataCollection = Array(dataCollection);
+   } else {
+      newDataCollection = dataCollection
+   }
+
+   const dataWithCpfOrCnpjMask = newDataCollection.map((item) => {
+      const { tipo_cliente } = item;
+      let valueWithMask;
+
+      if(tipo_cliente === "PESSOA_FISICA") {
+         valueWithMask = String(item.cpf_cnpj).replace(
+            /^(\d{3})(\d{3})(\d{3})(\d{2})$/,
+            '$1.$2.$3-$4'
+         );
+      } else {
+         valueWithMask = String(item.cpf_cnpj).replace(
+            /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,
+            '$1.$2.$3/$4-$5'
+         );
+      }
+      return {
+         ...item,
+         cpf_cnpj: valueWithMask
+      }
+   })
+
+   return dataWithCpfOrCnpjMask;   
+}
+
 module.exports = {
    setFirstLetterToUpperCase, 
    removeAllAcentsForString,
-   setCnpjMask
+   setCnpjMask,
+   setCpfOrCnpjMask
 };

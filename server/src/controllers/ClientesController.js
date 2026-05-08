@@ -204,7 +204,12 @@ async function updateCliente(req, res) {
          telefone,
          tipo_cliente,
          cpf_cnpj
-      } = req.body;
+      } = req.body || {
+         nome_cliente: undefined,
+         telefone: undefined,
+         tipo_cliente: undefined,
+         cpf_cnpj: undefined
+      };
 
       if (!id || (!nome_cliente && !telefone && !tipo_cliente && !cpf_cnpj)) {
          throw new FieldUndefinedError("Um ou mais campos obrigatórios não identificados", {

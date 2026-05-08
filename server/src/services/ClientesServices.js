@@ -13,7 +13,7 @@ const { Op, where } = require("sequelize");
 const { Clientes, sequelize } = require("../models");
 const NotFoundError = require("../classes/NotFoundError");
 const ExistsDataError = require("../classes/ExistsDataError");
-const { removeAllAcentsForString } = require("../utils/DataFormatUtil.js");
+const { removeAllAcentsForString, setCpfOrCnpjMask } = require("../utils/DataFormatUtil.js");
 
 async function getAllClientesService() {
     const allClientes = await getAllClientes();
@@ -22,11 +22,17 @@ async function getAllClientesService() {
 
 async function getAllActiveClientesService() {
     const allActiveClientes = await getAllActiveClientes();
-    return allActiveClientes;
+    let formattedData = JSON.parse(JSON.stringify(allActiveClientes));
+    const activeClientesWithCpfCnpjMask = setCpfOrCnpjMask(formattedData);
+
+    return activeClientesWithCpfCnpjMask;
 }
 
 async function getAllInactiveClientesService() {
     const allInactiveClientes = await getAllInactiveClientes();
+    let formattedData = JSON.parse(JSON.stringify(allInactiveClientes));
+    const inactiveClientesWithCpfCnpjMask = setCpfOrCnpjMask(formattedData);
+
     return allInactiveClientes;
 }
 
@@ -135,6 +141,7 @@ async function createClienteService(clienteData) {
     const formattedDoc = cpf_cnpj && String(cpf_cnpj).replace(/\D/g, '').trim();
     const formattedCliente = nome_cliente && String(removeAllAcentsForString(nome_cliente)).trim();
     const existCliente = await getClienteByCPForCNPJ(formattedDoc);
+    const formattedTelefone = telefone && telefone.toString().replace(/\D/g, "");
 
     if (existCliente) {
         throw new ExistsDataError("Já existe um cliente com este CPF/CNPJ")
@@ -142,7 +149,7 @@ async function createClienteService(clienteData) {
 
     const createdCliente = await createCliente({
         nome_cliente: formattedCliente,
-        telefone,
+        telefone: formattedTelefone,
         tipo_cliente,
         cpf_cnpj: formattedDoc,
     });
@@ -152,24 +159,27 @@ async function createClienteService(clienteData) {
 
 async function updateClienteService(id, clienteData) {
     const cliente = await getClienteByIdService(id);
+    
+    const { nome_cliente, telefone, tipo_cliente, cpf_cnpj } = clienteData;
 
     if (!cliente) {
         throw new NotFoundError("Cliente não localizado!")
     }
 
-    const { nome_cliente, telefone, tipo_cliente, cpf_cnpj } = clienteData
-    const formattedDoc = cpf_cnpj && String(cpf_cnpj).replace(/\D/g, '').trim();
     const formattedCliente = nome_cliente && String(removeAllAcentsForString(nome_cliente)).trim();
-    const existCliente = await getClienteByCPForCNPJ(formattedDoc);
+    const formattedTelefone = telefone && telefone.toString().replace(/\D/g, "");
+    if(cpf_cnpj) {
+        const formattedDoc = cpf_cnpj && String(cpf_cnpj).replace(/\D/g, '').trim();
+        const existCliente = await getClienteByCPForCNPJ(formattedDoc);
 
-
-    if (existCliente && existCliente.id !== id) {
-        throw new ExistsDataError("Já existe um cliente com este CPF/CNPJ")
+        if (existCliente && existCliente.id !== id) {
+            throw new ExistsDataError("Já existe um cliente com este CPF/CNPJ")
+        }
     }
 
     const updateFields = {};
     if (nome_cliente !== undefined) updateFields.nome_cliente = formattedCliente
-    if (telefone !== undefined) updateFields.telefone = telefone
+    if (telefone !== undefined) updateFields.telefone = formattedTelefone
     if (cpf_cnpj !== undefined) updateFields.cpf_cnpj = formattedDoc
     if (tipo_cliente !== undefined) updateFields.tipo_cliente = tipo_cliente
 

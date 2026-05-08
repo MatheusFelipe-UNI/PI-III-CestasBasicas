@@ -9,23 +9,28 @@ export function InputSearch({
    handleOnChange,
    handleOnKeyPress,
    customStyle = {},
-   customClass = ""
+   customClass = "",
+   hasFilterButton = false,
 }) {
-   return(
+   return (
       <div className={`${styles.inputContainer} ${styles[customClass] || ""}`} style={customStyle}>
          <div className={styles.inputContent__input}>
-            <input 
-               type={type} 
+            <input
+               type={type}
                name={name}
                id={id}
                placeholder={placeholder}
                value={value}
                onKeyUp={handleOnKeyPress}
-               onChange={handleOnChange} 
+               onChange={handleOnChange}
                className={styles.input__searchField}
             />
          </div>
-         <button className={styles.inputContent__filterButton} title="Filtrar">Filtrar e Organizar</button>
+         {hasFilterButton && (
+            <button className={styles.inputContent__filterButton} title="Filtrar">
+               Filtrar e Organizar
+            </button>
+         )}
       </div>
-   )
+   );
 }

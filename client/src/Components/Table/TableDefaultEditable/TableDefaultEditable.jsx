@@ -2,7 +2,11 @@ import { useAlert } from "../../../Context/AlertContext";
 import { getElementIdTable } from "../../../utils/ManipulateDataUtil";
 import TableDefault from "../TableDefault/TableDefault";
 
-import { FaEdit as IconEdit, FaTrashAlt as IconDel } from "react-icons/fa";
+import { 
+   FaEdit as IconEdit, 
+   FaTrashAlt as IconDel,
+   FaUndo as IconUndo 
+} from "react-icons/fa";
 
 export function TableDefaultEditable({
    title = "",
@@ -12,19 +16,29 @@ export function TableDefaultEditable({
    customClassData = {},
    isModalChildren = false,
    handleEdit,
-   handleDelete
+   handleStatusChange,
+   currViewStatus
 }) {
    const { showConfirmAlert } = useAlert();
    
    const handleConfirmDelete = async (e) => {
       const id = getElementIdTable(e);
       await showConfirmAlert({
-         title: "Mover para a Lixeira",
+         title: "Desativar Fornecedor",
          message:
-            "Você tem certeza que deseja mover o Suprimento para a lixeira? (Esta ação poderá ser desfeita)",
-         handleConfirm: async () => await handleDelete(id),
+            "Você tem certeza que deseja DESATIVAR o Fornecedor? (Esta ação poderá ser desfeita)",
+         handleConfirm: async () => await handleStatusChange(id),
       });
    };
+
+   const handleConfirmReturn = async (e) => {
+      const id = getElementIdTable(e);
+      await showConfirmAlert({
+         title: "Reativar Fornecedor",
+         message: "Você tem certeza que deseja REATIVAR o Fornecedor?",
+         handleConfirm: async () => await handleStatusChange(id)
+      })
+   }
 
    const btnCollection = [
       {
@@ -43,6 +57,16 @@ export function TableDefaultEditable({
       },
    ];
 
+   const btnCollectionForInactive = [
+      {
+         id: 1,
+         infoView: <IconUndo/>,
+         handleAction: handleConfirmReturn,
+         className: "editBtn",
+         toolTipsText: "Reativar" 
+      }
+   ]
+
    return(
       <TableDefault
          title={title}
@@ -51,7 +75,7 @@ export function TableDefaultEditable({
          fieldsExcludes={fieldsExcludes}
          customClassData={customClassData}
          isModalChildren={isModalChildren}
-         btnCollection={btnCollection}
+         btnCollection={currViewStatus === "ATIVO" ? btnCollection : btnCollectionForInactive}
       />
    )
 

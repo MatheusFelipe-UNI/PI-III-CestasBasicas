@@ -21,7 +21,7 @@ export function FormFornecedor({ dataFornecedor, handleFornecedorSubmit, handleC
 
    const registerCnpjWithMask = useHookFormMask(register);
 
-   const registerCnpj = registerCnpjWithMask("cnpj", ["99.999.999/0001-99"], {
+   const registerCnpj = registerCnpjWithMask("cnpj", ["99.999.999/9999-99"], {
       required: "campo Obrigatório",
    });
 

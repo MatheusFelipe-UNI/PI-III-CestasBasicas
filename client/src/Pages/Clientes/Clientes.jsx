@@ -1,10 +1,13 @@
 import { Outlet } from "react-router";
 import MainLayout from "../../Components/layout/MainLayout";
+import { ClienteProvider } from "../../Context/ClientesContext";
 
 export function Clientes() {
    return(
-      <MainLayout title={"Clientes"}>
-         <Outlet/>
-      </MainLayout>
+      <ClienteProvider>
+         <MainLayout title={"Clientes"}>
+            <Outlet/>
+         </MainLayout>
+      </ClienteProvider>
    )
 }

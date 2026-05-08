@@ -25,9 +25,6 @@ export function FornecedoresMain() {
    const handleOpenModal = () => {
       showModal({
          modalName: "addFornecedor",
-         data: {
-            id: "1",
-         },
       });
    };
 
@@ -83,7 +80,6 @@ export function FornecedoresMain() {
          <ViewStatusBar 
             viewName="Fornecedores" 
             viewStatusName="fornecedores" 
-            currViewStatus={currViewStatus}
             changeViewStatus={changeCurrViewStatus}
          />
          {isLoading ? (

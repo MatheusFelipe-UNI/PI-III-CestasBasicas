@@ -11,6 +11,7 @@ export function FormCliente({ dataCliente, handleClienteSubmit, handleCancel }) 
       handleSubmit,
       resetField,
       watch,
+      setValue,
       formState: { errors, isDirty, dirtyFields },
    } = useForm({
       defaultValues: dataCliente || {
@@ -48,8 +49,10 @@ export function FormCliente({ dataCliente, handleClienteSubmit, handleCancel }) 
 
    // Limpa o campo CPF CNPJ toda vez que o tipo de cliente for alterado
    useEffect(() => {
-      if(watchTipoCliente !== "" && watchCpfCnpj !== "") {
-         resetField("cpf_cnpj");
+      if((!dataCliente && (watchTipoCliente !== "" && watchCpfCnpj !== "")) ||
+         (dataCliente && dataCliente?.tipo_cliente !== watchTipoCliente)
+      ) {
+         setValue("cpf_cnpj", "");
       }
    }, [watchTipoCliente])
 
@@ -110,8 +113,8 @@ export function FormCliente({ dataCliente, handleClienteSubmit, handleCancel }) 
                         type="text"
                         id="cpfCnpj"
                         placeholder="Informe o CNPJ"
-                        textView="CPF*"
-                        register={{...registerWithMask("cpf_cnpj", ["99.999.999/0001-99"], {
+                        textView="CNPJ*"
+                        register={{...registerWithMask("cpf_cnpj", ["99.999.999/9999-99"], {
                            required: "Campo Obrigatório"
                         })}}
                         error={errors?.cpf_cnpj}
@@ -123,7 +126,7 @@ export function FormCliente({ dataCliente, handleClienteSubmit, handleCancel }) 
                         textView="CPF/CNPJ"
                         disabled={true}
                         register={{...register("cpf_cnpj", {
-                           validate: () => watchTipoCliente !== "" || "Selecione o Tipo de Cliente..."
+                           validate: () => watchTipoCliente === "" || "Selecione o Tipo de Cliente..."
                         })}}
                         error={errors?.cpf_cnpj}
                      />
@@ -135,7 +138,7 @@ export function FormCliente({ dataCliente, handleClienteSubmit, handleCancel }) 
 
             <button
                className={`buttonFormMain-style1 ${
-                  dataCliente && isDirty ? "buttonFormMain-style1__inactive" : ""
+                  dataCliente && !isDirty ? "buttonFormMain-style1__inactive" : ""
                }`}
             >
                {dataCliente ? "Confirmar Alterações" : "Cadastrar Cliente"}

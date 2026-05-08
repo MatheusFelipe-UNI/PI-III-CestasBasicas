@@ -57,7 +57,6 @@ export async function createFornecedorService(body) {
          Authorization: `Bearer ${Cookies.get("token")}`
       }
    })
-   console.log(res);
    return res;
 }
 

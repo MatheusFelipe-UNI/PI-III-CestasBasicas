@@ -60,7 +60,7 @@ export function FormFornecedor({ dataFornecedor, handleFornecedorSubmit, handleC
                <button className={`buttonFormSec-style1`} onClick={handleCancel}>Cancelar</button>
 
                <button className={`buttonFormMain-style1 ${
-               dataFornecedor && isDirty ? "buttonFormMain-style1__inactive" : ""
+               dataFornecedor && !isDirty ? "buttonFormMain-style1__inactive" : ""
             }`}>
                {dataFornecedor ? "Confirmar Alterações" : "Cadastrar Fornecedor"}
             </button>

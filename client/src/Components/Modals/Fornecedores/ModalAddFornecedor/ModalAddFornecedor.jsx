@@ -5,7 +5,7 @@ import { FormFornecedor } from "../../../Forms/Fornecedores/FormFornecedor";
 
 export function ModalAddFornecedor() {
    const { showSuccessAlert, showErrorAlert } = useAlert();
-   const { showDataInfo, closeModal } = useModal();
+   const { closeModal } = useModal();
    const { createFornecedor } = useFornecedor();
 
    const handleRegisterFornecedor = async ({nome_fornecedor, cnpj}) => {
@@ -18,7 +18,6 @@ export function ModalAddFornecedor() {
          }
 
          if(await createFornecedor({nome_fornecedor, cnpj})) {
-            console.log("deu certo em cadastrar");
             showSuccessAlert({
                title: "Fornecedor Cadastrado com Sucesso!"
             });

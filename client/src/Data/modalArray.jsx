@@ -8,6 +8,7 @@ import { ModalAddCliente } from "../Components/Modals/Clientes/ModalAddCliente";
 // Usuario
 import { ModalAddUser } from "../Components/Modals/Administrador/ModalAddUser";
 import { ModalAddCesta } from "../Components/Modals/Cestas/ModalAddCesta/ModalAddCesta";
+import { ModalEditFornecedor } from "../Components/Modals/Fornecedores/ModalEditFornecedor/ModalEditFornecedor";
 
 export const modalCollection = [
    // Produtos
@@ -26,6 +27,11 @@ export const modalCollection = [
       name: "addFornecedor",
       title: "Adicionar Novo Fornecedor",
       modalContent: <ModalAddFornecedor/>
+   },
+   {
+      name: "editFornecedor",
+      title: "Editar Fornecedor",
+      modalContent: <ModalEditFornecedor/>
    },
    //Clientes
    {

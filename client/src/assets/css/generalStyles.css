@@ -88,6 +88,14 @@ span.errorMessage {
    opacity: .7;
 }
 
+
+.buttonFormMain-style1__inactive {
+   pointer-events: none!important;
+   user-select: none!important;
+   background-color: var(--colorInactive)!important;
+   border-color: var(--colorInactive)!important;
+}
+
 /* 
 ===================================================================
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

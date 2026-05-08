@@ -9,7 +9,7 @@ import {
    updateFornecedorStatusService,
 } from "../Services/fornecedores.service";
 import { getScreenViewStatusByKey, setScreenViewStatusByKey } from "../utils/ViewStatusUtil";
-import { searchFilterData } from "../utils/SearchFilterUtil";
+import { customSearchFilterFornecedor, searchFilterData } from "../utils/SearchFilterUtil";
 
 const FornecedorContext = createContext(null);
 
@@ -17,13 +17,6 @@ export function FornecedorProvider({ children }) {
    const [fornecedores, setFornecedores] = useState();
    const [filteredFornecedores, setFilteredFornecedores] = useState();
    const [currViewStatus, setCurrViewStatus] = useState(getScreenViewStatusByKey("fornecedores") || "ATIVO"); 
-
-   const [activeFornecedores, setActiveFornecedores] = useState();
-   const [filteredActiveFornecedores, setFilteredActiveFornecedores] = useState();
-
-   //  Inativos
-   const [inactiveFornecedores, setInactiveFornecedores] = useState();
-   const [filteredInactiveFornecedores, setFilteredInactiveFornecedores] = useState();
 
    const [isLoading, setIsLoading] = useState(false);
    const [searchParams, setSearchParams] = useSearchParams();
@@ -60,26 +53,10 @@ export function FornecedorProvider({ children }) {
          "cnpj"
       ]
       if(fornecedores && Array.isArray(fornecedores)) {
-         const filteredData = searchFilterData(fornecedores, searchValue);
+         const filteredData = customSearchFilterFornecedor(fornecedores, searchValue, fieldsForSearch);
          setFilteredFornecedores(filteredData);
       }
    }
-
-   // PENDENTE
-   const loadFilteredActiveFornecedores = (activeFornecedores, searchValue) => {
-      if (activeFornecedores && Array.isArray(activeFornecedores)) {
-         const filteredData = () => null;
-         setFilteredActiveFornecedores();
-      }
-   };
-
-   // PENDENTE
-   const loadFilteredInactiveFornecedores = (inactiveFornecedores, searchValue) => {
-      if (inactiveFornecedores && Array.isArray(inactiveFornecedores)) {
-         const filteredData = () => null;
-         setFilteredInactiveFornecedores();
-      }
-   };
 
    const defineSearchParams = (searchValue) => {
       if (searchValue || searchValueMemo) {
@@ -99,7 +76,7 @@ export function FornecedorProvider({ children }) {
       const res = await updateFornecedorService(id, newFornecedorData);
 
       if (res.data.status === "success" || res.status === 200) {
-         await getAllActiveFornecedores();
+         await getAllFornecedores(currViewStatus);
          return true;
       }
    };
@@ -108,8 +85,8 @@ export function FornecedorProvider({ children }) {
       const res = await updateFornecedorStatusService(id, newFornecedorStatus);
 
       if (res.data.status === "success" || res.status === 200) {
-         await getAllActiveFornecedores();
-         await getAllInactiveFornecedores();
+         await getAllFornecedores(currViewStatus);
+         return true;
       }
    };
 
@@ -124,6 +101,7 @@ export function FornecedorProvider({ children }) {
    // useEffectEvents
    const onInit = useEffectEvent(() => init());
 
+   const onGetAllFornecedores = useEffectEvent((currViewStatus) => getAllFornecedores(currViewStatus));
    const onLoadFilteredFornecedores = useEffectEvent((fornecedores, searchValue) => loadFilteredFornecedores(fornecedores, searchValue))
 
    useEffect(() => {
@@ -135,7 +113,7 @@ export function FornecedorProvider({ children }) {
    }, [fornecedores, searchValueMemo])
 
    useEffect(() => {
-      getAllFornecedores(currViewStatus)
+      onGetAllFornecedores(currViewStatus)
    }, [currViewStatus])
 
 

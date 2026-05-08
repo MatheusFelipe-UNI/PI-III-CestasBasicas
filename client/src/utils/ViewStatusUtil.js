@@ -14,7 +14,7 @@ const DEFAULT_STATUS = {
 
 export function getScreenViewStatus() {
    const storedData = localStorage.getItem(STORAGE_KEY);
-   if(!stored) {
+   if(!storedData) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_STATUS));
       return DEFAULT_STATUS
    }
@@ -38,7 +38,7 @@ export function setScreenViewStatusByKey(key, newValue) {
    const storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
    const newStoredData = {
       ...storedData,
-      key: newValue
+      [key]: newValue
    }
    localStorage.setItem(STORAGE_KEY, JSON.stringify(newStoredData));
 }

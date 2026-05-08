@@ -9,4 +9,28 @@ function removeAllAcentsForString(text) {
    return formattedtext;
 }
 
-module.exports = {setFirstLetterToUpperCase, removeAllAcentsForString};
+function setCnpjMask(dataCollection) {
+   let newDataCollection;
+   if(!Array.isArray(dataCollection)) {
+      newDataCollection = Array(dataCollection);
+   } else {
+      newDataCollection = dataCollection
+   }
+
+   const dataWithCnpjMask = newDataCollection.map((item) => {
+      const maskCnpj = String(item.cnpj).replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,
+      '$1.$2.$3/$4-$5');
+      return {
+         ...item,
+         cnpj: maskCnpj
+      }
+   })
+
+   return dataWithCnpjMask;
+}
+
+module.exports = {
+   setFirstLetterToUpperCase, 
+   removeAllAcentsForString,
+   setCnpjMask
+};

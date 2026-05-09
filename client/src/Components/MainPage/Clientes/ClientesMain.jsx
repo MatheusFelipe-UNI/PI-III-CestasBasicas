@@ -59,7 +59,7 @@ export function ClientesMain() {
             const { errMessage } = error.response.data;
 
             showErrorAlert({
-               title: "Erro ao Mover Fornecedor",
+               title: "Erro ao Alterar Status de Produto",
                message: errMessage,
             });
          }

@@ -25,7 +25,6 @@ export function ModalEditCliente() {
 
    const handleSubmitCliente = async (newClienteData) => {
       try {
-         console.log(newClienteData);
          if(await updateCliente(id, newClienteData)) {
             showSuccessAlert({
                title: "Cliente Alterado com Sucesso!"
@@ -38,7 +37,7 @@ export function ModalEditCliente() {
             const { errMessage } = error.response.data;
 
             showErrorAlert({
-               title: "Erro ao cadastrar Fornecedor",
+               title: "Erro ao editar Cliente",
                message: errMessage
             })
          }

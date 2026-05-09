@@ -2,6 +2,10 @@ button.btnTable:hover { opacity: 0.8; }
 
 button.acceptBtn { background-color: var(--colorPrim); }
 
+button.primBtnDark {
+    background-color: var(--colorPrimDark);
+}
+
 button.editBtn {
     background-color: var(--colorYellow);
     color: #393939;

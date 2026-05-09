@@ -1,15 +1,17 @@
 // Produtos
 import { ModalAddProduto } from "../Components/Modals/Produtos/ModalAddProduto/ModalAddProduto";
 import { ModalAddEntradaProdutos } from "../Components/Modals/Produtos/Entrada/ModalAddEntradaProdutos/ModalAddEntradaProdutos";
+import { ModalEditProduto } from "../Components/Modals/Produtos/ModalEditProduto/ModalEditProduto";
 // Fornecedor
 import { ModalAddFornecedor } from "../Components/Modals/Fornecedores/ModalAddFornecedor/ModalAddFornecedor";
+import { ModalEditFornecedor } from "../Components/Modals/Fornecedores/ModalEditFornecedor/ModalEditFornecedor";
 // Cliente
 import { ModalAddCliente } from "../Components/Modals/Clientes/ModalAddCliente/ModalAddCliente";
+import { ModalEditCliente } from "../Components/Modals/Clientes/ModalEditCliente/ModalEditCliente";
 // Usuario
 import { ModalAddUser } from "../Components/Modals/Administrador/ModalAddUser";
+// Cesta
 import { ModalAddCesta } from "../Components/Modals/Cestas/ModalAddCesta/ModalAddCesta";
-import { ModalEditFornecedor } from "../Components/Modals/Fornecedores/ModalEditFornecedor/ModalEditFornecedor";
-import { ModalEditCliente } from "../Components/Modals/Clientes/ModalEditCliente/ModalEditCliente";
 
 export const modalCollection = [
    // Produtos
@@ -17,6 +19,11 @@ export const modalCollection = [
       name: "addProduto",
       title: "Adicionar Novo Produto",
       modalContent: <ModalAddProduto />,
+   },
+   {
+      name: "editProduto",
+      title: "Editar Produto",
+      modalContent: <ModalEditProduto/>
    },
    {
       name: "addEntradaProdutos",

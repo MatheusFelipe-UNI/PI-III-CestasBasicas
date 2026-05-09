@@ -133,4 +133,5 @@ export function ClienteProvider({ children }) {
 
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useCliente = () => useContext(ClienteContext);

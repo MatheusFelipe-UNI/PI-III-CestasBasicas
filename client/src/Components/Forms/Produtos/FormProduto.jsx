@@ -11,7 +11,7 @@ export function FormProduto({ dataProduto, handleProdutoSubmit, handleCancel }) 
    } = useForm({
       defaultValues: dataProduto || {
          nome_produto: "",
-         unidade: "",
+         tipo_unidade: "",
          quantidade_estoque: null,
          estoque_minimo: null
       }
@@ -21,7 +21,7 @@ export function FormProduto({ dataProduto, handleProdutoSubmit, handleCancel }) 
       required: "Campo Obrigatório"
    });
 
-   const registerUnidade = register("unidade", {
+   const registerUnidade = register("tipo_unidade", {
       required: "campo Obrigatório",
    });
 
@@ -61,11 +61,11 @@ export function FormProduto({ dataProduto, handleProdutoSubmit, handleCancel }) 
          />
          <InputDefault
             type="text"
-            id="unidade"
+            id="tipoUnidade"
             placeholder="ex: UN, KG, L etc."
             textView="Tipo de Unidade*"
             register={registerUnidade}
-            error={errors?.unidade}
+            error={errors?.tipo_unidade}
          />
          {
             !dataProduto || Object.keys(dataProduto).length > 0 ? (
@@ -102,7 +102,7 @@ export function FormProduto({ dataProduto, handleProdutoSubmit, handleCancel }) 
             <button className={`buttonFormSec-style1`} onClick={handleCancel}>Cancelar</button>
 
             <button className={`buttonFormMain-style1 ${
-               dataProduto && isDirty ? "buttonFormMain-style1__inactive" : ""
+               dataProduto && !isDirty ?"buttonFormMain-style1__inactive" : ""
             }`}>
                {dataProduto ? "Confirmar Alterações" : "Cadastrar Produto"}
             </button>

@@ -7,19 +7,36 @@ export default function TBodyProdutos({
    fieldsExcludes = [],
    customClassData = {},
 }) {
-   const { qtd_estoque, estoque_minimo } = dataInfo;
+   const { quantidade_estoque, estoque_minimo } = dataInfo;
+
+   const handleSetStatusClass = (qtd_estoque, qtd_estoque_minimo) => {
+      const diffQtd = Number(qtd_estoque) - Number(qtd_estoque_minimo);
+      let statusClass;
+      if(diffQtd > 0 && diffQtd <= 3) {
+         statusClass = "yellowStyle";
+      
+      } else if(diffQtd <= 0) {
+         statusClass = "redStyle";
+
+      } else {
+         statusClass = "greenStyle";
+      }
+      return statusClass;
+   }
 
    return (
-      <tr
-         id={dataInfo.id}
-         style={
-            qtd_estoque <= estoque_minimo
-               ? { backgroundColor: "#ffc3c3", color: "var(--colorText-for-bg-red)", fontWeight: "500" }
-               : {}
-         }
-      >
+      <tr id={dataInfo.id}>
          {Object.entries(dataInfo).map(([key, value], index) => {
             if (!fieldsExcludes.includes(key)) {
+               if(key === "status_estoque") {
+                  return(
+                     <td key={index}>
+                        <p className={handleSetStatusClass(quantidade_estoque, estoque_minimo)}>
+                           {value}
+                        </p>
+                     </td>
+                  )
+               }
                return (
                   <TCell
                      key={index}

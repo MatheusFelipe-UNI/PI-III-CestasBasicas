@@ -24,9 +24,9 @@ export function TableDefaultEditable({
    const handleConfirmDelete = async (e) => {
       const id = getElementIdTable(e);
       await showConfirmAlert({
-         title: "Desativar Fornecedor",
+         title: "Desativar Registro",
          message:
-            "Você tem certeza que deseja DESATIVAR o Fornecedor? (Esta ação poderá ser desfeita)",
+            "Você tem certeza que deseja DESATIVAR o Registro? (Esta ação poderá ser desfeita)",
          handleConfirm: async () => await handleStatusChange(id),
       });
    };
@@ -34,8 +34,8 @@ export function TableDefaultEditable({
    const handleConfirmReturn = async (e) => {
       const id = getElementIdTable(e);
       await showConfirmAlert({
-         title: "Reativar Fornecedor",
-         message: "Você tem certeza que deseja REATIVAR o Fornecedor?",
+         title: "Reativar Registro",
+         message: "Você tem certeza que deseja REATIVAR o Registro?",
          handleConfirm: async () => await handleStatusChange(id)
       })
    }

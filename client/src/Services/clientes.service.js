@@ -74,12 +74,6 @@ export async function updateClienteService(id, body) {
    return res;
 }
 
-
-/* 
-==================================
-method = PATCH
-==================================
-*/
 export async function updateClienteStatusService(id, newStatus) {
    const res = await axios.patch(`${localServer}/clientes/${id}/status`, { status: newStatus }, {
       headers: {

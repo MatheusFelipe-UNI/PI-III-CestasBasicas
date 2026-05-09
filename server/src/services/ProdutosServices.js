@@ -9,6 +9,7 @@ const { getProdutoById,
     createProduto,
     updateProduto,
 } = require("../repositories/ProdutosRepository");
+const { setStatusEstoqueForProdutos } = require("../utils/DataFormatUtil");
 
 
 async function getAllProdutosService() {
@@ -18,12 +19,18 @@ async function getAllProdutosService() {
 
 async function getAllActiveProdutosService() {
     const allActiveProdutos = await getAllActiveProdutos();
-    return allActiveProdutos;
+    let formattedData = JSON.parse(JSON.stringify(allActiveProdutos));
+    const activeProdutosWithStatusEstoque = setStatusEstoqueForProdutos(formattedData);
+
+    return activeProdutosWithStatusEstoque;
 }
 
 async function getAllInactiveProdutosService() {
     const allInactiveProdutos = await getAllInactiveProdutos();
-    return allInactiveProdutos;
+    let formattedData = JSON.parse(JSON.stringify(allInactiveProdutos));
+    const inactiveProdutosWithStatusEstoque = setStatusEstoqueForProdutos(formattedData);
+    
+    return inactiveProdutosWithStatusEstoque;
 }
 
 async function getProdutoByIdService(idProduto) {

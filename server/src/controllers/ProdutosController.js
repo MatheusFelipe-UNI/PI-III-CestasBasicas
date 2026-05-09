@@ -154,20 +154,17 @@ async function createProduto(req, res) {
       const {
          nome_produto,
          tipo_unidade,
-         quantidade_estoque,
          estoque_minimo
       } = req.body;
 
       if(!nome_produto || 
          !tipo_unidade || 
-         (quantidade_estoque === null || quantidade_estoque === undefined) || 
          (estoque_minimo === null || estoque_minimo === undefined)
       ) {
          throw new FieldUndefinedError("Um ou mais campos não identificados", {
             dados_passados: {
                nome_produto: nome_produto || "Não encontrado",
                tipo_unidade: tipo_unidade || "Não encontrado",
-               quantidade_estoque: quantidade_estoque || "Não encontrado",
                estoque_minimo: estoque_minimo || "Não encontrado",
             }
          })
@@ -176,7 +173,7 @@ async function createProduto(req, res) {
       const createdProduto = await createProdutoService({
          nome_produto,
          tipo_unidade,
-         quantidade_estoque,
+         quantidade_estoque: 0,
          estoque_minimo
       })
 

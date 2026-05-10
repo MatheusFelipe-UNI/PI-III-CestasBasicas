@@ -223,29 +223,29 @@ async function getAllActiveLotesProdutosByProdutoWithFilterAndOrderBy(req, res) 
 async function createLoteProduto(req, res) {
    try {
       const {
-         id_produto,
-         id_fornecedor,
+         fk_id_produto,
+         fk_id_fornecedor,
          valor_unitario,
          qtd_disponivel,
          data_validade
       } = req.body || {
-         id_produto: undefined,
-         id_fornecedor: undefined,
+         fk_id_produto: undefined,
+         fk_id_fornecedor: undefined,
          valor_unitario: undefined,
          qtd_disponivel: undefined,
          data_validade: undefined
       };
 
-      if(!id_produto || 
-         !id_fornecedor || 
+      if(!fk_id_produto || 
+         !fk_id_fornecedor || 
          !valor_unitario || 
          (qtd_disponivel === undefined || qtd_disponivel === null) || 
          !data_validade
       ) {
          throw new FieldUndefinedError("Um ou mais campos não identificados", {
             fields: {
-               id_produto: id_produto || "NÃO ENCONTRADO",
-               id_fornecedor: id_fornecedor || "NÃO ENCONTRADO",
+               fk_id_produto: fk_id_produto || "NÃO ENCONTRADO",
+               fk_id_fornecedor: fk_id_fornecedor || "NÃO ENCONTRADO",
                valor_unitario: valor_unitario || "NÃO ENCONTRADO",
                qtd_disponivel: qtd_disponivel || "NÃO ENCONTRADO",
                data_validade: data_validade || "NÃO ENCONTRADO",
@@ -255,8 +255,8 @@ async function createLoteProduto(req, res) {
 
       // Status já será definido como ativo automaticamente na criação
       const createdLoteProduto = await createLoteProdutoService({
-         id_produto,
-         id_fornecedor,
+         fk_id_produto,
+         fk_id_fornecedor,
          valor_unitario,
          qtd_disponivel,
          is_vencido: Number(0),
@@ -276,20 +276,20 @@ async function updateLoteProduto(req, res) {
       const id = Number(req.params.id);
 
       const {
-         id_fornecedor,
+         fk_id_fornecedor,
          valor_unitario,
          qtd_disponivel,
          is_vencido,
          data_validade
       } = req.body || {
-         id_fornecedor: undefined,
+         fk_id_fornecedor: undefined,
          valor_unitario: undefined,
          qtd_disponivel: undefined,
          is_vencido: undefined,
          data_validade: undefined
       };
 
-      if(!id || (!id_fornecedor && 
+      if(!id || (!fk_id_fornecedor && 
                  !valor_unitario && 
                  (qtd_disponivel === undefined || qtd_disponivel === null) && 
                  (is_vencido === undefined || is_vencido === null) && 
@@ -298,7 +298,7 @@ async function updateLoteProduto(req, res) {
          throw new FieldUndefinedError("Um ou mais campos não identificados", {
             fields: {
                id: id || "NÃO ENCONTRADO",
-               id_fornecedor: id_fornecedor || "NÃO ENCONTRADO",
+               fk_id_fornecedor: fk_id_fornecedor || "NÃO ENCONTRADO",
                valor_unitario: valor_unitario || "NÃO ENCONTRADO",
                qtd_disponivel: qtd_disponivel || "NÃO ENCONTRADO",
                is_vencido: is_vencido || "NÃO ENCONTRADO",
@@ -308,7 +308,7 @@ async function updateLoteProduto(req, res) {
       }
 
       const [rowAffected] = await updateLoteProdutoService(id, {
-         id_fornecedor,
+         fk_id_fornecedor,
          valor_unitario,
          qtd_disponivel,
          is_vencido,

@@ -15,6 +15,7 @@ const {
     changeFornecedorStatusService,
     createFornecedorService,
     updateFornecedorService,
+    getAllFornecedoresForSelectService,
 } = require ("../services/FornecedoresServices.js")
 
 /* 
@@ -81,6 +82,15 @@ async function getAllActiveFornecedoresByFilterAndOrderBy(req, res) {
 
       return res.status(200).json(filteredFornecedores);
 
+   } catch (error) {
+      errorResponse(error, res);
+   }
+}
+
+async function getAllFornecedoresForSelect(req, res) {
+   try {
+      const allFornecedores = await getAllFornecedoresForSelectService();
+      return res.status(200).json(allFornecedores);
    } catch (error) {
       errorResponse(error, res);
    }
@@ -230,6 +240,7 @@ module.exports = {
    getAllActiveFornecedores,
    getAllInactiveFornecedores,
    getAllActiveFornecedoresByFilterAndOrderBy,
+   getAllFornecedoresForSelect,
    getFornecedorById,
    changeFornecedorStatus,
    createFornecedor,

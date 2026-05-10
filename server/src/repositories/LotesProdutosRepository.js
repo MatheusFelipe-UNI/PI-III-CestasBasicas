@@ -8,50 +8,62 @@ async function getAllLotesProdutos() {
 
 async function getAllActiveLotesProdutos() {
     const allActiveLotes = await Lotes_produtos.findAll({
+        include: [
+            {
+                association: "produtos_lote",
+                attributes: []
+            },
+            {
+                association: "fornecedor_produto",
+                attributes: []
+            }
+        ],
+        attributes: [
+            "id",
+            [sequelize.col("produtos_lote.nome_produto"), "nome_produto"],
+            [sequelize.col("fornecedor_produto.nome_fornecedor"), "nome_fornecedor"],
+            [sequelize.col("produtos_lote.tipo_unidade"), "tipo_unidade"],
+            "qtd_disponivel",
+            "valor_unitario",
+            "is_vencido",
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.data_validade"), "%d-%m-%Y"), "data_vencimento",],
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.created_at"), "%d-%m-%Y %H:%i:%s"), "data_criacao",],
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.updated_at"), "%d-%m-%Y %H:%i:%s"), "data_alteracao",],
+        ],
         where: {
             status: "ATIVO"
         },
-        attributes: [
-            "id",
-            "fk_id_produto",
-            "valor_unitario",
-            "qtd_disponivel",
-            "is_vencido",
-            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.data_validade"), "%d-%m-%Y"), "data_validade",],
-            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.created_at"), "%d-%m-%Y %H:%i:%s"), "created_at",],
-            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.updated_at"), "%d-%m-%Y %H:%i:%s"), "updated_at",],
-        ],
-        include: [
-            {
-                association: "fornecedor_produto",
-                attributes: ["id", "nome_fornecedor"],
-            }
-        ],
     });
     return allActiveLotes;
 }
 
 async function getAllInactiveLotesProdutos() {
     const allInactiveLotes = await Lotes_produtos.findAll({
+        include: [
+            {
+                association: "produtos_lote",
+                attributes: []
+            },
+            {
+                association: "fornecedor_produto",
+                attributes: []
+            }
+        ],
+        attributes: [
+            "id",
+            [sequelize.col("produtos_lote.nome_produto"), "nome_produto"],
+            [sequelize.col("fornecedor_produto.nome_fornecedor"), "nome_fornecedor"],
+            [sequelize.col("produtos_lote.tipo_unidade"), "tipo_unidade"],
+            "qtd_disponivel",
+            "valor_unitario",
+            "is_vencido",
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.data_validade"), "%d-%m-%Y"), "data_vencimento",],
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.created_at"), "%d-%m-%Y %H:%i:%s"), "data_criacao",],
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.updated_at"), "%d-%m-%Y %H:%i:%s"), "data_alteracao",],
+        ],
         where: {
             status: "INATIVO"
         },
-        attributes: [
-            "id",
-            "fk_id_produto",
-            "valor_unitario",
-            "qtd_disponivel",
-            "is_vencido",
-            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.data_validade"), "%d-%m-%Y"), "data_validade",],
-            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.created_at"), "%d-%m-%Y %H:%i:%s"), "created_at",],
-            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.updated_at"), "%d-%m-%Y %H:%i:%s"), "updated_at",],
-        ],
-        include: [
-            {
-                association: "fornecedor_produto",
-                attributes: ["id", "nome_fornecedor"],
-            }
-        ],
     });
     return allInactiveLotes;
 }
@@ -129,7 +141,26 @@ async function getAllLotesProdutosByFornecedor(idFornecedor) {
 }
 
 async function getLoteProdutoById(idLoteProduto) {
-    const idLote = await Lotes_produtos.findByPk(idLoteProduto);
+    const idLote = await Lotes_produtos.findByPk(idLoteProduto, {
+        include: [
+            {
+                association: "produtos_lote",
+                attributes: []
+            }
+        ],
+        attributes: [
+            "id",
+            [sequelize.col("produtos_lote.nome_produto"), "nome_produto"],
+            "fk_id_produto",
+            "fk_id_fornecedor",
+            "qtd_disponivel",
+            "valor_unitario",
+            "is_vencido",
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.data_validade"), "%d/%m/%Y"), "data_validade",],
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.created_at"), "%d-%m-%Y %H:%i:%s"), "data_criacao",],
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.updated_at"), "%d-%m-%Y %H:%i:%s"), "data_alteracao",],           
+        ]
+    });
     return idLote
 }
 
@@ -142,30 +173,64 @@ async function getAllLotesProdutosByProduto(idProduto) {
 
 async function getAllActiveLotesProdutosByProduto(idProduto) {
     const activeLotesByProduto = await Lotes_produtos.findAll({
+        include: [
+            {
+                association: "produtos_lote",
+                attributes: []
+            },
+            {
+                association: "fornecedor_produto",
+                attributes: []
+            }
+        ],
+        attributes: [
+            "id",
+            [sequelize.col("produtos_lote.nome_produto"), "nome_produto"],
+            [sequelize.col("fornecedor_produto.nome_fornecedor"), "nome_fornecedor"],
+            [sequelize.col("produtos_lote.tipo_unidade"), "tipo_unidade"],
+            "qtd_disponivel",
+            "valor_unitario",
+            "is_vencido",
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.data_validade"), "%d-%m-%Y"), "data_vencimento",],
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.created_at"), "%d-%m-%Y %H:%i:%s"), "data_criacao",],
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.updated_at"), "%d-%m-%Y %H:%i:%s"), "data_alteracao",],
+        ],
         where: {
             status: "ATIVO",
             fk_id_produto: idProduto
-        }
-    });
-    return activeLotesByProduto;
-}
-
-async function getAllActiveLotesProdutosByProduto(idProduto) {
-    const activeLotesByProduto = await Lotes_produtos.findAll({
-        where: {
-            status: "ATIVO",
-            fk_id_produto: idProduto
-        }
+        },
     });
     return activeLotesByProduto;
 }
 
 async function getAllInactiveLotesProdutosByProduto(idProduto) {
     const inactiveLotesByProduto = await Lotes_produtos.findAll({
+        include: [
+            {
+                association: "produtos_lote",
+                attributes: []
+            },
+            {
+                association: "fornecedor_produto",
+                attributes: []
+            }
+        ],
+        attributes: [
+            "id",
+            [sequelize.col("produtos_lote.nome_produto"), "nome_produto"],
+            [sequelize.col("fornecedor_produto.nome_fornecedor"), "nome_fornecedor"],
+            [sequelize.col("produtos_lote.tipo_unidade"), "tipo_unidade"],
+            "qtd_disponivel",
+            "valor_unitario",
+            "is_vencido",
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.data_validade"), "%d-%m-%Y"), "data_vencimento",],
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.created_at"), "%d-%m-%Y %H:%i:%s"), "data_criacao",],
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Lotes_produtos.updated_at"), "%d-%m-%Y %H:%i:%s"), "data_alteracao",],
+        ],
         where: {
             status: "INATIVO",
             fk_id_produto: idProduto
-        }
+        },
     });
     return inactiveLotesByProduto;
 }
@@ -227,16 +292,7 @@ async function getAllActiveLotesProdutosByProdutoWithFilterAndOrderBy(idProduto,
 }
 
 async function createLoteProduto(loteProdutoData) {
-        const newLote = {
-            fk_id_produto: loteProdutoData.id_produto,
-            fk_id_fornecedor: loteProdutoData.id_fornecedor,
-            valor_unitario: loteProdutoData.valor_unitario,
-            qtd_disponivel: loteProdutoData.qtd_disponivel,
-            data_validade: loteProdutoData.data_validade,
-            is_vencido: loteProdutoData.is_vencido,
-            status: "ATIVO"
-        }
-    const createdLote = await Lotes_produtos.create(newLote)   
+    const createdLote = await Lotes_produtos.create(loteProdutoData)   
     return createdLote;
 }
 

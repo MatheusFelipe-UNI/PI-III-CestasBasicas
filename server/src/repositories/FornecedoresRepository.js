@@ -77,6 +77,19 @@ async function getAllActiveFornecedoresByFilterAndOrderBy(filters, validOrderBy)
     return filteredFornecedores;
 }
 
+async function findAllFornecedoresForSelect() {
+    const allFornecedores = await Fornecedores.findAll({
+        attributes: [
+            [sequelize.col("id"), "value"], 
+            [sequelize.col("nome_fornecedor"), "label"]
+        ],
+        where: {
+            status: "ATIVO"
+        }
+    });
+    return allFornecedores;
+}
+
 async function getFornecedorById(idFornecedor) {
     const Fornecedor = await Fornecedores.findByPk(idFornecedor);
     return Fornecedor;
@@ -119,6 +132,7 @@ module.exports = {
     getAllActiveFornecedores,
     getAllInactiveFornecedores,
     getAllActiveFornecedoresByFilterAndOrderBy,
+    findAllFornecedoresForSelect,
     getFornecedorById,
     getFornecedorByCNPJ,
     changeFornecedorestatus,

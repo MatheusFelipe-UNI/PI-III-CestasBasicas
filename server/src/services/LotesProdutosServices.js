@@ -66,12 +66,38 @@ async function getAllLotesProdutosByProdutoService(idProduto) {
 
 async function getAllActiveLotesProdutosByProdutoService(idProduto) {
     const activeLotesByProduto = await getAllActiveLotesProdutosByProduto(idProduto);
-    return activeLotesByProduto
+    let formattedData = JSON.parse(JSON.stringify(activeLotesByProduto));
+    const newActiveLotesByProduto = formattedData.map(lote => ({
+        id: lote.id,
+        nome_produto: lote.nome_produto,
+        nome_fornecedor: lote.nome_fornecedor,
+        tipo_unidade: lote.tipo_unidade,
+        qtd_disponivel: lote.qtd_disponivel,
+        valor_unitario: lote.valor_unitario,
+        is_vencido: lote.is_vencido,
+        data_vencimento: lote.data_vencimento,
+        data_criacao: lote.data_criacao,
+        data_alteracao: lote.data_alteracao
+    }));
+    return newActiveLotesByProduto
 }
 
 async function getAllInactiveLotesProdutosByProdutoService(idProduto) {
     const inactiveLotesByProduto = await getAllInactiveLotesProdutosByProduto(idProduto);
-    return inactiveLotesByProduto
+    let formattedData = JSON.parse(JSON.stringify(inactiveLotesByProduto));
+    const newInactiveLotesByProduto = formattedData.map(lote => ({
+        id: lote.id,
+        nome_produto: lote.nome_produto,
+        nome_fornecedor: lote.nome_fornecedor,
+        tipo_unidade: lote.tipo_unidade,
+        qtd_disponivel: lote.qtd_disponivel,
+        valor_unitario: lote.valor_unitario,
+        is_vencido: lote.is_vencido,
+        data_vencimento: lote.data_vencimento,
+        data_criacao: lote.data_criacao,
+        data_alteracao: lote.data_alteracao
+    }));
+    return newInactiveLotesByProduto
 }
 
 async function getAllActiveLotesProdutosByProdutoWithFilterAndOrderByService(idProduto, { orderBy, filterOptions }) {
@@ -92,32 +118,38 @@ async function getAllActiveLotesProdutosByProdutoWithFilterAndOrderByService(idP
 
 async function createLoteProdutoService(loteProdutoData) {
 
-const hoje = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
+    const hoje = new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+    const dataValidade = new Date(loteProdutoData.data_validade);
+    const dataHoje = new Date(hoje);
 
-    if(loteProdutoData.data_validade <= hoje) {
-        throw new CannotCreateError ("O lote não pode ser criado com prazo de validade inferior ao dia de hoje");
+    if(dataValidade <= dataHoje) {
+        throw new CannotCreateError ("O lote não pode ser criado com prazo de validade igual ou inferior ao dia de hoje");
     }
     
-    const createdLote = await createLoteProduto(loteProdutoData);
+    const createdLote = await createLoteProduto({
+        ...loteProdutoData,
+        status: "ATIVO",
+        is_vencido: 0,
+    });
     return createdLote
 }
 
 async function updateLoteProdutoService(id, lotesData) {
-    const { id_fornecedor, valor_unitario, qtd_disponivel, data_validade, is_vencido } = lotesData
+    const { fk_id_fornecedor, valor_unitario, qtd_disponivel, data_validade, is_vencido } = lotesData
     const lote = await getLoteProdutoByIdService(id);
-    const hoje = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
+    const hoje = new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' });
 
     if (!lote) {
         throw new ExistsDataError ("Lote não localizado!")
     }
 
     if(data_validade && data_validade <= hoje) {
-        throw new CannotupdateError ("O lote não pode ser editado usando um prazo de validade inferior ao dia de hoje");
+        throw new CannotupdateError ("O lote não pode ser editado usando um prazo de validade igual ou inferior ao dia de hoje");
     }
 
     const updateFields = {};
     if (is_vencido !== undefined) updateFields.is_vencido = is_vencido;
-    if (id_fornecedor !== undefined) updateFields.fk_id_fornecedor = id_fornecedor;
+    if (fk_id_fornecedor !== undefined) updateFields.fk_id_fornecedor = fk_id_fornecedor;
     if (valor_unitario !== undefined) updateFields.valor_unitario = valor_unitario;
     if (qtd_disponivel !== undefined) updateFields.qtd_disponivel = qtd_disponivel;
     if (data_validade !== undefined) updateFields.data_validade = data_validade;

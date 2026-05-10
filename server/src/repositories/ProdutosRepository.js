@@ -76,6 +76,18 @@ async function getAllActiveProdutosByFilterAndOrderBy(filters, validOrderBy) {
     return produtos;
 }
 
+async function findAllProdutosForSelect() {
+    const produtos = await Produtos.findAll({
+        attributes: [
+            [sequelize.col("id"), "value"], 
+            [sequelize.col("nome_produto"), "label"]
+        ],
+        where: {
+            status: "ATIVO"
+        }
+    })
+}
+
 async function getProdutoById(idProduto) {
     const produto = await Produtos.findByPk(idProduto);
     return produto;
@@ -109,6 +121,7 @@ module.exports = {
     getAllActiveProdutos,
     getAllInactiveProdutos,
     getAllActiveProdutosByFilterAndOrderBy,
+    findAllProdutosForSelect,
     getProdutoById,
     changeProdutoStatus,
     createProduto,

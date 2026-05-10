@@ -7,6 +7,7 @@ const {
    changeProdutoStatusService,
    createProdutoService,
    updateProdutoService,
+   getAllProdutosForSelectService,
 } = require("../services/ProdutosServices.js");
 
 //Helpers
@@ -80,6 +81,16 @@ async function getAllActiveProdutosByFilterAndOrderBy(req, res) {
       );
 
       return res.status(200).json(filteredProdutos);
+
+   } catch (error) {
+      errorResponse(error, res);
+   }
+}
+
+async function getAllProdutosForSelect(req, res) {
+   try {
+      const allProdutos = await getAllProdutosForSelectService();
+      return res.status(200).json(allProdutos);
 
    } catch (error) {
       errorResponse(error, res);
@@ -248,6 +259,7 @@ module.exports = {
    getAllActiveProdutos,
    getAllInactiveProdutos,
    getAllActiveProdutosByFilterAndOrderBy,
+   getAllProdutosForSelect,
    getProdutoById,
    changeProdutoStatus,
    createProduto,

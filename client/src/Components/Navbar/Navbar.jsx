@@ -40,6 +40,9 @@ export default function Navbar() {
                id: 3,
                title: "Geral",
                path: "/produtos",
+               subNav: [
+                  "/produtos/:id/lotes"
+               ],
                icon: <IconBox className={styles.iconList} />,
             },
             {

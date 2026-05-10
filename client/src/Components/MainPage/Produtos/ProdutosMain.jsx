@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import { useAlert } from "../../../Context/AlertContext";
 import { useModal } from "../../../Context/ModalContext";
 import { useProduto } from "../../../Context/ProdutosContext";
@@ -19,11 +20,17 @@ export function ProdutosMain() {
       defineSearchParams,
       searchValueMemo: searchValue
    } = useProduto();
+   const navigate = useNavigate();
 
    const handleOpenModal = () => {
       showModal({
          modalName: "addProduto",
       })
+   }
+
+   const handleViewLotes = (e) => {
+      const idValue = e.target.closest("tr").id;
+      navigate(`/produtos/${idValue}/lotes`)
    }
 
    const handleEditProduto = (e) => {
@@ -86,6 +93,7 @@ export function ProdutosMain() {
             ) : (
                <TableProdutos
                   dataCollection={produtos}
+                  handleViewLotes={handleViewLotes}
                   handleEdit={handleEditProduto}
                   handleStatusChange={handleOnChangeStatusProduto}
                   currViewStatus={currViewStatus}

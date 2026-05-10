@@ -14,6 +14,8 @@ export function TableDefaultEditable({
    dataCollection = [],
    fieldsExcludes = [],
    customClassData = {},
+   customClassDataForValue = {},
+   customDataValue,
    isModalChildren = false,
    handleEdit,
    handleStatusChange,
@@ -74,6 +76,8 @@ export function TableDefaultEditable({
          fieldCollection={fieldCollection}
          fieldsExcludes={fieldsExcludes}
          customClassData={customClassData}
+         customClassDataForValue={customClassDataForValue}
+         customDataValue={customDataValue}
          isModalChildren={isModalChildren}
          btnCollection={currViewStatus === "ATIVO" ? btnCollection : btnCollectionForInactive}
       />

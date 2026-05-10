@@ -12,6 +12,8 @@ import { ModalEditCliente } from "../Components/Modals/Clientes/ModalEditCliente
 import { ModalAddUser } from "../Components/Modals/Administrador/ModalAddUser";
 // Cesta
 import { ModalAddCesta } from "../Components/Modals/Cestas/ModalAddCesta/ModalAddCesta";
+import { ModalAddLoteProduto } from "../Components/Modals/LoteProdutos/ModalAddLoteProduto/ModalAddLoteProduto";
+import { ModalEditLoteProduto } from "../Components/Modals/LoteProdutos/ModalEditLoteProduto/ModalEditLoteProduto";
 
 export const modalCollection = [
    // Produtos
@@ -29,6 +31,17 @@ export const modalCollection = [
       name: "addEntradaProdutos",
       title: "Cadastrar Entrada de Produtos",
       modalContent: <ModalAddEntradaProdutos />,
+   },
+   // LoteProdutos
+   {
+      name: "addLoteProduto",
+      title: "Cadastrar Novo Lote de Produto", 
+      modalContent: <ModalAddLoteProduto/>
+   },
+   {
+      name: "editLoteProduto",
+      title: "Editar Lote de Produto",
+      modalContent: <ModalEditLoteProduto/>
    },
    //Fornecedores
    {

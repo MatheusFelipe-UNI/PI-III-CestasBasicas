@@ -6,6 +6,8 @@ export default function TBody({
    btnInfoCollection = [],
    fieldsExcludes = [],
    customClassData = {},
+   customClassDataForValue = {},
+   customDataValue,
 }) {
    return (
       <tr id={dataInfo.id}>
@@ -18,6 +20,8 @@ export default function TBody({
                      keyValue={key}
                      fieldValue={value}
                      customClassData={customClassData}
+                     customClassDataForValue={customClassDataForValue}
+                     customDataValue={customDataValue}
                   />
                );
             }

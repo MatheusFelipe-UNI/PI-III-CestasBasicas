@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {NavLink, useLocation} from 'react-router';
+import {matchPath, NavLink, useLocation} from 'react-router';
 
 import styles from "./Navbar.module.css";
 
@@ -29,11 +29,26 @@ export default function Navlist({listContent=[], handleCloseMenu}) {
     //Validação que permite que a raiz ("/") continue ativa, mesmo que o primeiro neto esteja ativo
     const styleValidation = (isActive, linkContent) => {
         const subNav = linkContent.subNav;
-        if((subNav && subNav.includes(location.pathname)) || isActive) {      
-            return true
         
-        } 
-        return false;
+        if(isActive) {
+            return true;
+        }
+        
+        if(subNav && subNav.length > 0) {
+            // Tenta match exato primeiro (mais rápido)
+            if(subNav.includes(location.pathname)) {
+                return true;
+            }
+            
+            // Depois tenta match pattern para rotas dinâmicas
+            return subNav.some(pattern => {
+                // Só tenta matchPath se o pattern contém caracteres especiais
+                if(pattern.includes(':') || pattern.includes('*')) {
+                    return matchPath({ path: pattern, end: false }, location.pathname);
+                }
+                return false;
+            });
+        }
     }
 
     return(

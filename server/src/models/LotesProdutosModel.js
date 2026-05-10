@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 module.exports = (sequelize, DataTypes) => {
    const Lotes_produtos = sequelize.define("Lotes_produtos", {
       id: {
@@ -36,11 +38,26 @@ module.exports = (sequelize, DataTypes) => {
       },
       is_vencido: {
          type: DataTypes.TINYINT.UNSIGNED,
-         allowNull: false
+         allowNull: false,
+         get(value) {
+            const rawValue = this.getDataValue("is_vencido");
+            return rawValue ? "SIM" : "NÃO"; 
+         }
       },
       data_validade: {
          type: DataTypes.DATEONLY,
-         allowNull: false
+         allowNull: false,
+         set(value) {
+            // Converte o DD-MM-YYYY para YYYY-MM-DD
+            if (value && typeof value === 'string') {
+               const dataMoment = moment(value, 'DD-MM-YYYY');
+               if (dataMoment.isValid()) {
+                  this.setDataValue('data_validade', dataMoment.format('YYYY-MM-DD'));
+               } else {
+                  throw new Error('Formato de data inválido. Use DD-MM-YYYY');
+               }
+            }
+         }
       },
       created_at: {
          type: DataTypes.DATE,

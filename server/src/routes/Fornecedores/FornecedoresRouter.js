@@ -9,6 +9,10 @@ router
    .post(fornecedoresController.createFornecedor);
 
 router
+   .route("/select-options")
+   .get(fornecedoresController.getAllFornecedoresForSelect)
+
+router
    .route("/ativos")
    .get(fornecedoresController.getAllActiveFornecedores)
 

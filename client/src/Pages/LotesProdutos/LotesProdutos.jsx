@@ -1,5 +1,13 @@
+import { Outlet } from "react-router";
+import MainLayout from "../../Components/layout/MainLayout";
+import { LoteProdutoProvider } from "../../Context/LoteProdutosContext";
+
 export function LotesProdutos() {
    return(
-      <h1>Lotes Produtos</h1>
+      <LoteProdutoProvider>
+         <MainLayout title={"Lotes Produtos"}>
+            <Outlet/>
+         </MainLayout>
+      </LoteProdutoProvider>
    )
 }

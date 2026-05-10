@@ -31,6 +31,30 @@ export function TBodyAddEntradaProduto({ produtoData, registerQtdEntrada, errors
             />
          </td>
          <td>
+            <input
+               type={"number"}
+               id={`qtdEntrada${produtoData.id}`}
+               onWheel={(e) => e.target.blur()}
+               {...registerQtdEntrada}
+               className={errorQtdEntrada ? "inputError" : ""}
+               style={{
+                  maxWidth: "100px",
+               }}
+            />
+         </td>
+         <td>
+            <input
+               type={"number"}
+               id={`qtdEntrada${produtoData.id}`}
+               onWheel={(e) => e.target.blur()}
+               {...registerQtdEntrada}
+               className={errorQtdEntrada ? "inputError" : ""}
+               style={{
+                  maxWidth: "100px",
+               }}
+            />
+         </td>
+         <td>
             <div className={"tableContent__btns"}>
                <ButtonTable
                   infoView={<IconRemove />}

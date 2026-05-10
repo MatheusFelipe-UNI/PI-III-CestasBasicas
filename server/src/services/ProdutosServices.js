@@ -8,6 +8,7 @@ const { getProdutoById,
     changeProdutoStatus,
     createProduto,
     updateProduto,
+    findAllProdutosForSelect,
 } = require("../repositories/ProdutosRepository");
 const { setStatusEstoqueForProdutos } = require("../utils/DataFormatUtil");
 
@@ -31,6 +32,11 @@ async function getAllInactiveProdutosService() {
     const inactiveProdutosWithStatusEstoque = setStatusEstoqueForProdutos(formattedData);
     
     return inactiveProdutosWithStatusEstoque;
+}
+
+async function getAllProdutosForSelectService() {
+    const produtos = await findAllProdutosForSelect();
+    return produtos;
 }
 
 async function getProdutoByIdService(idProduto) {
@@ -104,6 +110,7 @@ module.exports = {
     getAllInactiveProdutosService,
     getProdutoByIdService,
     getAllActiveProdutosByFilterAndOrderByService,
+    getAllProdutosForSelectService,
     changeProdutoStatusService,
     createProdutoService,
     updateProdutoService,

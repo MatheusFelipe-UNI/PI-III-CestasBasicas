@@ -1,0 +1,39 @@
+.lotesProdutosContent__returnLink {
+   position: relative;
+   width: fit-content;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   padding: 8px 10px;
+   color: white;
+   background-color: var(--colorPrim);
+   border: 1px solid transparent;
+   border-radius: var(--fixBorderRadius);
+   transition: .2s ease;
+}
+
+.lotesProdutosContent__returnLink a {
+   display: flex;
+   align-items: center;
+   gap: 5px;
+   color: white;
+   font-family: var(--fontPrim);
+   font-size: 18px;
+   font-weight: 600;
+   transition: .2s ease;
+}
+
+.lotesProdutosContent__returnLink a::before {
+   content: "";
+   position: absolute;
+   top: 0; right: 0; bottom: 0; left: 0;
+}
+
+.lotesProdutosContent__returnLink:has(a:hover) {
+   background-color: transparent;
+   border-color: var(--colorPrim);
+}
+
+.lotesProdutosContent__returnLink a:hover {
+   color: var(--colorPrim);
+}

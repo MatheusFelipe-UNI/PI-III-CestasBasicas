@@ -6,6 +6,7 @@ export function InputDefault({
    placeholder = "",
    disabled = false,
    autoComplete = "off",
+   pattern,
    customClass = "",
    textView = "",
    register = {},
@@ -18,6 +19,7 @@ export function InputDefault({
             type={type} 
             id={id}
             placeholder={placeholder}
+            pattern={pattern}
             onWheel={(e) => e.target.blur()}
             disabled={disabled} 
             autoComplete={autoComplete}

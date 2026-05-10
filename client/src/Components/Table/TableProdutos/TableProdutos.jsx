@@ -12,6 +12,7 @@ import {
 export function TableProdutos({
    title = "",
    dataCollection = [],
+   handleViewLotes,
    handleEdit,
    handleStatusChange,
    currViewStatus,
@@ -50,32 +51,11 @@ export function TableProdutos({
       });
    };
 
-   const tempDataCollection = [
-      {
-         id: 1,
-         nome_produto: "Arroz",
-         tipo_unidade: "KG",
-         qtd_estoque: 100,
-         estoque_minimo: 20,
-         status_estoque: "Em Estoque",
-         ultima_atualizacao: "2024-06-01",
-      },
-      {
-         id: 2,
-         nome_produto: "Feijão",
-         tipo_unidade: "KG",
-         qtd_estoque: 10,
-         estoque_minimo: 10,
-         status_estoque: "Pouco Estoque",
-         ultima_atualizacao: "2024-06-01",
-      },
-   ];
-
    const btnCollection = [
       {
          id: 1,
          infoView: "Visualizar Lote",
-         handleAction: handleEdit,
+         handleAction: handleViewLotes,
          className: "primBtnDark",
       },
       {

@@ -7,6 +7,7 @@ const { getFornecedorById,
     createFornecedor,
     updateFornecedor,
     getFornecedorByCNPJ,
+    findAllFornecedoresForSelect,
 } = require("../repositories/FornecedoresRepository");
 const ExistsDataError = require("../classes/ExistsDataError");
 const NotFoundError = require("../classes/NotFoundError");
@@ -49,6 +50,11 @@ async function getAllActiveFornecedoresByFilterAndOrderByService(orderBy, filter
 
 
     return await getAllActiveFornecedoresByFilterAndOrderBy(filters, validOrderBy);
+}
+
+async function getAllFornecedoresForSelectService() {
+    const allFornecedores = await findAllFornecedoresForSelect();
+    return allFornecedores;
 }
 
 async function getFornecedorByIdService(idFornecedor) {
@@ -127,6 +133,7 @@ module.exports = {
     getAllFornecedoresService,
     getAllActiveFornecedoresService,
     getAllInactiveFornecedoresService,
+    getAllFornecedoresForSelectService,
     getFornecedorByIdService,
     getAllActiveFornecedoresByFilterAndOrderByService,
     changeFornecedorStatusService,

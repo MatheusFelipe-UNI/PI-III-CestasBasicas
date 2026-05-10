@@ -36,6 +36,15 @@ export async function getAllInactiveFornecedoresService() {
    return res;   
 }
 
+export async function getAllFornecedoresForSelect() {
+   const res = await axios.get(`${localServer}/fornecedores/select-options`, {
+      headers: {
+         Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+   });
+   return res;
+}
+
 export async function getFornecedorByIdService(id) {
    const res = await axios.get(`${localServer}/fornecedores/${id}`, {
       headers: {

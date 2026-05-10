@@ -12,6 +12,8 @@ export default function TableDefault({
    btnCollection = [],
    fieldsExcludes = [],
    customClassData = {},
+   customClassDataForValue = {},
+   customDataValue,
    isModalChildren = false,
 }) {
    return (
@@ -34,6 +36,8 @@ export default function TableDefault({
                            btnInfoCollection={btnCollection}
                            fieldsExcludes={fieldsExcludes}
                            customClassData={customClassData}
+                           customClassDataForValue={customClassDataForValue}
+                           customDataValue={customDataValue}
                         />
                      ))}
                   </tbody>

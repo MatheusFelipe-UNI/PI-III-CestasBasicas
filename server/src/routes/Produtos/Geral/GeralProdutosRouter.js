@@ -3,16 +3,34 @@ const produtosController = require("../../../controllers/ProdutosController.js")
 
 const router = Router();
 
-router.route("/").get(produtosController.getAllProdutos).post(produtosController.createProduto);
+router
+   .route("/")
+   .get(produtosController.getAllProdutos)
+   .post(produtosController.createProduto);
 
-router.route("/ativos").get(produtosController.getAllActiveProdutos);
+router
+   .route("/select-options")
+   .get(produtosController.getAllProdutosForSelect)
 
-router.route("/inativos").get(produtosController.getAllInactiveProdutos);
+router
+   .route("/ativos")
+   .get(produtosController.getAllActiveProdutos);
 
-router.route("/ativos/filter").get(produtosController.getAllActiveProdutosByFilterAndOrderBy);
+router
+   .route("/inativos")
+   .get(produtosController.getAllInactiveProdutos);
 
-router.route("/:id/status").patch(produtosController.changeProdutoStatus);
+router
+   .route("/ativos/filter")
+   .get(produtosController.getAllActiveProdutosByFilterAndOrderBy);
 
-router.route("/:id").get(produtosController.getProdutoById).patch(produtosController.updateProduto);
+router
+   .route("/:id/status")
+   .patch(produtosController.changeProdutoStatus);
+
+router
+   .route("/:id")
+   .get(produtosController.getProdutoById)
+   .patch(produtosController.updateProduto);
 
 module.exports = router;

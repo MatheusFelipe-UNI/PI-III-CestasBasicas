@@ -33,6 +33,7 @@ import { AdministradorMain } from './Components/MainPage/Administrador/Administr
 import { UsuarioMain } from './Components/MainPage/Usuario/UsuarioMain.jsx';
 import { UserProvider } from './Context/UserContext.jsx';
 import { Autenticacao } from './Pages/Autenticacao/Autenticacao.jsx';
+import { LotesProdutosMain } from './Components/MainPage/LotesProdutos/LotesProdutosMain.jsx';
 
 
 const router = createBrowserRouter([
@@ -62,7 +63,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <h1>Lotes Produtos Main</h1>
+            element: <LotesProdutosMain/>
           }
         ]
       },

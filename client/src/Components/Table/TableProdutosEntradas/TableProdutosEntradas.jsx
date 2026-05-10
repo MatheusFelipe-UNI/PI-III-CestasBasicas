@@ -8,7 +8,7 @@ export function TableProdutosEntradas({ entradaProdutosData, fieldsExcludes = []
       id: entradaProdutosData.id,
       data_recebimento: entradaProdutosData.data_recebimento,
    };
-   const entradaItensCollection = entradaProdutosData.entrada_produtos || [];
+   const entradaItensCollection = entradaProdutosData.itens_entrada || [];
 
    return (
       <div className="tableContainer fadeIn">

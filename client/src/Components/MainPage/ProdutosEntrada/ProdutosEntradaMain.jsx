@@ -1,31 +1,28 @@
-import { data } from "react-router";
 import { TableProdutosEntradas } from "../../Table/TableProdutosEntradas/TableProdutosEntradas";
 import { ViewStatusBar } from "../../ViewStatusBar/ViewStatusBar";
 import { useModal } from "../../../Context/ModalContext";
 import { ActionBar } from "../../ActionBar/ActionBar";
+import { useEntradaProduto } from "../../../Context/EntradaProdutosContext";
 
 export function ProdutosEntradaMain() {
    const { showModal } = useModal();
+   const { 
+      filteredEntradaProdutos: entradaProdutos,
+      isLoading,
+      currViewStatus,
+      changeCurrViewStatus,
+      defineSearchParams,
+      searchValueMemo: searchValue
+   } = useEntradaProduto();
+
    const fieldsExcludes = ["id"];
    const optionsCollection = ["RECEBIDOS", "CANCELADOS"];
-
-   const handleOpenModal = () => {
-      showModal({
-         modalName: "addEntradaProdutos",
-         customStyle: {
-            overflow: "initial"
-         },
-         data: {
-            id: "1"
-         }
-      })
-   }
 
    const entradaProdutosCollection = [
       {
          id: 1,
          data_recebimento: "2024-06-01",
-         entrada_produtos: [
+         itens_entrada: [
             {
                id: 1,
                produto: "Arroz",
@@ -45,7 +42,7 @@ export function ProdutosEntradaMain() {
       {
          id: 2,
          data_recebimento: "2024-06-02",
-         entrada_produtos: [
+         itens_entrada: [
             {
                id: 3,
                produto: "Arroz",
@@ -66,11 +63,18 @@ export function ProdutosEntradaMain() {
 
    return(
       <>
-         <ActionBar viewName="Entrada Produtos" handleOpenModal={handleOpenModal}/>
-         <ViewStatusBar 
-            viewName="Entrada de produtos"
-            optionsCollection={optionsCollection} 
+         <ActionBar 
+            viewName="Entrada Produtos"
+            searchFilter={searchValue}
+            onChangeSearchFilter={defineSearchParams} 
+            hasActionButton={false}
          />
+         {/* <ViewStatusBar 
+            viewName="Entrada de produtos"
+            viewStatusName="entradaProdutos"
+            changeViewStatus={changeCurrViewStatus}
+            optionsCollection={optionsCollection} 
+         /> */}
          <div className="layoutTableSpacing">
             {entradaProdutosCollection.map((data) => (
                <TableProdutosEntradas 

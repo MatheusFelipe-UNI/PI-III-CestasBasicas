@@ -22,21 +22,41 @@ async function getAllEntradasProdutos() {
 
 async function getAllReceivedEntradasProdutos() {
     const allReceivedEntradasProdutos = await EntradasProdutos.findAll({
-        where: {
-            status: "RECEBIDA" //RECEBA!
-        },
+        include: [
+            {
+                association: "user_entrada",
+                attributes: []
+            },
+            {
+                association: "itens_entrada",
+                include: [
+                    {
+                        association: "produtos_entrada",
+                        attributes: []
+                    },
+                    {
+                        association: "fornecedor_produtos_entrada",
+                        attributes: []
+                    }
+                ],
+                attributes: [
+                    "id",
+                    [sequelize.literal("`itens_entrada->produtos_entrada`.`nome_produto`"), "nome_produto"],
+                    [sequelize.literal("`itens_entrada->fornecedor_produtos_entrada`.`nome_fornecedor`"), "nome_fornecedor"],
+                    [sequelize.literal("`itens_entrada->produtos_entrada`.`tipo_unidade`"), "tipo_unidade"],
+                    "quantidade_adquirida"
+                ],
+            }
+        ],
         attributes: [
             "id",
             "status",
             [sequelize.fn("DATE_FORMAT", sequelize.col("data_entrada"), "%d-%m-%Y %H:%i:%s"), "data_entrada"],
             [sequelize.col("user_entrada.usuario"), "usuario"]
         ],
-        include: [
-            {
-                association: "user_entrada",
-                attributes: []
-            }
-        ],
+        where: {
+            status: "RECEBIDA" //RECEBA!
+        },
         raw: true
     });
     return allReceivedEntradasProdutos;
@@ -44,21 +64,41 @@ async function getAllReceivedEntradasProdutos() {
 
 async function getAllCanceledEntradasProdutos() {
     const allCanceledEntradasProdutos = await EntradasProdutos.findAll({
-        where: {
-            status: "CANCELADA"
-        },
+        include: [
+            {
+                association: "user_entrada",
+                attributes: []
+            },
+            {
+                association: "itens_entrada",
+                include: [
+                    {
+                        association: "produtos_entrada",
+                        attributes: []
+                    },
+                    {
+                        association: "fornecedor_produtos_entrada",
+                        attributes: []
+                    }
+                ],
+                attributes: [
+                    "id",
+                    [sequelize.literal("`itens_entrada->produtos_entrada`.`nome_produto`"), "nome_produto"],
+                    [sequelize.literal("`itens_entrada->fornecedor_produtos_entrada`.`nome_fornecedor`"), "nome_fornecedor"],
+                    [sequelize.literal("`itens_entrada->produtos_entrada`.`tipo_unidade`"), "tipo_unidade"],
+                    "quantidade_adquirida"
+                ],
+            }
+        ],
         attributes: [
             "id",
             "status",
             [sequelize.fn("DATE_FORMAT", sequelize.col("data_entrada"), "%d-%m-%Y %H:%i:%s"), "data_entrada"],
             [sequelize.col("user_entrada.usuario"), "usuario"]
         ],
-        include: [
-            {
-                association: "user_entrada",
-                attributes: []
-            }
-        ],
+        where: {
+            status: "CANCELADA" //DESRECEBA!
+        },
         raw: true
     });
     return allCanceledEntradasProdutos;

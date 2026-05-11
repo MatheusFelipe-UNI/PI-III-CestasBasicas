@@ -15,6 +15,7 @@ const {
    changeClienteStatusService,
    createClienteService,
    updateClienteService,
+   getAllClientesForSelectService,
 } = require("../services/ClientesServices.js")
 
 /* 
@@ -80,6 +81,16 @@ async function getAllActiveClientesByFilterAndOrderBy(req, res) {
       );
 
       return res.status(200).json(filteredClientes);
+
+   } catch (error) {
+      errorResponse(error, res);
+   }
+}
+
+async function getAllClientesForSelect(req, res) {
+   try {
+      const allClientes = await getAllClientesForSelectService();
+      return res.status(200).json(allClientes);
 
    } catch (error) {
       errorResponse(error, res);
@@ -247,6 +258,7 @@ module.exports = {
    getAllActiveClientes,
    getAllInactiveClientes,
    getAllActiveClientesByFilterAndOrderBy,
+   getAllClientesForSelect,
    getClienteById,
    changeClienteStatus,
    createCliente,

@@ -9,6 +9,10 @@ router
    .post(clientesController.createCliente);
 
 router
+   .route("/select-options")
+   .get(clientesController.getAllClientesForSelect)
+
+router
    .route("/ativos")
    .get(clientesController.getAllActiveClientes)
 

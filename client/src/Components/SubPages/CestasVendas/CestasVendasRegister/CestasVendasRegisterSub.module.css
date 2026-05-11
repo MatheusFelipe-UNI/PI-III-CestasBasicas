@@ -1,0 +1,48 @@
+.registerVendaContent__selectContainer {
+   display: flex;
+   align-items: baseline;
+   gap: 20px;
+}
+
+.registerVendaContent__selectContainer button {
+   height: 45px;
+   padding: 5px 20px;
+   background-color: transparent;
+   color: var(--colorPrim);
+   border: 1px solid var(--colorPrim);
+   transition: none;
+   transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+}
+
+.registerVendaContent__selectContainer button:hover {
+   background-color: var(--colorPrim);
+   color: white;
+}
+
+.customErrorMessage {
+   margin: var(--marginContent) 0;
+   padding: 10px 15px;
+   font-size: 15px;
+   font-weight: bold;
+   color: var(--colorText-for-bg-red);
+   background-color: var(--bg-red);
+   border-radius: var(--fixBorderRadius);
+   width: fit-content;
+}
+
+.cestaVendaContent__button {
+   margin-top: 20px;
+   padding: 12px 15px;
+   background-color: var(--colorPrim);
+   color: white;
+   font-family: var(--fontPrim);
+   font-size: 16px;
+   font-weight: 500;
+   cursor: pointer;
+   outline: none;
+   border: 1px solid var(--colorPrim);
+   border-radius: var(--fixBorderRadius);
+   transition: .2s ease;
+}

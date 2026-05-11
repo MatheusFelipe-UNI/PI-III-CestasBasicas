@@ -64,6 +64,19 @@ async function getAllActiveClientesByFilterAndOrderBy(whereClause, orderFilters,
     return cliente;
 }
 
+async function findAllClientesForSelect() {
+    const clientes = await Clientes.findAll({
+        attributes: [
+            [sequelize.col("id"), "value"],
+            [sequelize.col("nome_cliente"), "label"]
+        ],
+        where: {
+            status: "ATIVO"
+        }
+    });
+    return clientes;
+}
+
 async function getClienteById(idCliente) {
     const clienteID = await Clientes.findByPk(idCliente)
     return clienteID;
@@ -104,6 +117,7 @@ module.exports = {
     getAllActiveClientes,
     getAllInactiveClientes,
     getAllActiveClientesByFilterAndOrderBy,
+    findAllClientesForSelect,
     getClienteById,
     changeClienteStatus,
     getClienteByCPForCNPJ,

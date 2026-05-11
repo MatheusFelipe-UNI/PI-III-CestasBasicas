@@ -9,6 +9,10 @@ router
    .post(cestasController.createCesta);
 
 router
+   .route("/select-options")
+   .get(cestasController.getAllCestasForSelect);
+
+router
    .route("/ativos")
    .get(cestasController.getAllActiveCestas)
 

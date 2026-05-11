@@ -253,17 +253,9 @@ async function changeVendaCestaStatus(id, newStatus) {
     return updateVendaStatus;
 }
 
-async function createVendaCesta(vendaCestaData) {
-    const newVenda = {
-        fk_id_cliente: vendaCestaData.id_cliente,
-        fk_id_user: vendaCestaData.id_user,
-        fk_id_cesta: vendaCestaData.id_cesta,
-        quantidade: vendaCestaData.quantidade,
-        valor_unitario: vendaCestaData.valor_unitario,
-        valor_total: vendaCestaData.valor_total,
-        status: "PENDENTE"
-    }
-    const createdVenda = await Vendas.create(newVenda)
+async function createVendaCesta(vendaCestaCollection) {
+    console.log(vendaCestaCollection);
+    const createdVenda = await Vendas.bulkCreate(vendaCestaCollection)
     return createdVenda;
 }
 

@@ -74,9 +74,16 @@ async function changeVendaCestaStatusService(id, newStatus) {
     return updateVendaStatus;
 }
 
-async function createVendaCestaService(vendaCestaData) {
-    const createdVenda = await createVendaCesta(vendaCestaData);
-    return createdVenda
+async function createVendaCestaService(idUser, vendaCestaCollection) {
+    const vendaCestaWithStatus = vendaCestaCollection.map(venda => ({ 
+        ...venda, 
+        status: "PENDENTE", 
+        fk_id_user: idUser,
+        quantidade: venda.quantidade_solicitada
+    }));
+
+    const createdVenda = await createVendaCesta(vendaCestaWithStatus);
+    return createdVenda;
 }
 
 module.exports = {

@@ -16,7 +16,7 @@ export function TableCesta({ dataCollection = [], register = {}, errors, removeP
             <div className="tableContainer" style={{marginBottom: "20px"}}>
                <table>
                   <thead>
-                     <tr style={errors?.supply ? {
+                     <tr style={errors?.cesta_itens ? {
                   backgroundColor: "var(--bg-red)",
                   color: "var(--colorText-for-bg-red)"
                } : {}}>

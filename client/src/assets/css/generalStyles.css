@@ -24,7 +24,7 @@ h2.subTitle {
 .textInfoNotAvaliable {
    font-family: var(--fontPrim);
    font-size: 16px;
-   margin: var(--marginContent);
+   margin: var(--marginContent) 0;
 }
 
 span.errorMessage {

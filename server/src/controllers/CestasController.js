@@ -19,6 +19,7 @@ const {
    getAllCestasItensByCestaIdService,
    getCestaItemByIdService,
    updateCestaService,
+   getAllCestasForSelectService,
 } = require("../services/CestasServices.js");
 
 /* 
@@ -65,6 +66,20 @@ async function getAllActiveCestasByFilterAndOrderBy(req, res) {
    try {
       const allActiveCestas = await getAllActiveCestasByFilterAndOrderByService(req.query);
       return res.status(200).json(allActiveCestas);
+   } catch (error) {
+      errorResponse(error, res);
+   }
+}
+
+async function getAllCestasForSelect(req, res) {
+   try {
+      let idExcludes = req.query.idExcludes || [];
+      if(!Array.isArray(idExcludes)) {
+         idExcludes = Array(idExcludes);
+      }
+
+      const allCestas = await getAllCestasForSelectService(idExcludes);
+      return res.status(200).json(allCestas);
    } catch (error) {
       errorResponse(error, res);
    }
@@ -305,6 +320,7 @@ module.exports = {
    getAllActiveCestas,
    getAllInactiveCestas,
    getAllActiveCestasByFilterAndOrderBy,
+   getAllCestasForSelect,
    getCestaById,
    createCesta,
    updateCesta,

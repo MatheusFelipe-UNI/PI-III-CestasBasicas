@@ -35,6 +35,15 @@ export async function getAllInactiveClientesService() {
    return res;   
 }
 
+export async function getAllClientesForSelectService() {
+   const res = await axios.get(`${localServer}/clientes/select-options`, {
+      headers: {
+         Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+   });
+   return res;
+}
+
 export async function getClienteByIdService(id) {
    const res = await axios.get(`${localServer}/clientes/${id}`, {
       headers: {

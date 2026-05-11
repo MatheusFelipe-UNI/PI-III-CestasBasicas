@@ -1,3 +1,4 @@
+import qs from "qs";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -37,6 +38,21 @@ export async function getAllInactiveCestasService() {
 
 export async function getAllCestaItensByIdCesta(idCesta) {
    const res = await axios.get(`${localServer}/cestas/${idCesta}/itens`, {
+      headers: {
+         Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+   });
+   return res;
+}
+
+export async function getAllCestasForSelectService(idExcludesCollection = []) {
+   const res = await axios.get(`${localServer}/cestas/select-options`, {
+      params: {
+         idExcludes: idExcludesCollection
+      },
+      paramsSerializer: params => {
+         return qs.stringify(params, { arrayFormat: "repeat" })
+      },
       headers: {
          Authorization: `Bearer ${Cookies.get("token")}`,
       },

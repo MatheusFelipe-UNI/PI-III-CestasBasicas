@@ -10,6 +10,7 @@ const { getAllCestas,
     getAllCestasItens,
     getAllCestasItensByCestaId,
     getCestaItemById,
+    findAllCestasForSelect,
 } = require("../repositories/CestasRepository");
 const { Op } = require("sequelize");
 const { Cestas, sequelize, Itens_cestas, Produtos } = require("../models");
@@ -83,6 +84,11 @@ async function getAllActiveCestasByFilterAndOrderByService(filterParams) {
 
     const filteredCestas = await getAllActiveCestasByFilterAndOrderBy(whereClause, orderFilters, attributesFilters);
     return filteredCestas;
+}
+
+async function getAllCestasForSelectService(idExcludes) {
+    const allCestas = await findAllCestasForSelect(idExcludes);
+    return allCestas;
 }
 
 async function getCestaByIdService(idCesta) {
@@ -159,6 +165,7 @@ module.exports = {
     getAllInactiveCestasService,
     getCestaByIdService,
     getAllActiveCestasByFilterAndOrderByService,
+    getAllCestasForSelectService,
     createCestaService,
     changeCestaStatusService,
     updateCestaService,

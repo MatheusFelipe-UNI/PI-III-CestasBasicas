@@ -8,12 +8,14 @@ const {
     createCliente,
     getClienteByCPForCNPJ,
     updateCliente,
+    findAllClientesForSelect,
 } = require("../repositories/ClientesRepository");
 const { Op, where } = require("sequelize");
 const { Clientes, sequelize } = require("../models");
 const NotFoundError = require("../classes/NotFoundError");
 const ExistsDataError = require("../classes/ExistsDataError");
 const { removeAllAcentsForString, setCpfOrCnpjMask } = require("../utils/DataFormatUtil.js");
+const { findAllCestasForSelect } = require("../repositories/CestasRepository.js");
 
 async function getAllClientesService() {
     const allClientes = await getAllClientes();
@@ -110,6 +112,11 @@ async function getAllActiveClientesByFilterAndOrderByService(orderBy, filterOpti
     return filteredClientes;
 }
 
+async function getAllClientesForSelectService() {
+    const clientes = await findAllClientesForSelect();
+    return clientes;
+}
+
 async function getClienteByIdService(idCliente) {
     const clienteID = await getClienteById(idCliente);
     return clienteID
@@ -191,6 +198,7 @@ module.exports = {
     getAllActiveClientesService,
     getAllInactiveClientesService,
     getAllActiveClientesByFilterAndOrderByService,
+    getAllClientesForSelectService,
     getClienteByIdService,
     changeClienteStatusService,
     createClienteService,

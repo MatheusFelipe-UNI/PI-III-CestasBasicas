@@ -1,4 +1,4 @@
-const { Association } = require("sequelize");
+const { Association, Op } = require("sequelize");
 const { Cestas, sequelize, Itens_cestas, Produtos } = require("../models");
 
 async function getAllCestas() {
@@ -60,6 +60,24 @@ async function getAllActiveCestasByFilterAndOrderBy(whereClause, orderFilters, a
         attributes: attributesFilters,
         order: orderFilters
     });
+    return cesta;
+}
+
+
+async function findAllCestasForSelect(idExcludesCollection = []) {
+    const cesta = await Cestas.findAll({
+        attributes: [
+            [sequelize.col("id"), "value"],
+            [sequelize.col("nome_cesta"), "label"]
+        ],
+        where: {
+            status: "ATIVO",
+            id: {
+                [Op.notIn]: idExcludesCollection
+            }
+        }
+    });
+
     return cesta;
 }
 
@@ -186,6 +204,7 @@ module.exports = {
     getAllInactiveCestas,
     getCestaById,
     getAllActiveCestasByFilterAndOrderBy,
+    findAllCestasForSelect,
     createCesta,
     changeCestaStatus,
     updateCesta,

@@ -83,7 +83,7 @@ async function changeProdutoStatusService(idProduto, newStatus) {
 }
 
 async function createProdutoService(produtoData) {
-    const newProduto = await createProduto(produtoData);
+    const newProduto = await createProduto({...produtoData, status: "ATIVO"});
     return newProduto;
 }
 

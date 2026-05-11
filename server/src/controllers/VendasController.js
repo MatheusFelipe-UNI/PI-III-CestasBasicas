@@ -155,43 +155,20 @@ async function changeVendaCestaStatus(req, res) {
 // Cria um nova Venda de Cesta
 async function createVendaCesta(req, res) {
    try {
-      const {
-         id_cliente,
-         id_user,
-         id_cesta,
-         quantidade,
-         valor_unitario,
-         valor_total
-      } = req.body;
+      const { id: idUser} = req.userInfo;
 
-      if(!id_cliente || 
-         !id_user || 
-         !id_cesta || 
-         (quantidade === undefined || quantidade === null) || 
-         (valor_unitario === undefined || valor_unitario === null) || 
-         (valor_total === undefined || valor_total === null)
-      ) {
-         throw new FieldUndefinedError("Um ou mais campos não identificados", {
+      const { vendaCollection } = req.body;
+      
+
+      if(!vendaCollection || Array.isArray(vendaCollection) && vendaCollection.length === 0) {
+         throw new FieldUndefinedError("Campo não identificado", {
             dados_passados: {
-               id_cliente: id_cliente || "Não encontrado",
-               id_user: id_user || "Não encontrado",
-               id_cesta: id_cesta || "Não encontrado",
-               quantidade: quantidade || "Não encontrado",
-               valor_unitario: valor_unitario || "Não encontrado",
-               valor_total: valor_total || "Não encontrado",
+               vendaCollection: vendaCollection || "Não encontrado"
             }
          })
       }
 
-      const createdVendaCesta = await createVendaCestaService({
-         id_cliente,
-         id_user,
-         id_cesta,
-         quantidade,
-         valor_unitario,
-         valor_total,
-         status: "PENDENTE"
-      })
+      const createdVendaCesta = await createVendaCestaService(idUser, vendaCollection);
 
       if(!createdVendaCesta) {
          throw new CannotCreateError("Erro ao cadastrar Venda de Cesta", {

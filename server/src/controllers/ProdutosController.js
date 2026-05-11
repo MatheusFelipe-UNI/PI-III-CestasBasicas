@@ -89,7 +89,12 @@ async function getAllActiveProdutosByFilterAndOrderBy(req, res) {
 
 async function getAllProdutosForSelect(req, res) {
    try {
-      const allProdutos = await getAllProdutosForSelectService();
+      let idExcludes = req.query.idExcludes || [];
+      if(!Array.isArray(idExcludes)) {
+         idExcludes = Array(idExcludes);
+      }
+
+      const allProdutos = await getAllProdutosForSelectService(idExcludes);
       return res.status(200).json(allProdutos);
 
    } catch (error) {

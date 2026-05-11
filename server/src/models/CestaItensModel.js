@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
             key: "id"
          }
       },
-      quantidade: {
+      quantidade_solicitada: {
          type: DataTypes.INTEGER.UNSIGNED,
          allowNull: false,
       },

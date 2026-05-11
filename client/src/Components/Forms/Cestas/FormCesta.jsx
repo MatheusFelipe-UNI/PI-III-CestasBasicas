@@ -7,8 +7,12 @@ import { InputDefault } from "../../Input/InputDefault/InputDefault";
 import SelectSearchable from "../../SelectSearchable/SelectSearchable";
 import { TableCesta } from "../../Table/TableCesta/TableCesta";
 import styles from "./FormCesta.module.css";
+import { InputMoney } from "../../Input/InputMoney/InputMoney";
+import { getAllProdutosForSelectService, getProdutoByIdService } from "../../../Services/produtos.service";
+import { getItemsDirtyData } from "../../../utils/ManipulateDataUtil";
+import TableDefault from "../../Table/TableDefault/TableDefault";
 
-export function FormCesta({ dataCesta }) {
+export function FormCesta({ dataCesta, handleCestaSubmit }) {
    const [optionsProdutos, setOptionsProdutos] = useState([]);
    const [isLoading, setIsLoading] = useState(false);
    const [idExcludes, setIdExcludes] = useState([]);
@@ -36,6 +40,8 @@ export function FormCesta({ dataCesta }) {
       defaultValues: dataCesta || {
          nome_cesta: "",
          preco: null,
+         quantidade: null,
+         cesta_itens: []
       },
    });
 
@@ -44,13 +50,12 @@ export function FormCesta({ dataCesta }) {
    const registerNomeCesta = register("nome_cesta", {
       required: "Campo Obrigatório"
    });
-
-   const registerPreco = register("preco", {
+   const registerQuantidade = register("quantidade", {
       required: "Campo Obrigatório",
       valueAsNumber: true,
       min: {
-         value: 0,
-         message: "O Preço deve ser maior ou igual a 0"
+         value: 1,
+         message: "Insira um valor maior que 0"
       }
    })
 
@@ -59,20 +64,8 @@ export function FormCesta({ dataCesta }) {
    //LOGICA PENDENTE
    const defineOptionsProdutos = async (idProdutosCollection) => {
       try {
-         setOptionsProdutos([
-            {
-               label: "Produto 1",
-               value: 1,
-            },
-            {
-               label: "Produto 2",
-               value: 2,
-            },
-            {
-               label: "Produto 3",
-               value: 3,
-            },
-         ]);
+         const res = await getAllProdutosForSelectService(idProdutosCollection);
+         setOptionsProdutos(res.data);
       } catch (error) {
          console.log(error);
       }
@@ -82,24 +75,38 @@ export function FormCesta({ dataCesta }) {
    const handleSelectProduto = async ({ produtoId }) => {
       try {
          setIsLoading(true);
-         append({
-            id: produtoId,
-            nome_produto: "Produto 1",
-            tipo_unidade: "UN",
-            quantidade_estoque: 20,
-            quantidade_solicitada: null,
-         });
+         const resProduto = await getProdutoByIdService(produtoId);
+         const produtoSelected = resProduto.data;
+         if(produtoSelected) {
+            append({
+               fk_id_produto: produtoSelected.id,
+               nome_produto: produtoSelected.nome_produto,
+               tipo_unidade: produtoSelected.tipo_unidade,
+               quantidade_estoque: produtoSelected.quantidade_estoque,
+               quantidade_solicitada: null,
+            });
 
-         setIdExcludes((oldArr) => [...oldArr, produtoId]);
-         resetSelect();
+            setIdExcludes((oldArr) => [...oldArr, produtoId]);
+            resetSelect();
+         }
+         
          setIsLoading(false);
       } catch (error) {
          console.log(error);
       }
    };
 
-   const handleAddCesta = async (data) => {
-      console.log(data);
+   const validateAndSubmit = async (data) => {
+      if(dataCesta) {
+         const fieldsModifiedOnly = getItemsDirtyData(dirtyFields, {
+            nome_cesta: data.nome_cesta,
+            preco: data.preco,
+            quantidade: data.quantidade
+         });
+         handleCestaSubmit(fieldsModifiedOnly);
+      } else {
+         handleCestaSubmit(data);
+      }
    };
 
    const handleRemoveProduto = (index) => {
@@ -124,7 +131,7 @@ export function FormCesta({ dataCesta }) {
       <form 
          action="" 
          className={"layoutFormContentSpacing"}
-         onSubmit={handleSubmit(handleAddCesta)}
+         onSubmit={handleSubmit(validateAndSubmit)}
       >
          <div className={styles.formCestaContainer}>
             <div className={styles.verticalLine}></div>
@@ -137,36 +144,46 @@ export function FormCesta({ dataCesta }) {
                   register={registerNomeCesta}
                   error={errors?.nome_cesta}
                />
-               <InputDefault
-                  type="number"
+               <InputMoney
                   id="preco"
+                  controlName="preco"
+                  control={control}
                   placeholder="ex: 240.50"
                   textView="Preço*"
-                  register={registerPreco}
                   error={errors?.preco}
+               />
+               <InputDefault
+                  type="number"
+                  id="quantidade"
+                  placeholder="ex: 10"
+                  textView="Quantidade*"
+                  register={registerQuantidade}
+                  error={errors?.quantidade}
                />
             </div>
             <div className={styles.formCestaContent__rightSide}>
-               <div className={styles.selectProdutoContainer}>
-                  <SelectSearchable
-                     control={controlSelect}
-                     controlName="produtoId"
-                     dataOptions={optionsProdutos}
-                     placeholder={"Selecione o Produto..."}
-                     textView="Produto*"
-                     error={errorsSelect?.produtoId}
-                     customStyle={{width: "100%"}}
-                  />
-                  <button
-                     type="button"
-                     onClick={handleSubmitSelect(handleSelectProduto)}
-                     disabled={isLoading}
-                     className={isLoading ? "buttonFormMain-style1__inactive" : ""}
-                     style={errorsSelect?.produtoId ? { marginTop: "4px" } : { marginTop: "23px" }}
-                  >
-                     { isLoading ? <Loading/> : "Adicionar" }
-                  </button>
-               </div>
+               {!dataCesta && (
+                  <div className={styles.selectProdutoContainer}>
+                     <SelectSearchable
+                        control={controlSelect}
+                        controlName="produtoId"
+                        dataOptions={optionsProdutos}
+                        placeholder={"Selecione o Produto..."}
+                        textView="Produto*"
+                        error={errorsSelect?.produtoId}
+                        customStyle={{width: "100%"}}
+                     />
+                     <button
+                        type="button"
+                        onClick={handleSubmitSelect(handleSelectProduto)}
+                        disabled={isLoading}
+                        className={isLoading ? "buttonFormMain-style1__inactive" : ""}
+                        style={errorsSelect?.produtoId ? { marginTop: "4px" } : { marginTop: "23px" }}
+                     >
+                        { isLoading ? <Loading/> : "Adicionar" }
+                     </button>
+                  </div>
+               )}
                <div className={styles.produtoViewContainer}>
                   {errors?.cesta_itens && (
                      <p className={`${styles.customErrorMessage} fadeIn`}>
@@ -175,12 +192,21 @@ export function FormCesta({ dataCesta }) {
                   )}
                   {Array.isArray(watchCestaItens) && watchCestaItens.length === 0
                      ? <p className="">Nenhum Produto Selecionado</p>
-                     : <TableCesta
+                     : (!dataCesta ? (
+                        <TableCesta
                            dataCollection={watchCestaItens}
                            register={register}
                            errors={errors}
                            removeProduto={handleRemoveProduto}
                         />
+                     ) : (
+                        <TableDefault
+                           title="Itens na Cesta"
+                           dataCollection={watchCestaItens}
+                           fieldCollection={["Produto", "Tipo de Unidade", "Quantidade Atual", "Quantidade na Cesta"]}
+                           isModalChildren={true}
+                        />
+                     ))
                   }
                </div>
             </div>
@@ -188,7 +214,7 @@ export function FormCesta({ dataCesta }) {
          <div className="footerButtonContainerForForm">
                <button
                   className={`buttonFormMain-style1 ${
-                     watchCestaItens?.length === 0 ? "buttonFormMain-style1__inactive" : ""
+                     ((!dataCesta && watchCestaItens?.length === 0) || (dataCesta && !isDirty)) ? "buttonFormMain-style1__inactive" : ""
                   }`}
                >
                   Cadastrar Entrada

@@ -1,3 +1,4 @@
+import qs from "qs";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -43,6 +44,21 @@ export async function getProdutoByIdService(id) {
       },
    });
    return res;   
+}
+
+export async function getAllProdutosForSelectService(idExcludesCollection = []) {
+   const res = await axios.get(`${localServer}/produtos/geral/select-options`, {
+      params: {
+         idExcludes: idExcludesCollection
+      },
+      paramsSerializer: params => {
+         return qs.stringify(params, {arrayFormat: "repeat"})
+      },
+      headers: {
+         Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+   });
+   return res;
 }
 
 

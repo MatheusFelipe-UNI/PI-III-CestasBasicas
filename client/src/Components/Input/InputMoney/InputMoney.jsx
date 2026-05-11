@@ -16,6 +16,13 @@ export function InputMoney({
          <Controller
             control={control}
             name={controlName}
+            rules={{
+               required: "Campo Obrigatório!",
+               min: {
+                  value: 0,
+                  message: "Insira um valor maior ou igual a 0",
+               }
+            }}
             render={({ field }) => (
                <CurrencyInput
                   id={id}

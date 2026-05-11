@@ -34,8 +34,8 @@ async function getAllInactiveProdutosService() {
     return inactiveProdutosWithStatusEstoque;
 }
 
-async function getAllProdutosForSelectService() {
-    const produtos = await findAllProdutosForSelect();
+async function getAllProdutosForSelectService(idExcludes) {
+    const produtos = await findAllProdutosForSelect(idExcludes);
     return produtos;
 }
 

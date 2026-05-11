@@ -117,6 +117,8 @@ async function createCesta(req, res) {
          itens_cesta
       } = req.body;
 
+      console.log(req.body)
+
       if(!nome_cesta || 
          (preco === undefined || preco === null) || 
          (quantidade === undefined || quantidade === null) || 

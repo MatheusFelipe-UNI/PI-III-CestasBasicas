@@ -14,6 +14,7 @@ import { ModalAddUser } from "../Components/Modals/Administrador/ModalAddUser";
 import { ModalAddCesta } from "../Components/Modals/Cestas/ModalAddCesta/ModalAddCesta";
 import { ModalAddLoteProduto } from "../Components/Modals/LoteProdutos/ModalAddLoteProduto/ModalAddLoteProduto";
 import { ModalEditLoteProduto } from "../Components/Modals/LoteProdutos/ModalEditLoteProduto/ModalEditLoteProduto";
+import { ModalEditCesta } from "../Components/Modals/Cestas/ModalEditCesta/ModalEditCesta";
 
 export const modalCollection = [
    // Produtos
@@ -77,4 +78,9 @@ export const modalCollection = [
       title: "Montar Cesta Básica",
       modalContent: <ModalAddCesta />,
    },
+   {
+      name: "editCesta",
+      title: "Visualizar e Editar Cesta Básica",
+      modalContent: <ModalEditCesta/>
+   }
 ];

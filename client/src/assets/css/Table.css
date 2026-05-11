@@ -143,10 +143,15 @@ Estilização de Content (texto, subtítulos...)
 ===================================================================
 */
 
+table thead tr.tableTitle {
+    background-color: var(--colorPrim);
+    color: white;
+}
+
 table thead tr.tableTitle th {
     text-align: left;
-    font-size: var(--fontSizeTitleContent);
     padding: 0.5em 15px;
+    border-radius: var(--fixBorderRadius) var(--fixBorderRadius) 0 0;
 }
 
 

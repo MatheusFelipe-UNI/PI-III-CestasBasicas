@@ -76,16 +76,21 @@ async function getAllActiveProdutosByFilterAndOrderBy(filters, validOrderBy) {
     return produtos;
 }
 
-async function findAllProdutosForSelect() {
+async function findAllProdutosForSelect(idExcludesCollection = []) {
     const produtos = await Produtos.findAll({
         attributes: [
             [sequelize.col("id"), "value"], 
             [sequelize.col("nome_produto"), "label"]
         ],
         where: {
-            status: "ATIVO"
+            status: "ATIVO",
+            id: {
+                [Op.notIn]: idExcludesCollection
+            }
         }
-    })
+    });
+
+    return produtos;
 }
 
 async function getProdutoById(idProduto) {

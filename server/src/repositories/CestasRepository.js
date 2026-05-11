@@ -16,6 +16,7 @@ async function getAllActiveCestas() {
             "nome_cesta",
             "status",
             "quantidade",
+            "preco",
             [
                 sequelize.fn("DATE_FORMAT", sequelize.col("Cestas.created_at"), "%d-%m-%Y %H:%i:%s"),
                 "created_at",
@@ -38,6 +39,8 @@ async function getAllInactiveCestas() {
             "id",
             "nome_cesta",
             "status",
+            "quantidade",
+            "preco",
             [
                 sequelize.fn("DATE_FORMAT", sequelize.col("Cestas.created_at"), "%d-%m-%Y %H:%i:%s"),
                 "created_at",
@@ -63,7 +66,17 @@ async function getAllActiveCestasByFilterAndOrderBy(whereClause, orderFilters, a
 async function getCestaById(idCesta) {
     const cestaID = await Cestas.findByPk(idCesta, {
         include: [{
-            association: "itens_cesta"
+            association: "itens_cesta",
+            include: {
+                association: "produtos_cesta",
+                attributes: []
+            },
+            attributes: [
+                [sequelize.literal("`itens_cesta->produtos_cesta`.`nome_produto`"), "nome_produto"],
+                [sequelize.literal("`itens_cesta->produtos_cesta`.`tipo_unidade`"), "tipo_unidade"],
+                [sequelize.literal("`itens_cesta->produtos_cesta`.`quantidade_estoque`"), "quantidade_estoque"],
+                "quantidade_solicitada"
+            ]
         }]
     });
     return cestaID;

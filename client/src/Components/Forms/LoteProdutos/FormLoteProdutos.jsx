@@ -34,15 +34,6 @@ export function FormLoteProdutos({
 
    const registerWithMask = useHookFormMask(register);
 
-   const registerValorUnitario = register("valor_unitario", {
-      required: "Campo Obrigatório",
-      valueAsNumber: true,
-      min: {
-         value: 0,
-         message: "Insira um valor maior ou igual a 0",
-      },
-   });
-
    const registerQtdDisponivel = register("qtd_disponivel", {
       required: "Campo Obrigatório",
       valueAsNumber: true,

@@ -22,7 +22,6 @@ export function ModalEditCesta() {
             quantidade,
             itens_cesta
          } = res.data;
-         console.log(res.data);
          setEditableCesta({
             nome_cesta,
             preco,

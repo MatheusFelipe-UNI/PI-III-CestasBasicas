@@ -119,7 +119,6 @@ export function ModalAddEntradaProdutos() {
          });
       } else {
          try {
-            console.log(produtos);
 
             showSuccessAlert({
                title: "Entrada Registrada com sucesso!",
@@ -161,8 +160,6 @@ export function ModalAddEntradaProdutos() {
    if (!optionsProdutos || !optionsFornecedores) {
       return <Loading />;
    }
-
-   console.log(watchProdutos);
 
    return (
       <>

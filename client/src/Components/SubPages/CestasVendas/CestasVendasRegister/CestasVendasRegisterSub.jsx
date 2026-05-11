@@ -1,5 +1,13 @@
+import SelectSearchable from "../../../SelectSearchable/SelectSearchable";
+
 export function CestasVendasRegisterSub() {
    return(
-      <h1>Cadastro de Cestas</h1>
+      <form action="">
+         <div className="">
+            <SelectSearchable/>
+            <SelectSearchable/>
+            <button>Adicionar</button>
+         </div>
+      </form>
    )
 }

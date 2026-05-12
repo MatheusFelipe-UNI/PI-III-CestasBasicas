@@ -31,11 +31,7 @@ export function EntradaProdutoProvider({ children }) {
       if (!isLoading) {
          setIsLoading(true);
       }
-      if (viewStatus === "ATIVO") {
-         res = await getAllEntradaProdutosRecebidosService();
-      } else {
-         res = await getAllEntradaProdutosCanceladasService();
-      }
+      res = await getAllEntradaProdutosRecebidosService();
 
       setEntradaProdutos(res.data);
       setFilteredEntradaProdutos(res.data);

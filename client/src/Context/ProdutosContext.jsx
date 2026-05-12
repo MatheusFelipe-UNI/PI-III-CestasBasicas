@@ -95,7 +95,9 @@ export function ProdutoProvider({ children }) {
 
    const init = async () => {
       try {
-         await getAllProdutos();
+         if(currViewStatus) {
+            await getAllProdutos(currViewStatus);
+         }
       } catch (error) {
          console.log(error);
       }

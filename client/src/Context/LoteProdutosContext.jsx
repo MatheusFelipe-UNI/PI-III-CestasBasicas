@@ -96,7 +96,9 @@ export function LoteProdutoProvider({ children }) {
 
    const init = async () => {
       try {
-         await getAllLoteProdutos();
+         if(currViewStatus) {
+            await getAllLoteProdutos(currViewStatus);
+         }
       } catch (error) {
          console.log(error);
       }

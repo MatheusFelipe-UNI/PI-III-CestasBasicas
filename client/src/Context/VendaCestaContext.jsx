@@ -3,6 +3,7 @@ import { getScreenViewStatusByKey, setScreenViewStatusByKey } from "../utils/Vie
 import { useLocation, useNavigate, useSearchParams } from "react-router";
 import {
    createVendaCestaService,
+   deleteVendaCestaService,
    getAllVendasCestasCanceladasService,
    getAllVendasCestasConcluidasService,
    getAllVendasCestasPendentesService,
@@ -51,7 +52,7 @@ export function VendaCestaProvider({ children }) {
    const loadFilteredVendaCestas = (vendaCestas, searchValue) => {
       const fieldsForSearch = [
          "nome_cliente",
-         "nome_cestas",
+         "nome_cesta",
          "usuario",
          "valor_total",
          "data_venda",
@@ -89,6 +90,15 @@ export function VendaCestaProvider({ children }) {
 
    const updateVendaCestaStatus = async (id, newVendaCestaStatus) => {
       const res = await updateVendaCestaStatusService(id, newVendaCestaStatus);
+
+      if (res.data.status === "success" || res.status === 200) {
+         await getAllVendaCestas(currViewStatus);
+         return true;
+      }
+   };
+   
+   const deleteVendaCesta = async (id) => {
+      const res = await deleteVendaCestaService(id);
 
       if (res.data.status === "success" || res.status === 200) {
          await getAllVendaCestas(currViewStatus);
@@ -150,6 +160,7 @@ export function VendaCestaProvider({ children }) {
             createVendaCesta,
             updateVendaCesta,
             updateVendaCestaStatus,
+            deleteVendaCesta,
             searchValueMemo,
             defineSearchParams,
          }}

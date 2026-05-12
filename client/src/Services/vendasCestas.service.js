@@ -45,6 +45,15 @@ export async function getAllVendasCestasCanceladasService() {
    return res;
 }
 
+export async function getVendaCestaByIdService(id) {
+   const res = await axios.get(`${localServer}/vendas-cestas/${id}`, {
+      headers: {
+         Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+   });
+   return res;
+}
+
 
 /* 
 ==================================
@@ -77,6 +86,21 @@ export async function updateVendaCestaService(id, body) {
 
 export async function updateVendaCestaStatusService(id, newStatus) {
    const res = await axios.patch(`${localServer}/vendas-cestas/${id}/status`, { status: newStatus }, {
+      headers: {
+         Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+   });
+   return res;
+}
+
+
+/* 
+==================================
+method = DELETE
+==================================
+*/
+export async function deleteVendaCestaService(id) {
+   const res = await axios.delete(`${localServer}/vendas-cestas/${id}`, {
       headers: {
          Authorization: `Bearer ${Cookies.get("token")}`,
       },

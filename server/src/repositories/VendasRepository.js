@@ -8,21 +8,6 @@ async function getAllVendasCestas() {
 
 async function getAllPendingVendasCestas() {
     const allPendingVendas = await Vendas.findAll({
-        where: {
-            status: "PENDENTE"
-        },
-        attributes: [
-            "id",
-            "fk_id_cesta",
-            "quantidade",
-            "valor_total",
-            "data_venda",
-            "valor_unitario",
-            "status",
-            [sequelize.fn("DATE_FORMAT", sequelize.col("Vendas.data_venda"), "%d-%m-%Y"), "data_venda",],
-            [sequelize.col("user_venda.usuario"), "vendedor"],
-            [sequelize.col("cliente_venda.nome_cliente"), "cliente"],
-        ],
         include: [
             {
                 association: "cliente_venda",
@@ -34,30 +19,28 @@ async function getAllPendingVendasCestas() {
             },
             {
                 association: "cesta_venda",
-                attributes: ["nome_cesta"]
+                attributes: []
             }
         ],
+        attributes: [
+            "id",
+            [sequelize.col("cliente_venda.nome_cliente"), "nome_cliente"],
+            [sequelize.col("cesta_venda.nome_cesta"), "nome_cesta"],
+            "quantidade",
+            "valor_total",
+            [sequelize.col("user_venda.usuario"), "nome_usuario"],
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Vendas.data_venda"), "%d-%m-%Y"), "data_pedido",],
+        ],
+        where: {
+            status: "PENDENTE"
+        },
+        order: [["data_venda", "DESC"]]
     });
     return allPendingVendas;
 }
 
 async function getAllFinishedVendasCestas() {
     const allFinishedVendas = await Vendas.findAll({
-        where: {
-            status: "CONCLUIDA"
-        },
-        attributes: [
-            "id",
-            "fk_id_cesta",
-            "quantidade",
-            "valor_total",
-            "data_venda",
-            "valor_unitario",
-            "status",
-            [sequelize.fn("DATE_FORMAT", sequelize.col("Vendas.data_venda"), "%d-%m-%Y"), "data_venda",],
-            [sequelize.col("user_venda.usuario"), "vendedor"],
-            [sequelize.col("cliente_venda.nome_cliente"), "cliente"],
-        ],
         include: [
             {
                 association: "cliente_venda",
@@ -69,30 +52,28 @@ async function getAllFinishedVendasCestas() {
             },
             {
                 association: "cesta_venda",
-                attributes: ["nome_cesta"]
+                attributes: []
             }
         ],
+        attributes: [
+            "id",
+            [sequelize.col("cliente_venda.nome_cliente"), "nome_cliente"],
+            [sequelize.col("cesta_venda.nome_cesta"), "nome_cesta"],
+            "quantidade",
+            "valor_total",
+            [sequelize.col("user_venda.usuario"), "nome_usuario"],
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Vendas.data_venda"), "%d-%m-%Y"), "data_pedido",],
+        ],
+        where: {
+            status: "CONCLUIDA"
+        },
+        order: [["data_venda", "DESC"]]
     });
     return allFinishedVendas;
 }
 
 async function getAllCanceledVendasCestas() {
     const allCanceledVendas = await Vendas.findAll({
-        where: {
-            status: "CANCELADA"
-        },
-        attributes: [
-            "id",
-            "fk_id_cesta",
-            "quantidade",
-            "valor_total",
-            "data_venda",
-            "valor_unitario",
-            "status",
-            [sequelize.fn("DATE_FORMAT", sequelize.col("Vendas.data_venda"), "%d-%m-%Y"), "data_venda",],
-            [sequelize.col("user_venda.usuario"), "vendedor"],
-            [sequelize.col("cliente_venda.nome_cliente"), "cliente"],
-        ],
         include: [
             {
                 association: "cliente_venda",
@@ -104,9 +85,22 @@ async function getAllCanceledVendasCestas() {
             },
             {
                 association: "cesta_venda",
-                attributes: ["nome_cesta"]
+                attributes: []
             }
         ],
+        attributes: [
+            "id",
+            [sequelize.col("cliente_venda.nome_cliente"), "nome_cliente"],
+            [sequelize.col("cesta_venda.nome_cesta"), "nome_cesta"],
+            "quantidade",
+            "valor_total",
+            [sequelize.col("user_venda.usuario"), "nome_usuario"],
+            [sequelize.fn("DATE_FORMAT", sequelize.col("Vendas.data_venda"), "%d-%m-%Y"), "data_pedido",],
+        ],
+        where: {
+            status: "CANCELADA"
+        },
+        order: [["data_venda", "DESC"]]
     });
     return allCanceledVendas;
 }
@@ -259,6 +253,13 @@ async function createVendaCesta(vendaCestaCollection) {
     return createdVenda;
 }
 
+async function deleteVendaCesta(id) {
+    const deletedVenda = await Vendas.destroy({
+        where: { id }
+    });
+    return deletedVenda;
+}
+
 module.exports = {
     getAllVendasCestas,
     getAllPendingVendasCestas,
@@ -268,4 +269,5 @@ module.exports = {
     getVendaCestaById,
     changeVendaCestaStatus,
     createVendaCesta,
+    deleteVendaCesta
 }

@@ -51,12 +51,13 @@ async function getAllReceivedEntradasProdutos() {
         attributes: [
             "id",
             "status",
-            [sequelize.fn("DATE_FORMAT", sequelize.col("data_entrada"), "%d-%m-%Y %H:%i:%s"), "data_entrada"],
+            [sequelize.fn("DATE_FORMAT", sequelize.col("data_entrada"), "%d-%m-%Y %H:%i:%s"), "data_recebimento"],
             [sequelize.col("user_entrada.usuario"), "usuario"]
         ],
         where: {
             status: "RECEBIDA" //RECEBA!
         },
+        order: [["data_entrada", "DESC"]],
         raw: true
     });
     return allReceivedEntradasProdutos;
@@ -93,12 +94,13 @@ async function getAllCanceledEntradasProdutos() {
         attributes: [
             "id",
             "status",
-            [sequelize.fn("DATE_FORMAT", sequelize.col("data_entrada"), "%d-%m-%Y %H:%i:%s"), "data_entrada"],
+            [sequelize.fn("DATE_FORMAT", sequelize.col("data_entrada"), "%d-%m-%Y %H:%i:%s"), "data_recebimento"],
             [sequelize.col("user_entrada.usuario"), "usuario"]
         ],
         where: {
             status: "CANCELADA" //DESRECEBA!
         },
+        order: [["data_entrada", "DESC"]],
         raw: true
     });
     return allCanceledEntradasProdutos;

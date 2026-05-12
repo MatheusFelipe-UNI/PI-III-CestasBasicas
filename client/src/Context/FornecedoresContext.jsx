@@ -92,7 +92,9 @@ export function FornecedorProvider({ children }) {
 
    const init = async () => {
       try {
-         await getAllFornecedores();
+         if(currViewStatus) {
+            await getAllFornecedores(currViewStatus);
+         }
       } catch (error) {
          console.log(error);
       }

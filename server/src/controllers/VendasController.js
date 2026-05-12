@@ -15,6 +15,7 @@ const {
    getVendaCestaByIdService,
    changeVendaCestaStatusService,
    createVendaCestaService,
+   deleteVendaCestaService,
 } = require("../services/VendasServices.js")
 
 /* 
@@ -101,7 +102,7 @@ async function getAllFinishedVendasCestasByFilterAndOrderBy(req, res) {
 // Retorna a venda de cesta correspondente ao ID passado (se houver)
 async function getVendaCestaById(req, res) {
    try {
-       
+      const id = Number(req.params.id);
 
       // Utilizar esse Nome de função para os services
       const vendaCesta = await getVendaCestaByIdService(id);
@@ -188,6 +189,32 @@ async function createVendaCesta(req, res) {
    }
 }
 
+async function removeVendaCesta(req, res) {
+   try {
+      const id = Number(req.params.id);
+
+      if(!id) {
+         throw new FieldUndefinedError("Campo ID não identificado", {
+            fields: {
+               id,
+            },
+         });
+      }
+
+      const deletedVendaCesta = await deleteVendaCestaService(id);
+
+      if(deletedVendaCesta > 0) {
+         return res.status(200).json({
+            status: "success",
+            message: "Venda de Cesta cancelada com sucesso!"
+         });
+      }
+
+   } catch (error) {
+      errorResponse(error, res);
+   }
+}
+
 module.exports = {
    getAllVendasCestas,
    getAllPendingVendasCestas,
@@ -196,5 +223,6 @@ module.exports = {
    getAllFinishedVendasCestasByFilterAndOrderBy,
    getVendaCestaById,
    changeVendaCestaStatus,
-   createVendaCesta
+   createVendaCesta,
+   removeVendaCesta
 };

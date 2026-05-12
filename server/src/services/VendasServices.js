@@ -1,6 +1,7 @@
+const CannotDeleteError = require("../classes/CannotDeleteError");
 const ExistsDataError = require("../classes/ExistsDataError");
 const FieldUndefinedError = require("../classes/FieldUndefinedError");
-const { changeLoteProdutoStatus } = require("../repositories/LotesProdutosRepository");
+const NotFoundError = require("../classes/NotFoundError");
 const {
     getAllVendasCestas,
     getAllPendingVendasCestas,
@@ -10,6 +11,7 @@ const {
     getVendaCestaById,
     changeVendaCestaStatus,
     createVendaCesta,
+    deleteVendaCesta,
 } = require("../repositories/VendasRepository")
 
 async function getAllVendasCestasService() {
@@ -54,7 +56,7 @@ async function getVendaCestaByIdService(idCestaVenda) {
 }
 
 async function changeVendaCestaStatusService(id, newStatus) {
-    const venda = await getVendaCestaByIdService(id)
+    const venda = await getVendaCestaById(id)
     const formattedNewStatus = newStatus.toUpperCase();
 
     if (!venda){
@@ -86,6 +88,20 @@ async function createVendaCestaService(idUser, vendaCestaCollection) {
     return createdVenda;
 }
 
+async function deleteVendaCestaService(idUser) {
+    const existsVenda = await getVendaCestaById(idUser);
+
+    if(!existsVenda) {
+        throw new NotFoundError("Venda de Cesta não encontrada!", {
+            id: idUser
+        });
+    }
+
+    const deletedVenda = await deleteVendaCesta(idUser);
+
+    return deletedVenda;
+}
+
 module.exports = {
     getAllVendasCestasService,
     getAllPendingVendasCestasService,
@@ -95,4 +111,5 @@ module.exports = {
     getVendaCestaByIdService,
     changeVendaCestaStatusService,
     createVendaCestaService,
+    deleteVendaCestaService
 }

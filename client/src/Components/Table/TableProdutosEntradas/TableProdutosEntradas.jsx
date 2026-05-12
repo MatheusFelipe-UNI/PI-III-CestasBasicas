@@ -3,6 +3,7 @@ import { THeadProdutosEntrada } from "../TableComponents/THead/THeadProdutosEntr
 
 export function TableProdutosEntradas({ entradaProdutosData, fieldsExcludes = [] }) {
    const fieldCollection = ["Produto", "Fornecedor", "Tipo Unidade", "Qtd. Adquirida"];
+   console.log(entradaProdutosData);
 
    const entradaProdutosHeaderData = {
       id: entradaProdutosData.id,

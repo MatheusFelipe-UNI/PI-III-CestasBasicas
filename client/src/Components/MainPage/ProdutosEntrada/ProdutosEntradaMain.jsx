@@ -3,16 +3,17 @@ import { ViewStatusBar } from "../../ViewStatusBar/ViewStatusBar";
 import { useModal } from "../../../Context/ModalContext";
 import { ActionBar } from "../../ActionBar/ActionBar";
 import { useEntradaProduto } from "../../../Context/EntradaProdutosContext";
+import { Loading } from "../../Loading/Loading";
 
 export function ProdutosEntradaMain() {
    const { showModal } = useModal();
-   const { 
+   const {
       filteredEntradaProdutos: entradaProdutos,
       isLoading,
       currViewStatus,
       changeCurrViewStatus,
       defineSearchParams,
-      searchValueMemo: searchValue
+      searchValueMemo: searchValue,
    } = useEntradaProduto();
 
    const fieldsExcludes = ["id"];
@@ -28,16 +29,16 @@ export function ProdutosEntradaMain() {
                produto: "Arroz",
                fornecedor: "Fornecedor A",
                tipo_unidade: "kg",
-               qtd_adquirida: 100
+               qtd_adquirida: 100,
             },
             {
                id: 2,
                produto: "Arroz",
                fornecedor: "Fornecedor A",
                tipo_unidade: "kg",
-               qtd_adquirida: 100
-            }
-         ]
+               qtd_adquirida: 100,
+            },
+         ],
       },
       {
          id: 2,
@@ -48,25 +49,25 @@ export function ProdutosEntradaMain() {
                produto: "Arroz",
                fornecedor: "Fornecedor A",
                tipo_unidade: "kg",
-               qtd_adquirida: 100
+               qtd_adquirida: 100,
             },
             {
                id: 4,
                produto: "Arroz",
                fornecedor: "Fornecedor A",
                tipo_unidade: "kg",
-               qtd_adquirida: 100
-            }
-         ]
-      }
-   ]
+               qtd_adquirida: 100,
+            },
+         ],
+      },
+   ];
 
-   return(
+   return (
       <>
-         <ActionBar 
+         <ActionBar
             viewName="Entrada Produtos"
             searchFilter={searchValue}
-            onChangeSearchFilter={defineSearchParams} 
+            onChangeSearchFilter={defineSearchParams}
             hasActionButton={false}
          />
          {/* <ViewStatusBar 
@@ -76,14 +77,20 @@ export function ProdutosEntradaMain() {
             optionsCollection={optionsCollection} 
          /> */}
          <div className="layoutTableSpacing">
-            {entradaProdutosCollection.map((data) => (
-               <TableProdutosEntradas 
-                  key={data.id}
-                  entradaProdutosData={data}
-                  fieldsExcludes={fieldsExcludes}
-               />
-            ))}
+            {isLoading ? (
+               <Loading />
+            ) : Array.isArray(entradaProdutos) && entradaProdutos.length > 0 ? (
+               entradaProdutos.map((data) => (
+                  <TableProdutosEntradas
+                     key={data.id}
+                     entradaProdutosData={data}
+                     fieldsExcludes={fieldsExcludes}
+                  />
+               ))
+            ) : (
+               <p className="textInfoNotAvaliable">Nenhuma Entrada encontrada</p>
+            )}
          </div>
       </>
-   )
+   );
 }

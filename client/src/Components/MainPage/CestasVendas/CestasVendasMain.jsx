@@ -28,14 +28,6 @@ export function CestasVendasMain() {
             >
                Vendas Concluídas
             </NavLink>
-
-            <NavLink 
-               to="canceladas"
-               className={({isActive}) => isActive ? styles.active : ""}
-               end
-            >
-               Vendas Canceladas
-            </NavLink>
          </div>
          <article className={styles.cestasVendasMainContainer} style={{border: "1px solid var(--colorPrim)"}}>
             <Outlet/>

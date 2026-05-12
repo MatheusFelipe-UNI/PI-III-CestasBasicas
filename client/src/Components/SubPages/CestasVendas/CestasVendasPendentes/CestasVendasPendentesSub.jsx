@@ -1,8 +1,79 @@
+import { useAlert } from "../../../../Context/AlertContext";
+import { useVendaCesta } from "../../../../Context/VendaCestaContext";
+import { getVendaCestaByIdService } from "../../../../Services/vendasCestas.service";
+import { getElementIdTable } from "../../../../utils/ManipulateDataUtil";
+import { ActionBar } from "../../../ActionBar/ActionBar";
+import { Loading } from "../../../Loading/Loading";
 import TableDefault from "../../../Table/TableDefault/TableDefault";
-import { FaCheck as IconConfirm } from "react-icons/fa";
+import { FaCheck as IconConfirm, FaTrashAlt as IconDel, } from "react-icons/fa";
+
 
 
 export function CestasVendasPendentesSub() {
+   const { showConfirmAlert, showSuccessAlert, showErrorAlert } = useAlert();
+   const {
+      filteredVendaCestas: vendas,
+      isLoading,
+      currViewStatus,
+      changeCurrViewStatus,
+      updateVendaCestaStatus,
+      deleteVendaCesta,
+      defineSearchParams,
+      searchValueMemo: searchValue,
+   } = useVendaCesta();
+
+   const handleChangeViewStatus = async (e) => {
+      const idValue = e.target.closest("tr").id;
+      try {
+
+         if(await updateVendaCestaStatus(idValue, "CONCLUIDA")) {
+            showSuccessAlert({
+               title: "Retirada realizada com sucesso!!",
+            })
+         }
+      } catch (error) {
+         console.log(error);
+         if (error?.response?.data) {
+            const { errMessage } = error.response.data;
+
+            showErrorAlert({
+               title: "Erro ao Retirar Cesta",
+               message: errMessage,
+            });
+         }         
+      }
+   }
+
+   const handleOnDeleteVenda = async (id) => {
+      try {
+         if(await deleteVendaCesta(id)) {
+            showSuccessAlert({
+               title: "Venda Cancelada com sucesso!",
+            })
+         }
+      } catch (error) {
+         console.log(error);
+         if (error?.response?.data) {
+            const { errMessage } = error.response.data;
+
+            showErrorAlert({
+               title: "Erro ao remover Cesta",
+               message: errMessage,
+            });
+         }         
+      }
+   }
+
+   const handleConfirmDelete = async (e) => {
+      const id = getElementIdTable(e);
+      await showConfirmAlert({
+         title: "Excluir Venda de Cesta",
+         message:
+            "Você tem certeza que deseja EXCLUIR a Venda de Cesta? (Esta ação NÃO poderá ser desfeita)",
+         handleConfirm: async () => await handleOnDeleteVenda(id),
+      });
+   };
+
    const fieldCollection = [
       "ID",
       "Cliente",
@@ -13,26 +84,6 @@ export function CestasVendasPendentesSub() {
       "Data Pedido",
    ];
 
-   const tempDataCollection = [
-      {
-         id: 1,
-         cliente: "José Augusto Ferreira",
-         cesta_solicitada: "Cesta 1",
-         qtd_solicitada: 50,
-         valor_total: "R$150.00",
-         usuario: "Claudio Pereira",
-         data_pedido: "01-04-2026"
-      },
-      {
-         id: 2,
-         cliente: "Marcus Vinicius Amaral Rodrigues",
-         cesta_solicitada: "Cesta 2",
-         qtd_solicitada: 20,
-         valor_total: "R$1900.00",
-         usuario: "Admin",
-         data_pedido: "20-04-2026"
-      }
-   ]
 
    const buttonCollection = [
       {
@@ -42,18 +93,34 @@ export function CestasVendasPendentesSub() {
             <IconConfirm/>
          </>,
          className: "greenBtn",
-         handleAction: () => null
+         handleAction: handleChangeViewStatus
+      },
+      {
+         id: 2,
+         infoView: <IconDel/>,
+         handleAction: handleConfirmDelete,
+         className: "delBtn",
+         toolTipsText: "Cancelar Venda"
       }
    ]
 
    return(
       <>
-         <div><input type="text" /></div>
-         <TableDefault
-            fieldCollection={fieldCollection}
-            dataCollection={tempDataCollection}
-            btnCollection={buttonCollection}
+         <ActionBar
+            viewName="Vendas Pendentes"
+            hasActionButton={false}
+            searchFilter={searchValue}
+            onChangeSearchFilter={defineSearchParams}
          />
+         {isLoading ? (
+            <Loading/>
+         ) : (
+            <TableDefault
+               fieldCollection={fieldCollection}
+               dataCollection={vendas}
+               btnCollection={buttonCollection}
+            />
+         )}
       </>
    )
 }

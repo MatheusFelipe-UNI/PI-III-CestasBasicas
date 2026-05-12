@@ -1,7 +1,16 @@
+import { useVendaCesta } from "../../../../Context/VendaCestaContext";
+import { ActionBar } from "../../../ActionBar/ActionBar";
+import { Loading } from "../../../Loading/Loading";
 import TableDefault from "../../../Table/TableDefault/TableDefault";
 import { ImCancelCircle as IconCancel } from "react-icons/im";
 
 export function CestasVendasConcluidasSub() {
+   const {
+      filteredVendaCestas: vendas,
+      isLoading,
+      defineSearchParams,
+      searchValueMemo: searchValue,
+   } = useVendaCesta();
    const fieldCollection = [
       "ID",
       "Cliente",
@@ -9,54 +18,25 @@ export function CestasVendasConcluidasSub() {
       "Qtd. Solicitada",
       "Valor Total",
       "Cadastrado por",
-      "Data Pedido",
-   ];
-
-   const tempDataCollection = [
-      {
-         id: 1,
-         cliente: "José Augusto Ferreira",
-         cesta_solicitada: "Cesta 1",
-         qtd_solicitada: 50,
-         valor_total: "R$150.00",
-         usuario: "Claudio Pereira",
-         data_pedido: "01-04-2026",
-      },
-      {
-         id: 2,
-         cliente: "Marcus Vinicius Amaral Rodrigues",
-         cesta_solicitada: "Cesta 2",
-         qtd_solicitada: 20,
-         valor_total: "R$1900.00",
-         usuario: "Admin",
-         data_pedido: "20-04-2026",
-      },
-   ];
-
-   const buttonCollection = [
-      {
-         id: 1,
-         infoView: (
-            <>
-               <p style={{ marginRight: "5px" }}>Cancelar Venda</p>
-               <IconCancel />
-            </>
-         ),
-         className: "delBtn",
-         handleAction: () => null,
-      },
+      "Data Retirada",
    ];
 
    return (
       <>
-         <div>
-            <input type="text" />
-         </div>
-         <TableDefault
-            fieldCollection={fieldCollection}
-            dataCollection={tempDataCollection}
-            btnCollection={buttonCollection}
+         <ActionBar
+            viewName="Vendas Concluídas"
+            hasActionButton={false}
+            searchFilter={searchValue}
+            onChangeSearchFilter={defineSearchParams}
          />
+         {isLoading ? (
+            <Loading/>
+         ) : (
+            <TableDefault
+               fieldCollection={fieldCollection}
+               dataCollection={vendas}
+            />
+         )}
       </>
    );
 }

@@ -31,5 +31,6 @@ router
 router
    .route("/:id")
    .get(vendasController.getVendaCestaById)
+   .delete(vendasController.removeVendaCesta)
 
 module.exports = router;

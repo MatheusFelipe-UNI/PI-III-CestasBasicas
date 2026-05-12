@@ -248,7 +248,6 @@ async function changeVendaCestaStatus(id, newStatus) {
 }
 
 async function createVendaCesta(vendaCestaCollection) {
-    console.log(vendaCestaCollection);
     const createdVenda = await Vendas.bulkCreate(vendaCestaCollection)
     return createdVenda;
 }

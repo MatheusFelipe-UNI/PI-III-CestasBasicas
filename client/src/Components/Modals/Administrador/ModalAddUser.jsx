@@ -18,7 +18,6 @@ export function ModalAddUser() {
       }
       try {
          const res = await registerNewUser({ usuario, senha, nivel_acesso })
-         console.log(res);
 
          if(res.data.status === "success" || res.status === 201) {
             showSuccessAlert({

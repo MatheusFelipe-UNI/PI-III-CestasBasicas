@@ -90,7 +90,7 @@ export function Autenticacao() {
          }
 
          const res = await registerFirstUserService({ usuario: userName, senha: userPass });
-         console.log(res);
+
          if (res.status === 201) {
             showSuccessAlert({
                title: "Cadastro Concluído",

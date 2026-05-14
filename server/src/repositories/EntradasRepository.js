@@ -245,13 +245,14 @@ async function changeEntradaProdutoStatus(idEntrada, newStatus) {
     return updateEntradaStatus;
 }
 
-async function createEntradaProduto(entradaData) {
-    const t = await sequelize.transaction();
+async function createEntradaProduto(entradaData, transaction = null) {
+    const t = transaction || await sequelize.transaction();
 
     try {
         const newEntradaProduto = await EntradasProdutos.create({
             fk_id_user: entradaData.fk_id_user,
-            itens_entrada: entradaData.itens_entrada
+            itens_entrada: entradaData.itens_entrada,
+            status: "RECEBIDA",
         }, {
             include: [{
                 association: "itens_entrada"
@@ -259,11 +260,11 @@ async function createEntradaProduto(entradaData) {
             transaction: t
         });
 
-        await t.commit();
+        if(!transaction) await t.commit();
         return newEntradaProduto;
 
     } catch (error) {
-        console.log(error);
+        if (!transaction) console.log(error);
         await t.rollback();
     }
 }

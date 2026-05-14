@@ -92,8 +92,8 @@ async function changeEntradaProdutoStatusService(idEntrada, newStatus){
     return updateEntradaStatus
 }
 
-async function createEntradaProdutoService(entradaData) {
-    const newEntrada = await createEntradaProduto(entradaData);
+async function createEntradaProdutoService(entradaData, transaction = null) {
+    const newEntrada = await createEntradaProduto(entradaData, transaction);
     return newEntrada;
 }
 

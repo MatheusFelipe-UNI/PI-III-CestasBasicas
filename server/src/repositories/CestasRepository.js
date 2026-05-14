@@ -100,8 +100,8 @@ async function getCestaById(idCesta) {
     return cestaID;
 }
 
-async function createCesta(cestaData) {
-    const t = await sequelize.transaction();
+async function createCesta(cestaData, transaction = null) {
+    const t = transaction || await sequelize.transaction();
 
     try {
         const newCesta = await Cestas.create({
@@ -117,12 +117,15 @@ async function createCesta(cestaData) {
             transaction: t
         });
 
-        await t.commit();
+        if (!transaction) await t.commit();
         return newCesta;
 
     } catch (error) {
-        console.log(error);
-        await t.rollback();
+        if (!transaction) {
+            console.log(error);
+            await t.rollback();
+        }
+        throw error;
     }
 }
 
@@ -135,8 +138,8 @@ async function changeCestaStatus(idCesta, newStatus) {
     return updateCesta
 }
 
-async function updateCesta(id, updateFields, itens_cesta) {
-    const t = await sequelize.transaction();
+async function updateCesta(id, updateFields, itens_cesta, transaction = null) {
+    const t = transaction ||  await sequelize.transaction();
 
     try {
         if (Object.keys(updateFields).length > 0) {
@@ -156,18 +159,19 @@ async function updateCesta(id, updateFields, itens_cesta) {
                 return {
                     fk_id_cesta: id,
                     fk_id_produto: item.fk_id_produto,
-                    quantidade: item.quantidade
+                    quantidade_solicitada: item.quantidade_solicitada
                 };
             });
             await Itens_cestas.bulkCreate(newItens, { transaction: t });
         }
 
-        await t.commit();
+        if (!transaction) await t.commit();
         return [1];
 
     } catch (error) {
         console.log(error);
-        await t.rollback();
+        if (!transaction) await t.rollback();
+        throw error; 
     }
 }
 

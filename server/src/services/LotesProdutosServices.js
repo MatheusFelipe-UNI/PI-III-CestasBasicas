@@ -164,14 +164,14 @@ async function createLoteProdutoService(loteProdutoData) {
 async function updateLoteProdutoService(id, lotesData) {
     const { id_fornecedor, valor_unitario, qtd_disponivel, data_validade, is_vencido } = lotesData
     const lote = await getLoteProdutoByIdService(id);
-    const hoje = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
+    const hoje = new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' });
 
     if (!lote) {
         throw new ExistsDataError ("Lote não localizado!")
     }
 
     if(data_validade && data_validade <= hoje) {
-        throw new CannotupdateError ("O lote não pode ser editado usando um prazo de validade inferior ao dia de hoje");
+        throw new CannotupdateError ("O lote não pode ser editado usando um prazo de validade igual ou inferior ao dia de hoje");
     }
 
     const statusAtual = lote.status;

@@ -13,7 +13,8 @@ import Cookies from "js-cookie";
 // Services
 import { 
    getTotalUsersForFirstRegister, 
-   loginService 
+   loginService, 
+   registerFirstUserService
 } from "../../services/user.service";
 import { useEffectEvent } from "react";
 import { useEffect } from "react";

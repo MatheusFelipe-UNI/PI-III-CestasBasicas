@@ -1,10 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `controle_estoque` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `controle_estoque` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */;
 USE `controle_estoque`;
--- MySQL dump 10.13  Distrib 8.0.45, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
--- Host: localhost    Database: controle_estoque
+-- Host: 127.0.0.1    Database: controle_estoque
 -- ------------------------------------------------------
--- Server version	8.0.45
+-- Server version	5.5.5-10.4.27-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,15 +25,15 @@ DROP TABLE IF EXISTS `cestas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cestas` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome_cesta` varchar(200) NOT NULL,
   `preco` decimal(10,2) unsigned NOT NULL,
   `status` enum('ATIVO','INATIVO') NOT NULL DEFAULT 'ATIVO',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `quantidade` int unsigned NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `quantidade` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,16 +44,16 @@ DROP TABLE IF EXISTS `clientes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `clientes` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome_cliente` varchar(100) NOT NULL,
   `telefone` varchar(20) NOT NULL,
-  `cpf_cnpj` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `cpf_cnpj` varchar(18) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `tipo_cliente` enum('PESSOA_FISICA','PESSOA_JURIDICA') NOT NULL,
   `status` enum('ATIVO','INATIVO') NOT NULL DEFAULT 'ATIVO',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,14 +64,14 @@ DROP TABLE IF EXISTS `entradas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `entradas` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `fk_id_user` int unsigned NOT NULL,
-  `data_entrada` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_id_user` int(10) unsigned NOT NULL,
+  `data_entrada` datetime NOT NULL DEFAULT current_timestamp(),
   `status` enum('RECEBIDA','CANCELADA') NOT NULL DEFAULT 'RECEBIDA',
   PRIMARY KEY (`id`),
   KEY `fk_id_user` (`fk_id_user`),
-  CONSTRAINT `entradas_ibfk_1` FOREIGN KEY (`fk_id_user`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `entradas_ibfk_1` FOREIGN KEY (`fk_id_user`) REFERENCES `users` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -82,14 +82,14 @@ DROP TABLE IF EXISTS `fornecedor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fornecedor` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome_fornecedor` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` enum('ATIVO','INATIVO') NOT NULL DEFAULT 'ATIVO',
   `cnpj` varchar(18) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,16 +100,16 @@ DROP TABLE IF EXISTS `itens_cestas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `itens_cestas` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `fk_id_cesta` int unsigned NOT NULL,
-  `fk_id_produto` int unsigned NOT NULL,
-  `quantidade_solicitada` int NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_id_cesta` int(10) unsigned NOT NULL,
+  `fk_id_produto` int(10) unsigned NOT NULL,
+  `quantidade_solicitada` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_id_cesta` (`fk_id_cesta`),
   KEY `fk_id_produto` (`fk_id_produto`),
   CONSTRAINT `itens_cestas_ibfk_1` FOREIGN KEY (`fk_id_cesta`) REFERENCES `cestas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `itens_cestas_ibfk_2` FOREIGN KEY (`fk_id_produto`) REFERENCES `produtos` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `itens_cestas_ibfk_2` FOREIGN KEY (`fk_id_produto`) REFERENCES `produtos` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,40 +120,21 @@ DROP TABLE IF EXISTS `itens_entrada`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `itens_entrada` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `fk_id_produto` int unsigned NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `quantidade_adquirida` int NOT NULL,
-  `fk_id_entrada` int unsigned NOT NULL,
-  `fk_id_fornecedor` int unsigned NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_id_produto` int(10) unsigned NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `quantidade_adquirida` int(11) NOT NULL,
+  `fk_id_entrada` int(10) unsigned NOT NULL,
+  `fk_id_fornecedor` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_id_produto` (`fk_id_produto`),
   KEY `fk_id_entrada` (`fk_id_entrada`),
   KEY `fk_id_fornecedor` (`fk_id_fornecedor`),
-  CONSTRAINT `itens_entrada_ibfk_1` FOREIGN KEY (`fk_id_produto`) REFERENCES `produtos` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `itens_entrada_ibfk_1` FOREIGN KEY (`fk_id_produto`) REFERENCES `produtos` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `itens_entrada_ibfk_2` FOREIGN KEY (`fk_id_entrada`) REFERENCES `entradas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `itens_entrada_ibfk_3` FOREIGN KEY (`fk_id_fornecedor`) REFERENCES `fornecedor` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `itens_entrada_ibfk_3` FOREIGN KEY (`fk_id_fornecedor`) REFERENCES `fornecedor` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `somar_estoque_entrada` AFTER INSERT ON `itens_entrada` FOR EACH ROW BEGIN
-UPDATE produtos
-SET quantidade_estoque = quantidade_estoque + NEW.quantidade_adquirida
-WHERE id = NEW.fk_id_produto;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `lotes_produtos`
@@ -163,22 +144,22 @@ DROP TABLE IF EXISTS `lotes_produtos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lotes_produtos` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `fk_id_produto` int unsigned NOT NULL,
-  `fk_id_fornecedor` int unsigned NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_id_produto` int(10) unsigned NOT NULL,
+  `fk_id_fornecedor` int(10) unsigned NOT NULL,
   `valor_unitario` decimal(11,2) unsigned NOT NULL,
-  `qtd_disponivel` int NOT NULL,
+  `qtd_disponivel` int(11) NOT NULL,
   `status` enum('ATIVO','INATIVO') NOT NULL DEFAULT 'ATIVO',
-  `is_vencido` tinyint unsigned NOT NULL,
+  `is_vencido` tinyint(3) unsigned NOT NULL,
   `data_validade` date NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `fk_id_produto` (`fk_id_produto`),
   KEY `fk_id_fornecedor` (`fk_id_fornecedor`),
-  CONSTRAINT `lotes_produtos_ibfk_1` FOREIGN KEY (`fk_id_produto`) REFERENCES `produtos` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `lotes_produtos_ibfk_2` FOREIGN KEY (`fk_id_fornecedor`) REFERENCES `fornecedor` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `lotes_produtos_ibfk_1` FOREIGN KEY (`fk_id_produto`) REFERENCES `produtos` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `lotes_produtos_ibfk_2` FOREIGN KEY (`fk_id_fornecedor`) REFERENCES `fornecedor` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -189,16 +170,16 @@ DROP TABLE IF EXISTS `produtos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `produtos` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome_produto` varchar(500) NOT NULL,
   `tipo_unidade` varchar(50) NOT NULL,
-  `quantidade_estoque` int NOT NULL,
-  `estoque_minimo` int NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `quantidade_estoque` int(11) NOT NULL,
+  `estoque_minimo` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` enum('ATIVO','INATIVO') NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,16 +190,16 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `usuario` varchar(45) NOT NULL,
-  `senha` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `nivel_acesso` int unsigned NOT NULL,
-  `status` enum('ATIVO','INATIVO') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'ATIVO',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `senha` varchar(255) NOT NULL,
+  `nivel_acesso` int(10) unsigned NOT NULL,
+  `status` enum('ATIVO','INATIVO') NOT NULL DEFAULT 'ATIVO',
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `usuario` (`usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -229,30 +210,30 @@ DROP TABLE IF EXISTS `vendas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `vendas` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `fk_id_cliente` int unsigned NOT NULL,
-  `fk_id_user` int unsigned NOT NULL,
-  `fk_id_cesta` int unsigned NOT NULL,
-  `quantidade` int unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_id_cliente` int(10) unsigned NOT NULL,
+  `fk_id_user` int(10) unsigned NOT NULL,
+  `fk_id_cesta` int(10) unsigned NOT NULL,
+  `quantidade` int(10) unsigned NOT NULL,
   `valor_total` decimal(10,2) unsigned NOT NULL,
-  `data_venda` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `data_venda` datetime NOT NULL DEFAULT current_timestamp(),
   `valor_unitario` decimal(10,2) unsigned NOT NULL,
   `status` enum('PENDENTE','CONCLUIDA','CANCELADA') NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_id_cliente` (`fk_id_cliente`),
   KEY `fk_id_user` (`fk_id_user`),
   KEY `fk_id_cesta` (`fk_id_cesta`),
-  CONSTRAINT `vendas_ibfk_1` FOREIGN KEY (`fk_id_user`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `vendas_ibfk_2` FOREIGN KEY (`fk_id_cliente`) REFERENCES `clientes` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `vendas_ibfk_3` FOREIGN KEY (`fk_id_cesta`) REFERENCES `cestas` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `vendas_ibfk_1` FOREIGN KEY (`fk_id_user`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `vendas_ibfk_2` FOREIGN KEY (`fk_id_cliente`) REFERENCES `clientes` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `vendas_ibfk_3` FOREIGN KEY (`fk_id_cesta`) REFERENCES `cestas` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -269,9 +250,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -303,4 +284,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-11 22:40:02
+-- Dump completed on 2026-05-16  0:31:47

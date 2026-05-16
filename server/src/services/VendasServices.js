@@ -1,7 +1,7 @@
-const CannotDeleteError = require("../classes/CannotDeleteError");
-const ExistsDataError = require("../classes/ExistsDataError");
-const FieldUndefinedError = require("../classes/FieldUndefinedError");
-const NotFoundError = require("../classes/NotFoundError");
+const CannotDeleteError = require("../classes/CannotDeleteError.js");
+const ExistsDataError = require("../classes/ExistsDataError.js");
+const FieldUndefinedError = require("../classes/FieldUndefinedError.js");
+const NotFoundError = require("../classes/NotFoundError.js");
 const {
     getAllVendasCestas,
     getAllPendingVendasCestas,
@@ -12,7 +12,7 @@ const {
     changeVendaCestaStatus,
     createVendaCesta,
     deleteVendaCesta,
-} = require("../repositories/VendasRepository")
+} = require("../repositories/VendasRepository.js")
 
 async function getAllVendasCestasService() {
     const vendas = await getAllVendasCestas();

@@ -8,9 +8,9 @@ const { getFornecedorById,
     updateFornecedor,
     getFornecedorByCNPJ,
     findAllFornecedoresForSelect,
-} = require("../repositories/FornecedoresRepository");
-const ExistsDataError = require("../classes/ExistsDataError");
-const NotFoundError = require("../classes/NotFoundError");
+} = require("../repositories/FornecedoresRepository.js");
+const ExistsDataError = require("../classes/ExistsDataError.js");
+const NotFoundError = require("../classes/NotFoundError.js");
 const { removeAllAcentsForString, setCnpjMask } = require("../utils/DataFormatUtil.js");
 
 

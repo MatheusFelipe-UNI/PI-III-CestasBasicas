@@ -11,13 +11,13 @@ const { getAllCestas,
     getAllCestasItensByCestaId,
     getCestaItemById,
     findAllCestasForSelect,
-} = require("../repositories/CestasRepository");
-const { getProdutoByIdService, } = require("../services/ProdutosServices");
-const { getAllActiveLotesProdutosByProdutoOrderByValidade } = require("../repositories/LotesProdutosRepository");
+} = require("../repositories/CestasRepository.js");
+const { getProdutoByIdService, } = require("../services/ProdutosServices.js");
+const { getAllActiveLotesProdutosByProdutoOrderByValidade } = require("../repositories/LotesProdutosRepository.js");
 const { Op } = require("sequelize");
 const { Cestas, sequelize, Itens_cestas, Produtos, Lotes_produtos } = require("../models");
-const NotFoundError = require("../classes/NotFoundError");
-const ExistsDataError = require("../classes/ExistsDataError");
+const NotFoundError = require("../classes/NotFoundError.js");
+const ExistsDataError = require("../classes/ExistsDataError.js");
 
 
 async function getAllCestasService() {

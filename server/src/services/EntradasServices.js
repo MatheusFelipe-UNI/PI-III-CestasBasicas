@@ -10,11 +10,11 @@ const {
     getAllEntradasProdutosItens,
     getAllEntradasProdutosItensByIdEntrada,
     getEntradaProdutoItemById,
-} = require ("../repositories/EntradasRepository");
+} = require ("../repositories/EntradasRepository.js");
 const { Op } = require("sequelize");
 const { EntradasProdutos, sequelize} = require("../models");
-const NotFoundError = require("../classes/NotFoundError");
-const ExistsDataError = require("../classes/ExistsDataError");
+const NotFoundError = require("../classes/NotFoundError.js");
+const ExistsDataError = require("../classes/ExistsDataError.js");
 
 
 

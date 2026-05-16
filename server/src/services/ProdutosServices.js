@@ -1,5 +1,5 @@
-const ExistsDataError = require("../classes/ExistsDataError");
-const NotFoundError = require("../classes/NotFoundError");
+const ExistsDataError = require("../classes/ExistsDataError.js");
+const NotFoundError = require("../classes/NotFoundError.js");
 const { getProdutoById,
     getAllProdutos,
     getAllActiveProdutos,
@@ -9,8 +9,8 @@ const { getProdutoById,
     createProduto,
     updateProduto,
     findAllProdutosForSelect,
-} = require("../repositories/ProdutosRepository");
-const { setStatusEstoqueForProdutos } = require("../utils/DataFormatUtil");
+} = require("../repositories/ProdutosRepository.js");
+const { setStatusEstoqueForProdutos } = require("../utils/DataFormatUtil.js");
 
 
 async function getAllProdutosService() {

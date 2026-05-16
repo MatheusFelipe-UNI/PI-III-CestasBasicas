@@ -9,11 +9,11 @@ const {
     getClienteByCPForCNPJ,
     updateCliente,
     findAllClientesForSelect,
-} = require("../repositories/ClientesRepository");
+} = require("../repositories/ClientesRepository.js");
 const { Op, where } = require("sequelize");
 const { Clientes, sequelize } = require("../models");
-const NotFoundError = require("../classes/NotFoundError");
-const ExistsDataError = require("../classes/ExistsDataError");
+const NotFoundError = require("../classes/NotFoundError.js");
+const ExistsDataError = require("../classes/ExistsDataError.js");
 const { removeAllAcentsForString, setCpfOrCnpjMask } = require("../utils/DataFormatUtil.js");
 const { findAllCestasForSelect } = require("../repositories/CestasRepository.js");
 

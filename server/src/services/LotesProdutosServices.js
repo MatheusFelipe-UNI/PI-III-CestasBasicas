@@ -17,9 +17,9 @@ const {
     changeLoteProdutoStatus,
     incrementProdutoEstoque,
     decrementProdutoEstoque,
-} = require("../repositories/LotesProdutosRepository");
-const { createEntradaProdutoService } = require ("../services/EntradasServices")
-const FieldUndefinedError = require("../classes/FieldUndefinedError");
+} = require("../repositories/LotesProdutosRepository.js");
+const { createEntradaProdutoService } = require ("../services/EntradasServices.js")
+const FieldUndefinedError = require("../classes/FieldUndefinedError.js");
 const { sequelize } = require("../models");
 
 async function getAllLotesProdutosService() {

@@ -1,0 +1,47 @@
+services: 
+  mysql-cestas:
+    container_name: mysql-cestas
+    image: mysql:8.0
+    restart: always
+    command: --lower_case_table_names=1
+    environment:
+      MYSQL_ROOT_PASSWORD: "PREENCHER"
+    volumes:
+      - mysql-cestas-volume:/var/lib/mysql
+    networks:
+      - net-cestas
+    ports:
+      - 3306:3306
+    expose:
+      - "3306"
+  api:
+    container_name: api-cestas
+    build: ./server
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - mysql-cestas
+    networks:
+      - net-cestas
+    env_file:
+      - ./server/.env
+  client:
+    container_name: client-cestas
+    build: ./client
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - api
+    networks:
+      - net-cestas
+    env_file:
+      - ./client/.env
+
+volumes:
+  mysql-cestas-volume:
+    driver: local
+
+networks:
+  net-cestas: {}

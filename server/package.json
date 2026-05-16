@@ -7,7 +7,8 @@
    "type": "commonjs",
    "main": "index.js",
    "scripts": {
-      "start": "nodemon index.js",
+      "start": "node index.js",
+      "dev": "nodemon index.js",
       "migration:create": "npx sequelize migration:create --name",
       "migration:undo": "npx sequelize-cli db:migrate:undo",
       "migration:undo:all": "npx sequelize-cli db:migrate:undo:all",

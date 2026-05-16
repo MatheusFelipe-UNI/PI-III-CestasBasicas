@@ -12,8 +12,10 @@ const { getAllCestas,
     getCestaItemById,
     findAllCestasForSelect,
 } = require("../repositories/CestasRepository");
+const { getProdutoByIdService, } = require("../services/ProdutosServices");
+const { getAllActiveLotesProdutosByProdutoOrderByValidade } = require("../repositories/LotesProdutosRepository");
 const { Op } = require("sequelize");
-const { Cestas, sequelize, Itens_cestas, Produtos } = require("../models");
+const { Cestas, sequelize, Itens_cestas, Produtos, Lotes_produtos } = require("../models");
 const NotFoundError = require("../classes/NotFoundError");
 const ExistsDataError = require("../classes/ExistsDataError");
 
@@ -96,10 +98,96 @@ async function getCestaByIdService(idCesta) {
     return cestaID
 }
 
-async function createCestaService(cestaData) {
-    const createdCesta = await createCesta(cestaData);
-    return createdCesta;
+/*
+============================================================================
+                     Atualiza a tabela produtos e Lotes_produtos 
+                            conforme uso em cestas
+============================================================================
+*/
+
+
+async function attEstoqueProduto(produtoid, quantidade, transaction) {
+    if (!quantidade || isNaN(quantidade) || quantidade <= 0) {
+        throw new Error("Erro de cálculo")
+    }
+    const produto = await Produtos.findOne({ where: { id: produtoid, status: "ATIVO" }, transaction });
+
+    if (!produto) {
+        throw new NotFoundError("Produto não localizado")
+    }
+    if (produto.quantidade_estoque < quantidade) {
+        throw new Error(`Estoque insuficiente do produto: ${produto.nome_produto}`)
+    }
+
+    const lotes = await getAllActiveLotesProdutosByProdutoOrderByValidade(produtoid, transaction);
+
+    let quantidadeProdutoCesta = quantidade;
+    for (const lote of lotes) {
+        if (quantidadeProdutoCesta <= 0) break;
+
+        const debito = Math.min(lote.qtd_disponivel, quantidadeProdutoCesta);
+        const newQtd = lote.qtd_disponivel - debito;
+
+        await lote.update({ qtd_disponivel: newQtd }, { transaction });
+        quantidadeProdutoCesta -= debito;
+
+        if (newQtd === 0) {
+            await lote.update({ status: "INATIVO" }, { transaction });
+        }
+    }
+
+    const currentEstoque = await Lotes_produtos.sum('qtd_disponivel', {
+        where: {
+            fk_id_produto: produtoid,
+            status: "ATIVO"
+        },
+        transaction
+    });
+    await produto.update({ quantidade_estoque: currentEstoque }, { transaction });
 }
+
+async function devolveEstoqueProduto(produtoid, quantidade, transaction) {
+    if (!quantidade || isNaN(quantidade) || quantidade <= 0) {
+        throw new Error("Erro de cálculo");
+    }
+    const produto = await Produtos.findOne({ where: { id: produtoid, status: "ATIVO" }, transaction });
+    if (!produto) {
+        throw new NotFoundError("Produto não localizado para devolução");
+    }
+
+    const newEstoque = produto.quantidade_estoque + quantidade;
+    await produto.update({ quantidade_estoque: newEstoque }, { transaction });
+}
+
+
+/*
+============================================================================
+                     Atualiza a tabela produtos e Lotes_produtos 
+                            conforme uso em cestas
+============================================================================
+*/
+
+
+async function createCestaService(cestaData) {
+    const t = await sequelize.transaction();
+
+    try {
+
+        const newCesta = await createCesta(cestaData, t);
+
+        for (const item of cestaData.itens_cesta) {
+            const qtdItem = item.quantidade_solicitada || item.quantidade;
+            const quantidadeTotal = item.quantidade_solicitada * cestaData.quantidade;
+            await attEstoqueProduto(item.fk_id_produto, quantidadeTotal, t);
+        }
+        await t.commit();
+        return newCesta;
+    } catch (error) {
+        console.log(error);
+        await t.rollback();
+    }
+}
+
 
 async function changeCestaStatusService(idCesta, newStatus) {
     const formattedNewStatus = newStatus.toUpperCase();
@@ -125,17 +213,46 @@ async function changeCestaStatusService(idCesta, newStatus) {
 async function updateCestaService(id, cestaData) {
     const { nome_cesta, preco, quantidade, itens_cesta } = cestaData;
     const cesta = await getCestaByIdService(id);
-    
+
     if (!cesta) {
         throw new NotFoundError("Cesta não localizado!");
     }
 
-    const updateFields = {};
-    if (nome_cesta !== undefined) updateFields.nome_cesta = nome_cesta;
-    if (preco !== undefined) updateFields.preco = preco;
-    if (quantidade !== undefined && quantidade !== "") updateFields.quantidade = quantidade;
+    const currentItens = await getAllCestasItensByCestaId(id);
+    const t = await sequelize.transaction();
 
-    return await updateCesta(id, updateFields, itens_cesta);
+    try {
+        if (quantidade !== undefined && quantidade !== cesta.quantidade) {
+            const diffCestas = quantidade - cesta.quantidade;
+
+            for (const item of currentItens) {
+                const qtdItemCesta = item.quantidade_solicitada || item.quantidade;
+                const diffItens = Math.abs(diffCestas) * qtdItemCesta;
+
+
+                if (diffCestas > 0) {
+                    await attEstoqueProduto(item.fk_id_produto, diffItens, t);
+                } else {
+                    await devolveEstoqueProduto(item.fk_id_produto, diffItens, t);
+                }
+            }
+        }
+
+        const updateFields = {};
+        if (nome_cesta !== undefined) updateFields.nome_cesta = nome_cesta;
+        if (preco !== undefined) updateFields.preco = preco;
+        if (quantidade !== undefined && quantidade !== "") updateFields.quantidade = quantidade;
+
+        const result = await updateCesta(id, updateFields, itens_cesta, t);
+        await t.commit();
+        return result;
+
+    } catch (error) {
+        if (t && !t.finished) {
+            await t.rollback();
+        }
+        throw error;
+    }
 }
 
 /*

@@ -15,8 +15,12 @@ const {
     createLoteProduto,
     updateLoteProduto,
     changeLoteProdutoStatus,
+    incrementProdutoEstoque,
+    decrementProdutoEstoque,
 } = require("../repositories/LotesProdutosRepository");
+const { createEntradaProdutoService } = require ("../services/EntradasServices")
 const FieldUndefinedError = require("../classes/FieldUndefinedError");
+const { sequelize } = require("../models");
 
 async function getAllLotesProdutosService() {
     const allLotesProdutos = await getAllLotesProdutos();
@@ -117,7 +121,7 @@ async function getAllActiveLotesProdutosByProdutoWithFilterAndOrderByService(idP
 }
 
 async function createLoteProdutoService(loteProdutoData) {
-
+    const { id_user, fk_id_produto, fk_id_fornecedor, valor_unitario, qtd_disponivel, data_validade} = loteProdutoData
     const hoje = new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' });
     const dataValidade = new Date(loteProdutoData.data_validade);
     const dataHoje = new Date(hoje);
@@ -126,16 +130,39 @@ async function createLoteProdutoService(loteProdutoData) {
         throw new CannotCreateError ("O lote não pode ser criado com prazo de validade igual ou inferior ao dia de hoje");
     }
     
-    const createdLote = await createLoteProduto({
-        ...loteProdutoData,
-        status: "ATIVO",
-        is_vencido: 0,
-    });
-    return createdLote
+    const t = await sequelize.transaction();
+    try {
+        const createdLote = await createLoteProduto({
+            fk_id_produto,
+            fk_id_fornecedor,
+            valor_unitario,
+            qtd_disponivel,
+            data_validade,
+            status: "ATIVO",
+            is_vencido:0
+        }, t);
+
+        await incrementProdutoEstoque(fk_id_produto, qtd_disponivel, t);
+
+        await createEntradaProdutoService({
+            fk_id_user: id_user,
+            itens_entrada:[{
+                fk_id_produto,
+                fk_id_fornecedor,
+                quantidade_adquirida:qtd_disponivel
+            }]
+        }, t);
+
+        await t.commit();
+        return createdLote;
+    } catch (error) {
+        await t.rollback();
+        console.log(error);
+    }
 }
 
 async function updateLoteProdutoService(id, lotesData) {
-    const { fk_id_fornecedor, valor_unitario, qtd_disponivel, data_validade, is_vencido } = lotesData
+    const { id_fornecedor, valor_unitario, qtd_disponivel, data_validade, is_vencido } = lotesData
     const lote = await getLoteProdutoByIdService(id);
     const hoje = new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' });
 
@@ -147,15 +174,40 @@ async function updateLoteProdutoService(id, lotesData) {
         throw new CannotupdateError ("O lote não pode ser editado usando um prazo de validade igual ou inferior ao dia de hoje");
     }
 
+    const statusAtual = lote.status;
+    let newStatus = statusAtual;
+     if (Number(is_vencido) === 1) {
+        newStatus = "INATIVO";
+    }
+
+    const idProduto = lote.fk_id_produto;
+    const currentQtd = lote.qtd_disponivel;
+
+    if (statusAtual == "ATIVO" && newStatus == "INATIVO"){
+        await decrementProdutoEstoque(idProduto, currentQtd);
+    }
+
+    if (statusAtual === "ATIVO" && newStatus === "ATIVO") {
+        const newQtd = qtd_disponivel !== undefined ? Number(qtd_disponivel) : currentQtd;
+        if (newQtd !== currentQtd) {
+            const diff = newQtd - currentQtd;
+            if (diff > 0) {
+                await incrementProdutoEstoque(idProduto, diff);
+            } else if (diff < 0) {
+                await decrementProdutoEstoque(idProduto, Math.abs(diff));
+            }
+        }
+    }
+
     const updateFields = {};
     if (is_vencido !== undefined) updateFields.is_vencido = is_vencido;
-    if (fk_id_fornecedor !== undefined) updateFields.fk_id_fornecedor = fk_id_fornecedor;
+    if (id_fornecedor !== undefined) updateFields.fk_id_fornecedor = id_fornecedor;
     if (valor_unitario !== undefined) updateFields.valor_unitario = valor_unitario;
-    if (qtd_disponivel !== undefined) updateFields.qtd_disponivel = qtd_disponivel;
+    if (qtd_disponivel !== undefined) updateFields.qtd_disponivel = Number(qtd_disponivel);
     if (data_validade !== undefined) updateFields.data_validade = data_validade;
 
-    if (Number(is_vencido) === 1) {
-        updateFields.status = "INATIVO";
+    if (newStatus !== statusAtual) {
+        updateFields.status = newStatus;
     }
 
     return await updateLoteProduto(id, updateFields)
@@ -176,6 +228,12 @@ async function changeLoteProdutoStatusService(id, newStatus) {
         const statusAtual = lote.status;
     if (formattedNewStatus == statusAtual) {
         throw new ExistsDataError(`Este lote já se encontra com o status: ${formattedNewStatus}`);
+    }
+
+    if (statusAtual == "ATIVO" && formattedNewStatus == "INATIVO"){
+        await decrementProdutoEstoque(lote.fk_id_produto, lote.qtd_disponivel);
+    } else if (statusAtual == "INATIVO" && formattedNewStatus == "ATIVO") {
+        await incrementProdutoEstoque(lote.fk_id_produto, lote.qtd_disponivel);
     }
 
     const updateStatus = await changeLoteProdutoStatus (id, formattedNewStatus);

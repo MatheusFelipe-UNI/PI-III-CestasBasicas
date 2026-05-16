@@ -1,4 +1,4 @@
-const { Lotes_produtos, sequelize } = require("../models");
+const { Lotes_produtos, sequelize, Produtos} = require("../models");
 const { Op } = require("sequelize");
 
 async function getAllLotesProdutos() {
@@ -96,7 +96,7 @@ async function getAllActiveLotesProdutosByFilterAndOrderBy(filters, orderBy) {
             include[0].required = true;
         }
 
-        // exibe os produtos que irão vencer em x dias (x = núemro de dias dado pelo usuário) 
+        // exibe os produtos que irão vencer em x dias (x = número de dias dado pelo usuário) 
         else if (selectFilter === 'periodo') {
             const hoje = new Date();
             const dataFim = new Date();
@@ -150,6 +150,7 @@ async function getLoteProdutoById(idLoteProduto) {
         ],
         attributes: [
             "id",
+            "status",
             [sequelize.col("produtos_lote.nome_produto"), "nome_produto"],
             "fk_id_produto",
             "fk_id_fornecedor",
@@ -291,13 +292,12 @@ async function getAllActiveLotesProdutosByProdutoWithFilterAndOrderBy(idProduto,
     return result;
 }
 
-async function createLoteProduto(loteProdutoData) {
+async function createLoteProduto(loteProdutoData, transaction = null) {
     const createdLote = await Lotes_produtos.create(loteProdutoData)   
     return createdLote;
 }
 
 async function updateLoteProduto(id, updateFields) {
-
     const rowAffected = await Lotes_produtos.update(updateFields, {
         where: { id: id },
     });
@@ -309,6 +309,34 @@ async function changeLoteProdutoStatus(id, newStatus) {
         where: { id: id }
     });
     return updateStatus;
+}
+
+async function getAllActiveLotesProdutosByProdutoOrderByValidade(produtoid, transaction = null) {
+    const activeLotesByProduto = await Lotes_produtos.findAll({
+        where: {
+            status: "ATIVO",
+            fk_id_produto: produtoid,
+            qtd_disponivel: { [Op.gt]: 0 }
+        },
+        attributes: ["id", "qtd_disponivel"],
+        order: [["data_validade", "ASC"]],
+        transaction
+    });
+    return activeLotesByProduto;
+}
+
+async function incrementProdutoEstoque(produtoid, qtd_disponivel, transaction = null) {
+    await Produtos.increment(
+        {quantidade_estoque: qtd_disponivel },
+        { where: { id: produtoid}}
+    );
+}
+
+async function decrementProdutoEstoque(produtoid, qtd_disponivel) {
+    await Produtos.decrement(
+        {quantidade_estoque: qtd_disponivel },
+        { where: { id: produtoid}}
+    );
 }
 
 module.exports = {
@@ -325,4 +353,7 @@ module.exports = {
     createLoteProduto,
     updateLoteProduto,
     changeLoteProdutoStatus,
+    getAllActiveLotesProdutosByProdutoOrderByValidade,
+    incrementProdutoEstoque,
+    decrementProdutoEstoque,
 }

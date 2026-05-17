@@ -17,7 +17,7 @@ import { FaUser as IconUser } from "react-icons/fa";
 import { TbLogout as IconLogout } from "react-icons/tb";
 
 import { useUser } from "../../Context/UserContext";
-import { logoutService } from "../../services/user.service";
+import { logoutService } from "../../Services/user.service";
 import { useNavigate } from "react-router";
 
 export default function Navbar() {

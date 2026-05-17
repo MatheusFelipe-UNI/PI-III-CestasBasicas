@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
-import { ModalAlert } from "../components/Modals/ModalAlert/ModalAlert";
+import { ModalAlert } from "../Components/Modals/ModalAlert/ModalAlert";
 
 const AlertContext = createContext(null);
 

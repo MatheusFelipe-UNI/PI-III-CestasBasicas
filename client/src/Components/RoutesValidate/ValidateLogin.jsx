@@ -1,7 +1,7 @@
 import { Navigate } from "react-router";
 import Cookies from "js-cookie";
 import { useAlert } from "../../Context/AlertContext";
-import { getNecessaryInfoUser, logoutService } from "../../services/user.service";
+import { getNecessaryInfoUser, logoutService } from "../../Services/user.service";
 import { useEffect } from "react";
 import localforage from "localforage";
 

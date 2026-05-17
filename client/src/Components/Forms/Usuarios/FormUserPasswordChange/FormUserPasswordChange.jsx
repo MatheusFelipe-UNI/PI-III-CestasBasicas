@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import styles from "./FormUserPasswordChange.module.css";
 import InputDefaultPassword from "../../../Input/InputDefaultPassword/InputDefaultPassword";
 import { useAlert } from "../../../../Context/AlertContext";
-import { logoutService, updatePasswordUserService } from "../../../../services/user.service";
+import { logoutService, updatePasswordUserService } from "../../../../Services/user.service";
 
 export function FormUserPasswordChange() {
    const { showSuccessAlert, showErrorAlert } = useAlert();

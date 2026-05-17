@@ -3,7 +3,7 @@ import InputCheck from "../../../Input/InputCheck/InputCheck.jsx";
 import { useState } from "react";
 import { useAlert } from "../../../../Context/AlertContext";
 import { useAdmin } from "../../../../Context/AdminContext.jsx";
-import { changeStatusUserService } from "../../../../services/admin.service.js";
+import { changeStatusUserService } from "../../../../Services/admin.service.js";
 
 export function TBodyAdminUser({ userData }) {
    const { showConfirmAlert, showSuccessAlert, showErrorAlert } = useAlert();

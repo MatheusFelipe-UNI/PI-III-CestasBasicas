@@ -1,6 +1,6 @@
 import { useAlert } from "../../../Context/AlertContext";
 import { useModal } from "../../../Context/ModalContext";
-import { registerNewUser } from "../../../services/admin.service";
+import { registerNewUser } from "../../../Services/admin.service";
 import { FormAddUser } from "../../Forms/Administradores/FormAddUser";
 
 export function ModalAddUser() {

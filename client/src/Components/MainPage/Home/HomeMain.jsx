@@ -1,4 +1,3 @@
-import { useUser } from "../../../context/UserContext"
 import { CardShortCut } from "../../Cards/CardShortCut/CardShortCut"
 
 export function HomeMain() {

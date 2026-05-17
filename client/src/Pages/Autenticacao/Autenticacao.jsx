@@ -15,7 +15,7 @@ import {
    getTotalUsersForFirstRegister, 
    loginService, 
    registerFirstUserService
-} from "../../services/user.service";
+} from "../../Services/user.service";
 import { useEffectEvent } from "react";
 import { useEffect } from "react";
 import { PassEye } from "../../Components/PassEye/PassEye";

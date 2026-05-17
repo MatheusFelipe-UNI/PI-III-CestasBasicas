@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useEffectEvent, useState } from "react";
-import { getAllDefaultUsersService } from "../services/admin.service";
+import { getAllDefaultUsersService } from "../Services/admin.service";
 
 const AdminContext = createContext(null);
 

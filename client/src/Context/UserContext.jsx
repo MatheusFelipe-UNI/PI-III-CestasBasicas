@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import localforage from "localforage";
 import Cookies from "js-cookie";
-import { getNecessaryInfoUser } from "../services/user.service";
+import { getNecessaryInfoUser } from "../Services/user.service";
 import { useEffectEvent } from "react";
 
 const UserContext = createContext(null);

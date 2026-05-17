@@ -1,4 +1,4 @@
-import { useUser } from "../../../context/UserContext";
+import { useUser } from "../../../Context/UserContext";
 import styles from "./CardShortCut.module.css";
 import { CardShortCutItem } from "./CardShortCutItem";
 

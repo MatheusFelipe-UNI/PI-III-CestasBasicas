@@ -1,6 +1,6 @@
 import { Navigate } from "react-router";
 import { useUser } from "../../Context/UserContext";
-import { getNecessaryInfoUser } from "../../services/user.service";
+import { getNecessaryInfoUser } from "../../Services/user.service";
 import { useEffect } from "react";
 import { useEffectEvent } from "react";
 

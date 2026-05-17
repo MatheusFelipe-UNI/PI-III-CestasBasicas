@@ -5,7 +5,7 @@ services:
     restart: always
     command: --lower_case_table_names=1
     environment:
-      MYSQL_ROOT_PASSWORD: "PREENCHER"
+      MYSQL_ROOT_PASSWORD: "root"
     volumes:
       - mysql-cestas-volume:/var/lib/mysql
     networks:
